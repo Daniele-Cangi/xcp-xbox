@@ -477,7 +477,7 @@
       "tests": [
         "python -m pytest -q"
       ],
-      "destination_sha256": "ff47651f4d8284e45125c6a27f1ea8ec3237621c39015b7c61a67631f5970f95"
+      "destination_sha256": "3b2613af2b3b86a0d1389f0a6333fdae2d7bbb37fe540294c705e75d63c8252b"
     },
     {
       "source_path": null,

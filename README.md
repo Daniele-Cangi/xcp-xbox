@@ -141,6 +141,49 @@ NOT_TESTED_ON_XBOX
 The distinction is intentional: historical evidence is not silently reused as
 evidence for a new build.
 
+## Recorded public visuals
+
+These are unchanged public visuals from
+[XCP-Research at commit `84c6c742`](https://github.com/Daniele-Cangi/XCP-Research/tree/84c6c742afc2b9a8e51450dc2081e848814bc724).
+Their [byte-level provenance](provenance/visual-asset-provenance.json) is recorded
+separately from the reconstructed source. They show recorded scenarios and
+product surfaces. They do not identify every depicted scenario as P4/r10 or
+validate the new development packages on Xbox.
+
+### XCP Studio workspace
+
+![XCP Studio project workspace](assets/showcase/01-studio-workspace.webp)
+
+This is a real Studio product surface for project work.
+
+### Core Siege
+
+![Core Siege running in the recorded Xbox creation scenario](assets/showcase/02-core-siege.webp)
+
+Core Siege is a real capture of software produced through the AI-driven
+workflow, not an AI-generated marketing image. It illustrates the recorded
+creation scenario, not a general success claim for new projects.
+
+### Minilens adaptation
+
+![Minilens in the recorded authorized adaptation case](assets/showcase/03-minilens.webp)
+
+This is a real capture of the authorized adaptation case. Minilens remains the
+work of its authors under GPL-3.0-or-later. The public result concerns a
+playable behavioural subset with declared degradation; full source equivalence
+is not claimed.
+
+### Evidence surface
+
+![XCP public evidence surface for the recorded movement-left scenario](assets/showcase/04-studio-evidence.webp)
+
+This is a real product surface showing a bounded result for the declared
+`movement-left` scenario and its frozen tolerance. It does not establish global
+equivalence. The [validation overview](assets/xcp-studio-validation-overview.svg)
+is an explanatory diagram, and the
+[social preview](assets/social-preview/xcp-research-github-social-preview.png)
+is a visual summary; neither is a new execution record.
+
 ## What is inside XCP
 
 ### XCP Studio

@@ -10,8 +10,13 @@ destination hashes without reading the private repository.
 Git history for the selected code and contracts is authored by Daniele Cangi,
 the owner directing this extraction. No selected file carries an external
 license header or vendor attribution. Synthetic Godot fixtures are new
-first-party material. Minilens is GPL-3.0-or-later and is excluded, as are
-third-party Godot projects, product assets and generated experiment evidence.
-Uncertain future components stay out until redistribution rights are clear.
+first-party material. Minilens source and standalone game assets remain
+excluded, as do third-party Godot projects and generated experiment evidence.
+The six public visuals imported from `Daniele-Cangi/XCP-Research` are exact Git
+blob copies recorded in
+[`visual-asset-provenance.json`](../provenance/visual-asset-provenance.json).
+The Minilens capture depicts an authorized adaptation case; Minilens remains
+the work of its authors under GPL-3.0-or-later, and no whole-project fidelity
+is claimed. Uncertain future components stay out until redistribution rights are clear.
 This distribution uses Apache-2.0; the private source's absence of a top-level
 license is not a grant for third-party material.

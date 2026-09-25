@@ -53,6 +53,78 @@ P4_SYNTHETIC_CREDENTIAL_FIXTURES = {
     b"session" + b'_id": "must-not-enter"',
     b"session" + b'_id="ephemeral-test-session"',
 }
+VISUAL_SOURCE_COMMIT = "84c6c742afc2b9a8e51450dc2081e848814bc724"
+VISUAL_SOURCE_TREE = "dc7217f6b0a955f48434ea9557d71ffe4b520908"
+EXPECTED_VISUAL_BLOBS = {
+    "assets/showcase/01-studio-workspace.webp": "b504178fc028796018a4bf496af470ac284c95f0",
+    "assets/showcase/02-core-siege.webp": "cc6498fb51667b3ab74ab0abbca6995d895f2eb4",
+    "assets/showcase/03-minilens.webp": "9dadecc3d6356173e77dca88f7666cc8f830aa55",
+    "assets/showcase/04-studio-evidence.webp": "6e9476586c4cf1494f01a8c286ddc1c1a2a3f67e",
+    "assets/social-preview/xcp-research-github-social-preview.png": "e35c483ca1939757b23801e61acbadca8c263257",
+    "assets/xcp-studio-validation-overview.svg": "aa0f8d7d88d242e6e2efcbe0a04b1431bf69d25b",
+}
+
+
+def check_visual_assets(root: Path = ROOT) -> list[str]:
+    """Allow only the six byte-locked public captures from XCP-Research."""
+    manifest_path = root / "provenance/visual-asset-provenance.json"
+    if not manifest_path.is_file():
+        return ["provenance/visual-asset-provenance.json: missing"]
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return [f"provenance/visual-asset-provenance.json: invalid ({exc})"]
+    violations: list[str] = []
+    required = {
+        "schema_version": "xcp-visual-asset-provenance-v1",
+        "source_repository": "Daniele-Cangi/XCP-Research",
+        "source_commit": VISUAL_SOURCE_COMMIT,
+        "source_tree": VISUAL_SOURCE_TREE,
+        "destination_repository": "Daniele-Cangi/xcp-xbox",
+        "transformation": "EXACT_GIT_BLOB_COPY",
+    }
+    if not isinstance(manifest, dict):
+        return ["visual asset provenance: expected a JSON object"]
+    for key, expected in required.items():
+        if manifest.get(key) != expected:
+            violations.append(f"visual asset provenance: invalid {key}")
+    entries = manifest.get("assets")
+    if not isinstance(entries, list):
+        return violations + ["visual asset provenance: assets must be a list"]
+    seen: set[str] = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            violations.append("visual asset provenance: invalid asset entry")
+            continue
+        destination = entry.get("destination_path")
+        if not isinstance(destination, str) or destination not in EXPECTED_VISUAL_BLOBS or destination in seen:
+            violations.append(f"visual asset provenance: unexpected/duplicate path {destination!r}")
+            continue
+        seen.add(destination)
+        if (entry.get("source_path") != destination
+                or entry.get("source_mode") != "100644"
+                or entry.get("source_blob_sha1") != EXPECTED_VISUAL_BLOBS[destination]):
+            violations.append(f"{destination}: source identity mismatch")
+        if not isinstance(entry.get("description"), str) or not isinstance(entry.get("claim_boundary"), str):
+            violations.append(f"{destination}: missing visual description or claim boundary")
+        boundary = entry.get("claim_boundary")
+        if (destination == "assets/showcase/03-minilens.webp"
+                and (not isinstance(boundary, str) or "GPL-3.0-or-later" not in boundary)):
+            violations.append(f"{destination}: missing Minilens attribution")
+        file = root / destination
+        if not file.is_file() or file.is_symlink():
+            violations.append(f"{destination}: missing/linked visual asset")
+            continue
+        data = file.read_bytes()
+        git_blob = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+        if (type(entry.get("bytes")) is not int
+                or entry["bytes"] != len(data)
+                or entry.get("destination_sha256") != hashlib.sha256(data).hexdigest()
+                or git_blob != EXPECTED_VISUAL_BLOBS[destination]):
+            violations.append(f"{destination}: visual asset bytes differ from source blob")
+    for missing in sorted(EXPECTED_VISUAL_BLOBS.keys() - seen):
+        violations.append(f"{missing}: missing visual provenance entry")
+    return violations
 
 
 def candidate_files() -> list[Path]:
@@ -62,6 +134,7 @@ def candidate_files() -> list[Path]:
 
 def check() -> list[str]:
     violations: list[str] = []
+    violations.extend(check_visual_assets())
     workflow = (ROOT / ".github/workflows/tests.yml").read_text(encoding="utf-8")
     if "actions/upload-artifact" in workflow:
         violations.append("CI artifact upload requires an explicit binary publication decision")
@@ -69,6 +142,10 @@ def check() -> list[str]:
         relative = path.relative_to(ROOT).as_posix()
         if path.is_symlink():
             violations.append(f"{relative}: symbolic link")
+            continue
+        if relative in EXPECTED_VISUAL_BLOBS:
+            # The separate manifest and pinned Git blob IDs bind these exact
+            # public bytes before the normal binary/path denylist is applied.
             continue
         parts = {part.lower() for part in path.relative_to(ROOT).parts}
         if parts & FORBIDDEN_PARTS or path.suffix.lower() in FORBIDDEN_SUFFIXES:

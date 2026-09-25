@@ -1,0 +1,72 @@
+{
+  "schema_version": "xcp-visual-asset-provenance-v1",
+  "source_repository": "Daniele-Cangi/XCP-Research",
+  "source_commit": "84c6c742afc2b9a8e51450dc2081e848814bc724",
+  "source_tree": "dc7217f6b0a955f48434ea9557d71ffe4b520908",
+  "destination_repository": "Daniele-Cangi/xcp-xbox",
+  "transformation": "EXACT_GIT_BLOB_COPY",
+  "source_license": "Apache-2.0 for original XCP-Research content; Minilens authorship and GPL-3.0-or-later attribution are preserved for the depicted authorized adaptation case.",
+  "claim_boundary": "These public visuals describe recorded product surfaces and historical scenarios. They do not validate newly reconstructed development packages on Xbox.",
+  "assets": [
+    {
+      "source_path": "assets/showcase/01-studio-workspace.webp",
+      "source_blob_sha1": "b504178fc028796018a4bf496af470ac284c95f0",
+      "source_mode": "100644",
+      "destination_path": "assets/showcase/01-studio-workspace.webp",
+      "destination_sha256": "0c3b1bda7185ec023f520212fc262f3ad57be9724004a05b9a12ae66c511155a",
+      "bytes": 29028,
+      "description": "Real XCP Studio project-workspace product capture.",
+      "claim_boundary": "Product surface; does not establish Xbox validation of this repository's reconstructed builds."
+    },
+    {
+      "source_path": "assets/showcase/02-core-siege.webp",
+      "source_blob_sha1": "cc6498fb51667b3ab74ab0abbca6995d895f2eb4",
+      "source_mode": "100644",
+      "destination_path": "assets/showcase/02-core-siege.webp",
+      "destination_sha256": "0db01f88bb9550a255383cc6bc3581cdd61b05050bd40bd8ceb55a82cec03844",
+      "bytes": 62184,
+      "description": "Real capture of Core Siege software produced through the AI-driven workflow, not an AI-generated marketing image.",
+      "claim_boundary": "Recorded creation scenario only; not a general success guarantee for generated projects or new builds."
+    },
+    {
+      "source_path": "assets/showcase/03-minilens.webp",
+      "source_blob_sha1": "9dadecc3d6356173e77dca88f7666cc8f830aa55",
+      "source_mode": "100644",
+      "destination_path": "assets/showcase/03-minilens.webp",
+      "destination_sha256": "76a239e5e7b70a621860c5ecb38e65716485423adccaa87cb41d2f36c7c297a7",
+      "bytes": 56188,
+      "description": "Real capture of the authorized Minilens source-to-target adaptation case.",
+      "claim_boundary": "Minilens remains the work of its authors under GPL-3.0-or-later. The public case supports its declared playable subset and measured checks; full source equivalence is not claimed."
+    },
+    {
+      "source_path": "assets/showcase/04-studio-evidence.webp",
+      "source_blob_sha1": "6e9476586c4cf1494f01a8c286ddc1c1a2a3f67e",
+      "source_mode": "100644",
+      "destination_path": "assets/showcase/04-studio-evidence.webp",
+      "destination_sha256": "4e9749ee9984f3d0de81cb4a13b8a42e1a717cacacfa8b26324322512de2a995",
+      "bytes": 65992,
+      "description": "Real XCP public-evidence product surface for the recorded movement-left scenario.",
+      "claim_boundary": "The bounded result applies to the declared scenario and frozen tolerance only; it does not establish global equivalence."
+    },
+    {
+      "source_path": "assets/social-preview/xcp-research-github-social-preview.png",
+      "source_blob_sha1": "e35c483ca1939757b23801e61acbadca8c263257",
+      "source_mode": "100644",
+      "destination_path": "assets/social-preview/xcp-research-github-social-preview.png",
+      "destination_sha256": "0517e3d3dbe77a4ceb96bea4a50f09a93e54e923b4534d5afce41ad5a2658da5",
+      "bytes": 83088,
+      "description": "Existing XCP-Research social-preview graphic.",
+      "claim_boundary": "Visual summary only; no independent runtime or hardware evidence."
+    },
+    {
+      "source_path": "assets/xcp-studio-validation-overview.svg",
+      "source_blob_sha1": "aa0f8d7d88d242e6e2efcbe0a04b1431bf69d25b",
+      "source_mode": "100644",
+      "destination_path": "assets/xcp-studio-validation-overview.svg",
+      "destination_sha256": "3c09544c5101bd4e2776d670d6b822efbde464657a2b7ea8670ed1715be898a4",
+      "bytes": 14688,
+      "description": "Existing XCP Studio validation overview diagram.",
+      "claim_boundary": "Explanatory diagram; not an execution record or a new Xbox test."
+    }
+  ]
+}

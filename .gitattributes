@@ -11,3 +11,6 @@ NOTICE text eol=lf
 
 # Historical source snapshots are byte-locked against the source Git blobs.
 reference/** -text -eol
+
+# Public visuals are byte-locked to their XCP-Research Git blobs.
+assets/** -text -eol
