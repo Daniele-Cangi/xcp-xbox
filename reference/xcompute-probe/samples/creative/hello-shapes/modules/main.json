@@ -1,0 +1,31 @@
+{
+  "schema_version": "xcp-canvas2d-module-v1",
+  "canvas": {
+    "width": 1280,
+    "height": 720,
+    "background": "#101410"
+  },
+  "nodes": [
+    {
+      "id": "focus",
+      "type": "rectangle",
+      "transform": {
+        "position": [640, 360]
+      },
+      "size": [240, 160],
+      "style": {
+        "fill": "#77E21D",
+        "opacity": 1
+      },
+      "visible": true
+    }
+  ],
+  "input_bindings": [
+    {
+      "action": "canvas.move-focus",
+      "source": "gamepad.left_stick",
+      "target_node": "focus",
+      "scale": 6
+    }
+  ]
+}

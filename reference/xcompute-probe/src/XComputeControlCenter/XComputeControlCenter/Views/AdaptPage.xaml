@@ -1,0 +1,97 @@
+<Page
+    x:Class="XComputeControlCenter.Views.AdaptPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollMode="Disabled">
+        <StackPanel MaxWidth="1060" Spacing="18" Padding="0,18,0,28">
+            <StackPanel Spacing="6">
+                <TextBlock Text="C6 · SOURCE → CREATIVE IR → XCP" Style="{StaticResource StudioEyebrowStyle}" />
+                <TextBlock Text="Bring an existing project." Style="{StaticResource StudioPageTitleStyle}" />
+                <TextBlock
+                    Text="The ecosystem adapter only extracts semantics. One shared backend produces the ordinary project that continues through C5."
+                    Style="{StaticResource StudioBodyStyle}" />
+            </StackPanel>
+
+            <Border Style="{StaticResource StudioHeroCardStyle}">
+                <StackPanel Spacing="14">
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Authorized external source"
+                            Text="{x:Bind ViewModel.ExternalSourceDirectory, Mode=TwoWay}" />
+                        <TextBox
+                            Grid.Column="1"
+                            Header="Adaptation output"
+                            Text="{x:Bind ViewModel.AdaptationOutputDirectory, Mode=TwoWay}" />
+                    </Grid>
+                    <TextBox
+                        Header="Creative Host profile"
+                        Text="{x:Bind ViewModel.HostProfilePath, Mode=TwoWay}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Browse source folder" Click="PickSource_Click" />
+                        <Button Content="Choose output parent" Click="PickOutputParent_Click" />
+                        <Button Content="Browse host profile" Click="PickHostProfile_Click" />
+                    </StackPanel>
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Origin"
+                            Text="{x:Bind ViewModel.OriginLocator, Mode=TwoWay}" />
+                        <TextBox
+                            Grid.Column="1"
+                            Header="Revision"
+                            Text="{x:Bind ViewModel.Revision, Mode=TwoWay}" />
+                        <TextBox
+                            Grid.Column="2"
+                            Header="Attribution"
+                            Text="{x:Bind ViewModel.Attribution, Mode=TwoWay}" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="1 · Detect ecosystem" Click="DetectSource_Click" />
+                        <Button Content="2 · Adapt through C6" Click="AdaptSource_Click" />
+                        <Button Content="3 · Finalize readiness" Click="FinalizeAdaptation_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="ADAPTATION OUTPUTS" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock Text="Inventory + provenance" Style="{StaticResource StudioBodyStyle}" />
+                        <TextBlock Text="Canonical Creative IR" Style="{StaticResource StudioBodyStyle}" />
+                        <TextBlock Text="Machine-readable adaptation plan" Style="{StaticResource StudioBodyStyle}" />
+                        <TextBlock Text="Source mapping + readiness" Style="{StaticResource StudioBodyStyle}" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="NEXT HANDOFF" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock
+                            Text="A successful adaptation binds the generated project, C5 intent and correction ledger automatically."
+                            Style="{StaticResource StudioBodyStyle}" />
+                        <Button
+                            Content="Open generated project"
+                            HorizontalAlignment="Left"
+                            Click="Workspace_Click" />
+                        <Button
+                            Content="Continue to playtest"
+                            HorizontalAlignment="Left"
+                            Click="Playtest_Click" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-scene3d-module-v1.schema.json",
+  "title": "XCP minimum general 3D scene module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "coordinate_system",
+    "materials",
+    "meshes",
+    "nodes",
+    "cameras",
+    "active_camera",
+    "lights",
+    "input_bindings",
+    "animations"
+  ],
+  "properties": {
+    "schema_version": {"const": "xcp-scene3d-module-v1"},
+    "coordinate_system": {"const": "left_handed_y_up"},
+    "materials": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": {"$ref": "#/$defs/material"}
+    },
+    "meshes": {
+      "type": "array",
+      "maxItems": 2048,
+      "items": {"$ref": "#/$defs/mesh"}
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {"$ref": "#/$defs/node"}
+    },
+    "cameras": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/camera"}
+    },
+    "active_camera": {"$ref": "#/$defs/identifier"},
+    "lights": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/light"}
+    },
+    "input_bindings": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {"$ref": "#/$defs/input_binding"}
+    },
+    "animations": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {"$ref": "#/$defs/animation"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?$"
+    },
+    "vec3": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number"}],
+      "items": false
+    },
+    "positive_vec3": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000},
+        {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000},
+        {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000}
+      ],
+      "items": false
+    },
+    "transform3d": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "rotation_degrees", "scale"],
+      "properties": {
+        "position": {"$ref": "#/$defs/vec3"},
+        "rotation_degrees": {"$ref": "#/$defs/vec3"},
+        "scale": {"$ref": "#/$defs/positive_vec3"}
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "base_color", "roughness", "metallic"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "base_color": {"$ref": "#/$defs/color"},
+        "roughness": {"type": "number", "minimum": 0, "maximum": 1},
+        "metallic": {"type": "number", "minimum": 0, "maximum": 1},
+        "emissive": {"$ref": "#/$defs/color"}
+      }
+    },
+    "mesh": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "primitive": {"enum": ["cube", "sphere", "plane", "cylinder", "capsule"]},
+            "asset_id": {"$ref": "#/$defs/identifier"}
+          },
+          "oneOf": [
+            {"required": ["primitive"]},
+            {"required": ["asset_id"]}
+          ]
+        }
+      }
+    },
+    "collider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape", "is_trigger"],
+      "properties": {
+        "shape": {"enum": ["box", "sphere", "capsule"]},
+        "size": {"$ref": "#/$defs/positive_vec3"},
+        "radius": {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000},
+        "height": {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000},
+        "is_trigger": {"type": "boolean"}
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "transform"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "parent_id": {"$ref": "#/$defs/identifier"},
+        "mesh_id": {"$ref": "#/$defs/identifier"},
+        "material_id": {"$ref": "#/$defs/identifier"},
+        "transform": {"$ref": "#/$defs/transform3d"},
+        "collider": {"$ref": "#/$defs/collider"},
+        "visible": {"type": "boolean"}
+      }
+    },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "transform", "field_of_view_degrees", "near_plane", "far_plane"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "transform": {"$ref": "#/$defs/transform3d"},
+        "field_of_view_degrees": {"type": "number", "minimum": 10, "maximum": 140},
+        "near_plane": {"type": "number", "exclusiveMinimum": 0, "maximum": 1000},
+        "far_plane": {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000}
+      }
+    },
+    "light": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "color", "intensity"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "type": {"enum": ["directional", "point"]},
+        "color": {"$ref": "#/$defs/color"},
+        "intensity": {"type": "number", "minimum": 0, "maximum": 1000000},
+        "position": {"$ref": "#/$defs/vec3"},
+        "direction": {"$ref": "#/$defs/vec3"},
+        "range": {"type": "number", "exclusiveMinimum": 0, "maximum": 1000000}
+      }
+    },
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "source", "target"],
+      "properties": {
+        "action": {"$ref": "#/$defs/contract_id"},
+        "source": {
+          "enum": [
+            "gamepad.left_stick",
+            "gamepad.right_stick",
+            "gamepad.dpad",
+            "gamepad.a",
+            "gamepad.b",
+            "gamepad.x",
+            "gamepad.y",
+            "gamepad.left_trigger",
+            "gamepad.right_trigger",
+            "keyboard.arrows",
+            "keyboard.wasd"
+          ]
+        },
+        "target": {"$ref": "#/$defs/identifier"},
+        "scale": {"type": "number", "minimum": -10000, "maximum": 10000}
+      }
+    },
+    "animation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "target_node",
+        "from",
+        "to",
+        "duration_ms",
+        "loop",
+        "autoplay"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "target_node": {"$ref": "#/$defs/identifier"},
+        "from": {"$ref": "#/$defs/vec3"},
+        "to": {"$ref": "#/$defs/vec3"},
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
+        },
+        "loop": {"type": "boolean"},
+        "autoplay": {"type": "boolean"},
+        "start_event": {"$ref": "#/$defs/contract_id"},
+        "complete_event": {"$ref": "#/$defs/contract_id"}
+      }
+    }
+  }
+}

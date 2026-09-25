@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-semantic-diff-v1.schema.json",
+  "title": "XCP source and Creative IR semantic diff v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "diff_id",
+    "project_id",
+    "base",
+    "target",
+    "file_summary",
+    "files",
+    "semantic_summary",
+    "semantics",
+    "has_semantic_changes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-semantic-diff-v1"
+    },
+    "diff_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "base": {
+      "$ref": "#/$defs/revision"
+    },
+    "target": {
+      "$ref": "#/$defs/revision"
+    },
+    "file_summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "files": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "$ref": "#/$defs/file_change"
+      }
+    },
+    "semantic_summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "semantics": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "$ref": "#/$defs/semantic_change"
+      }
+    },
+    "has_semantic_changes": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "optional_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "source_inventory_sha256",
+        "creative_ir_sha256"
+      ],
+      "properties": {
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "creative_ir_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unchanged",
+        "modified",
+        "added",
+        "removed"
+      ],
+      "properties": {
+        "unchanged": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "modified": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "added": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "removed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "file_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "status",
+        "base_sha256",
+        "target_sha256",
+        "role"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "status": {
+          "enum": [
+            "unchanged",
+            "modified",
+            "added",
+            "removed"
+          ]
+        },
+        "base_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "target_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "semantic_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "collection",
+        "element_id",
+        "status",
+        "base_sha256",
+        "target_sha256"
+      ],
+      "properties": {
+        "collection": {
+          "enum": [
+            "project",
+            "scenes",
+            "entities",
+            "behaviors",
+            "input_actions",
+            "ui",
+            "assets",
+            "state"
+          ]
+        },
+        "element_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "unchanged",
+            "modified",
+            "added",
+            "removed"
+          ]
+        },
+        "base_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "target_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        }
+      }
+    }
+  }
+}

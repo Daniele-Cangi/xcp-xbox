@@ -1,0 +1,137 @@
+{
+  "schema_version": "xcp-agent-native-source-adaptation-v1",
+  "program_id": "XCP_CREATIVE_PLATFORM_V1",
+  "gate_id": "C6_AGENT_NATIVE_SOURCE_ADAPTATION_V1",
+  "status": "PUBLIC_RECONSTRUCTION_AWAITING_VALIDATION",
+  "pipeline": [
+    "inspect_detect",
+    "semantic_extraction",
+    "creative_ir",
+    "describe_creative_host_comparison",
+    "adaptation_plan",
+    "xcp_project_generation",
+    "c5_lifecycle"
+  ],
+  "authority": {
+    "source_inventory_schema": "schemas/xcp-creative-source-inventory-v1.schema.json",
+    "semantic_inventory_schema": "schemas/xcp-creative-semantic-inventory-v1.schema.json",
+    "creative_ir_schema": "schemas/xcp-creative-ir-v1.schema.json",
+    "adaptation_plan_schema": "schemas/xcp-creative-adaptation-plan-v1.schema.json",
+    "fidelity_contract_schema": "schemas/xcp-creative-fidelity-contract-v1.schema.json",
+    "fidelity_evidence_schema": "schemas/xcp-creative-fidelity-evidence-v1.schema.json",
+    "xcp_project_schema": "schemas/xcp-creative-project-v1.schema.json",
+    "source_map_schema": "schemas/xcp-creative-source-map-v1.schema.json",
+    "readiness_report_schema": "schemas/xcp-creative-adaptation-readiness-v2.schema.json",
+    "handoff_schema": "schemas/xcp-creative-adaptation-handoff-v2.schema.json",
+    "host_discovery_operation": "describe_creative_host",
+    "lifecycle_owner": "C5_AGENT_NATIVE_CREATION_GATE",
+    "free_form_output_authoritative": false
+  },
+  "architecture": {
+    "adapter_registry_versioned": true,
+    "ecosystem_count_ceiling": null,
+    "adapter_responsibilities": [
+      "detect",
+      "inspect",
+      "inventory",
+      "extract_semantics",
+      "emit_creative_ir"
+    ],
+    "adapter_may_emit_xcp_project": false,
+    "adapter_may_target_xbox": false,
+    "single_backend_id": "xcp.creative_ir_to_project.v1",
+    "single_backend_input": "xcp-creative-ir-v1",
+    "single_backend_output": "xcp-creative-project-v1",
+    "engine_to_xbox_direct_conversion": false,
+    "creative_ir_game_specific": false
+  },
+  "classifications": [
+    "preserved_directly",
+    "translated",
+    "substituted",
+    "degraded",
+    "unsupported",
+    "human_intervention_required"
+  ],
+  "plan_invariants": {
+    "every_inventory_file_has_provenance": true,
+    "every_ir_element_has_source_refs": true,
+    "every_ir_element_classified_exactly_once": true,
+    "classification_counts_match_items": true,
+    "every_generated_xcp_ref_is_traceable": true,
+    "unsupported_or_human_work_may_be_silently_emitted": false,
+    "invariant_failure_is_terminal": true
+  },
+  "mandatory_outputs": [
+    "source_inventory_and_provenance",
+    "whole_project_semantic_inventory",
+    "canonical_creative_ir",
+    "machine_readable_adaptation_plan",
+    "machine_readable_fidelity_contract",
+    "generated_xcp_project",
+    "source_to_xcp_mapping",
+    "fidelity_and_readiness_report",
+    "c5_intent",
+    "hash_bound_c6_to_c5_handoff"
+  ],
+  "c5_handoff": {
+    "generated_project_enters_as_ordinary_xcp_project": true,
+    "install_execution_observation_correction_rollback_owned_by_c5": true,
+    "parallel_lifecycle_allowed": false,
+    "private_worker_rules_allowed": false,
+    "structured_error_branch_key": "error.code",
+    "structured_error_details_path": "error.details"
+  },
+  "first_gate": {
+    "candidate": {
+      "selection_status": "AUTHORIZED_SOURCE_REQUIRED",
+      "exact_revision_required": true
+    },
+    "prerequisites": [
+      "C4A_STUDIO_CONTRACT_CORE_COMPLETE",
+      "C4B_STUDIO_SHELL_NOT_REQUIRED_FOR_AGENT_GATE",
+      "C5_LIFECYCLE_IMPLEMENTED_AND_MEASURED",
+      "EXACT_SOURCE_REVISION_PINNED",
+      "SOURCE_AND_ASSET_AUTHORIZATION_VERIFIED"
+    ],
+    "required_adaptation_dimensions": [
+      "gameplay",
+      "input",
+      "ui",
+      "assets",
+      "state"
+    ],
+    "required_corrections": [
+      "one_structured_conversion_error",
+      "one_structured_live_error"
+    ],
+    "required_lifecycle_evidence": [
+      "install",
+      "launch",
+      "observe",
+      "capture",
+      "update",
+      "rollback",
+      "cleanup"
+    ],
+    "root_controller_free_form_interpretation_allowed": false,
+    "synthetic_or_xcp_sample_substitution_allowed": false
+  },
+  "claim_boundary": {
+    "native_or_host_payload_import": false,
+    "runtime_shader_compilation": false,
+    "shell_or_process_creation_on_xbox": false,
+    "broad_filesystem_access": false,
+    "credentials_in_projects_or_evidence": false,
+    "unsupported_features_hidden": false,
+    "human_intervention_hidden": false
+  },
+  "package_strategy": {
+    "pc_side_by_default": true,
+    "public_worker_package_required_for_live_validation": true
+  },
+  "validation": {
+    "status": "NOT_VALIDATED_FROM_PUBLIC_BUILD",
+    "historical_operational_evidence_included": false
+  }
+}

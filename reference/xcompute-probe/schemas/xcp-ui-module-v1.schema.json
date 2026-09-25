@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-ui-module-v1.schema.json",
+  "title": "XCP controller-safe UI module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "root_id", "elements", "initial_focus_id"],
+  "properties": {
+    "schema_version": {"const": "xcp-ui-module-v1"},
+    "root_id": {"$ref": "#/$defs/identifier"},
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1024,
+      "items": {"$ref": "#/$defs/element"}
+    },
+    "initial_focus_id": {"$ref": "#/$defs/identifier"}
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "direction": {"enum": ["row", "column", "overlay"]},
+        "width": {"type": "number", "minimum": 0, "maximum": 8192},
+        "height": {"type": "number", "minimum": 0, "maximum": 8192},
+        "gap": {"type": "number", "minimum": 0, "maximum": 512},
+        "padding": {"type": "number", "minimum": 0, "maximum": 1024},
+        "align": {"enum": ["start", "center", "end", "stretch"]}
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "type": {"enum": ["panel", "label", "button", "toggle", "slider", "progress", "list"]},
+        "parent_id": {"$ref": "#/$defs/identifier"},
+        "text": {"type": "string", "maxLength": 4096},
+        "layout": {"$ref": "#/$defs/layout"},
+        "focusable": {"type": "boolean"},
+        "action": {"$ref": "#/$defs/contract_id"},
+        "value_state": {"$ref": "#/$defs/identifier"},
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"},
+        "visible_state": {"$ref": "#/$defs/identifier"},
+        "style_token": {"$ref": "#/$defs/contract_id"}
+      }
+    }
+  }
+}

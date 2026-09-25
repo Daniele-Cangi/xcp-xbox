@@ -1,0 +1,66 @@
+{
+  "schema_version": "xcp-project-evolution-profile-v1",
+  "program_id": "XCP_CREATIVE_PLATFORM_V1",
+  "gate_id": "C7_PROJECT_EVOLUTION_AND_CONTINUOUS_READAPTATION",
+  "status": "PUBLIC_RECONSTRUCTION_AWAITING_VALIDATION",
+  "pipeline": [
+    "verify_prior_c6_handoff",
+    "adapt_authorized_later_revision_through_c6",
+    "compute_source_and_ir_semantic_diff",
+    "three_way_reconcile_source_base_and_overlay",
+    "reuse_unchanged_content_by_sha256",
+    "emit_new_immutable_c6_project",
+    "ordinary_c5_update_observe_and_rollback"
+  ],
+  "authority": {
+    "overlay_schema": "schemas/xcp-creative-evolution-overlay-v1.schema.json",
+    "semantic_diff_schema": "schemas/xcp-creative-semantic-diff-v1.schema.json",
+    "reconciliation_schema": "schemas/xcp-creative-reconciliation-plan-v1.schema.json",
+    "reuse_schema": "schemas/xcp-creative-evolution-reuse-v1.schema.json",
+    "report_schema": "schemas/xcp-creative-evolution-report-v1.schema.json",
+    "c6_profile": "profiles/creative/xcp-agent-native-source-adaptation-v1.json",
+    "c5_profile": "profiles/creative/xcp-agent-native-creation-v1.json",
+    "c6_backend": "xcp.creative_ir_to_project.v1",
+    "lifecycle_owner": "C5_AGENT_NATIVE_CREATION_GATE",
+    "generated_output_is_editable_authority": false
+  },
+  "invariants": {
+    "overlay_explicit_and_hash_bound": true,
+    "generated_files_edited_in_place": false,
+    "source_base_overlay_three_way_merge": true,
+    "conflicts_machine_readable": true,
+    "human_choices_machine_readable": true,
+    "unchanged_content_reused_by_sha256": true,
+    "cache_binds_source_adapter_backend_and_host": true,
+    "new_project_version_immutable": true,
+    "parallel_c5_lifecycle_allowed": false,
+    "engine_to_xbox_path_allowed": false
+  },
+  "first_gate": {
+    "adapter_id": "godot.source-adapter",
+    "adapter_version": "1.1.0",
+    "manual_overlay_required": true,
+    "source_semantic_change_required": true,
+    "reused_and_rebuilt_outputs_required": true,
+    "c5_update_required": true,
+    "c5_rollback_required": true,
+    "capture_state_and_acceptance_regression_required": true,
+    "source_selection": "AUTHORIZED_TWO_REVISION_SOURCE_REQUIRED"
+  },
+  "claim_boundary": {
+    "native_or_host_payload_import": false,
+    "runtime_shader_compilation": false,
+    "shell_or_process_creation_on_xbox": false,
+    "broad_filesystem_access": false,
+    "credentials_in_projects_or_evidence": false,
+    "source_or_overlay_conflicts_hidden": false
+  },
+  "package_strategy": {
+    "pc_side_by_default": true,
+    "public_worker_package_required_for_live_validation": true
+  },
+  "validation": {
+    "status": "NOT_VALIDATED_FROM_PUBLIC_BUILD",
+    "historical_operational_evidence_included": false
+  }
+}

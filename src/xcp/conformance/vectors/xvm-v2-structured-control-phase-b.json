@@ -1,0 +1,56 @@
+{
+  "schema_version": "xvm-program-artifact-v2",
+  "isa_version": "xvm-v2",
+  "profile": "integer-deterministic-v2",
+  "program_id": "xvm-v2-structured-control-phase-b",
+  "memory_bytes": 16,
+  "output_bytes": 16,
+  "max_fuel": 64,
+  "max_call_depth": 1,
+  "capabilities": [
+    "artifact_input",
+    "artifact_output",
+    "control_output",
+    "structured_control_v2",
+    "structured_control_v2_phase_b"
+  ],
+  "functions": [
+    {
+      "entry_pc": 29,
+      "end_pc": 30
+    }
+  ],
+  "bytecode_words": [
+    2, 0, 10, 0,
+    1, 1, 5, 0,
+    1, 2, 7, 0,
+    20, 3, 1, 2,
+    1, 4, 4294967295, 0,
+    21, 5, 4, 1,
+    1, 6, 100, 0,
+    1, 7, 200, 0,
+    22, 3, 6, 7,
+    1, 8, 0, 0,
+    1, 9, 0, 0,
+    11, 2, 15, 0,
+    3, 8, 8, 5,
+    24, 9, 11, 15,
+    3, 8, 8, 5,
+    12, 11, 0, 0,
+    11, 3, 20, 0,
+    3, 8, 8, 5,
+    23, 9, 16, 20,
+    3, 8, 8, 5,
+    12, 16, 0, 0,
+    25, 9, 42, 23,
+    1, 8, 999, 0,
+    13, 3, 0, 0,
+    13, 8, 4, 0,
+    13, 5, 8, 0,
+    14, 5, 0, 0,
+    15, 29, 0, 0,
+    0, 0, 0, 0,
+    1, 10, 1, 0,
+    16, 0, 0, 0
+  ]
+}

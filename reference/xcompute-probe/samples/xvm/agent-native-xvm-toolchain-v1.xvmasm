@@ -1,0 +1,17 @@
+.program agent-native-xvm-toolchain-v1
+.memory 64
+.output 16
+.max_fuel auto
+.max_call_depth 1
+
+load_input_u32 r0, 0
+call mix_input
+output_u32 r0, 0
+set_control r1
+halt
+
+.function mix_input
+move_immediate r1, 1
+xor_u32 r0, r0, r1
+return
+.endfunction

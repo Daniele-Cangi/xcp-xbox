@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-fidelity-contract-v1.schema.json",
+  "title": "XCP source adaptation fidelity contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "identities",
+    "target",
+    "achieved_level",
+    "mappings",
+    "coverage",
+    "reference_oracle",
+    "human_playtest",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-fidelity-contract-v1"
+    },
+    "contract_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_inventory_sha256",
+        "semantic_inventory_sha256",
+        "creative_ir_sha256",
+        "adaptation_plan_sha256",
+        "xcp_project_sha256",
+        "host_profile_sha256"
+      ],
+      "properties": {
+        "source_inventory_sha256": { "$ref": "#/$defs/sha256" },
+        "semantic_inventory_sha256": { "$ref": "#/$defs/sha256" },
+        "creative_ir_sha256": { "$ref": "#/$defs/sha256" },
+        "adaptation_plan_sha256": { "$ref": "#/$defs/sha256" },
+        "xcp_project_sha256": { "$ref": "#/$defs/sha256_or_empty" },
+        "host_profile_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "source_scope",
+        "policy"
+      ],
+      "properties": {
+        "level": { "const": "source_faithful" },
+        "source_scope": { "const": "whole_project" },
+        "policy": {
+          "const": "no_unaccounted_semantics_and_reference_equivalence_v1"
+        }
+      }
+    },
+    "achieved_level": {
+      "$ref": "#/$defs/fidelity_level"
+    },
+    "mappings": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 400000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "semantic_ref",
+          "category",
+          "classification",
+          "ir_refs",
+          "xcp_refs",
+          "verification",
+          "rationale",
+          "residual_work"
+        ],
+        "properties": {
+          "semantic_ref": { "$ref": "#/$defs/identifier" },
+          "category": { "$ref": "#/$defs/category" },
+          "classification": { "$ref": "#/$defs/classification" },
+          "ir_refs": { "$ref": "#/$defs/ref_array_or_empty" },
+          "xcp_refs": {
+            "type": "array",
+            "maxItems": 256,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "verification": {
+            "enum": [
+              "structural",
+              "behavioral",
+              "visual",
+              "audio",
+              "state",
+              "human"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "residual_work": {
+            "type": "array",
+            "maxItems": 256,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "total",
+          "preserved_directly",
+          "translated",
+          "substituted",
+          "degraded",
+          "unsupported",
+          "human_intervention_required"
+        ],
+        "properties": {
+          "category": { "$ref": "#/$defs/category" },
+          "total": { "$ref": "#/$defs/count" },
+          "preserved_directly": { "$ref": "#/$defs/count" },
+          "translated": { "$ref": "#/$defs/count" },
+          "substituted": { "$ref": "#/$defs/count" },
+          "degraded": { "$ref": "#/$defs/count" },
+          "unsupported": { "$ref": "#/$defs/count" },
+          "human_intervention_required": { "$ref": "#/$defs/count" }
+        }
+      }
+    },
+    "reference_oracle": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/oracle" }
+    },
+    "human_playtest": {
+      "$ref": "#/$defs/evidence_outcome"
+    },
+    "decision": {
+      "enum": [
+        "ready_source_faithful",
+        "not_ready",
+        "human_intervention_required"
+      ]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sha256_or_empty": {
+      "oneOf": [
+        { "const": "" },
+        { "$ref": "#/$defs/sha256" }
+      ]
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+    },
+    "category": {
+      "enum": [
+        "project_configuration",
+        "scene_graph",
+        "resource",
+        "rendering",
+        "animation",
+        "collision_physics",
+        "behavior",
+        "input",
+        "ui",
+        "audio",
+        "state_persistence",
+        "lifecycle",
+        "asset"
+      ]
+    },
+    "classification": {
+      "enum": [
+        "preserved_directly",
+        "translated",
+        "substituted",
+        "degraded",
+        "unsupported",
+        "human_intervention_required"
+      ]
+    },
+    "fidelity_level": {
+      "enum": [
+        "asset_preview",
+        "vertical_slice",
+        "behavioral_subset",
+        "source_faithful"
+      ]
+    },
+    "ref_array_or_empty": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "evidence_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "outcome",
+        "evidence_refs"
+      ],
+      "properties": {
+        "required": { "type": "boolean" },
+        "outcome": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_run",
+            "not_applicable"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 1024,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dimension",
+        "required",
+        "outcome",
+        "evidence_refs"
+      ],
+      "properties": {
+        "dimension": {
+          "enum": [
+            "structural",
+            "behavioral",
+            "visual",
+            "audio",
+            "state"
+          ]
+        },
+        "required": { "type": "boolean" },
+        "outcome": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_run",
+            "not_applicable"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 1024,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    }
+  }
+}

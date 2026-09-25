@@ -1,0 +1,10 @@
+import "windows.applicationmodel.background.idl";
+
+namespace XComputeTopologyBroker
+{
+    [default_interface]
+    runtimeclass BrokerTask : Windows.ApplicationModel.Background.IBackgroundTask
+    {
+        BrokerTask();
+    }
+}

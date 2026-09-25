@@ -1,0 +1,83 @@
+{
+  "schema_version": "xvm-program-artifact-v2",
+  "isa_version": "xvm-v2",
+  "profile": "integer-deterministic-v2",
+  "program_id": "xvm-v2-typed-memory-v1",
+  "memory_bytes": 16,
+  "output_bytes": 16,
+  "max_fuel": 16,
+  "max_call_depth": 1,
+  "capabilities": [
+    "artifact_input",
+    "artifact_output",
+    "control_output",
+    "typed_memory_v1"
+  ],
+  "input_views": [
+    {
+      "view_id": "bound_mix_lo",
+      "element_type": "u32",
+      "access": "read",
+      "offset_bytes": 0,
+      "length_bytes": 4
+    }
+  ],
+  "memory_views": [
+    {
+      "view_id": "scratch_word",
+      "element_type": "u32",
+      "access": "read_write",
+      "offset_bytes": 4,
+      "length_bytes": 4
+    }
+  ],
+  "output_views": [
+    {
+      "view_id": "result_word",
+      "element_type": "u32",
+      "access": "write",
+      "offset_bytes": 8,
+      "length_bytes": 4
+    }
+  ],
+  "functions": [
+    {
+      "entry_pc": 5,
+      "end_pc": 7
+    }
+  ],
+  "bytecode_words": [
+    2,
+    0,
+    0,
+    0,
+    15,
+    5,
+    0,
+    0,
+    13,
+    1,
+    8,
+    0,
+    14,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0,
+    4,
+    0,
+    7,
+    1,
+    4,
+    0,
+    16,
+    0,
+    0,
+    0
+  ]
+}

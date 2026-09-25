@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10">
+  <Identity Name="XComputeProbe.CpuCapsule.Framework" Publisher="CN=LocalDev" Version="1.0.0.0" ProcessorArchitecture="x64" />
+  <Properties>
+    <Framework>true</Framework>
+    <DisplayName>XCP CPU Capsule Framework</DisplayName>
+    <PublisherDisplayName>LocalDev</PublisherDisplayName>
+    <Description>Fixed signed CPU capsule for package-graph measurement.</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Xbox" MinVersion="10.0.18362.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+  <Resources><Resource Language="en-us" /></Resources>
+</Package>

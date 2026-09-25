@@ -1,0 +1,431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-ir-v1.schema.json",
+  "title": "XCP canonical creative intermediate representation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ir_id",
+    "source_inventory_sha256",
+    "producer",
+    "project",
+    "scenes",
+    "entities",
+    "behaviors",
+    "input_actions",
+    "ui",
+    "assets",
+    "state",
+    "diagnostics"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-ir-v1"
+    },
+    "ir_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_inventory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter_id",
+        "adapter_version",
+        "canonicalization"
+      ],
+      "properties": {
+        "adapter_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/semantic_version"
+        },
+        "canonicalization": {
+          "const": "utf8_json_sorted_keys_no_insignificant_whitespace_v1"
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "description",
+        "domain",
+        "initial_scene"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "domain": {
+          "enum": [
+            "interactive_2d",
+            "interactive_3d",
+            "hybrid",
+            "application",
+            "simulation",
+            "other"
+          ]
+        },
+        "initial_scene": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/semantic_record"
+      }
+    },
+    "entities": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/semantic_record"
+      }
+    },
+    "behaviors": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/behavior_record"
+      }
+    },
+    "input_actions": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/input_record"
+      }
+    },
+    "ui": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/semantic_record"
+      }
+    },
+    "assets": {
+      "type": "array",
+      "maxItems": 200000,
+      "items": {
+        "$ref": "#/$defs/asset_record"
+      }
+    },
+    "state": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/state_record"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "source_refs",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "$ref": "#/$defs/contract_id"
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "warning",
+              "error"
+            ]
+          },
+          "source_refs": {
+            "$ref": "#/$defs/source_refs"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "scalar": {
+      "type": [
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "null"
+      ]
+    },
+    "semantic_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_refs",
+        "semantic_kind",
+        "intent",
+        "attributes"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/source_refs"
+        },
+        "semantic_kind": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "attributes": {
+          "type": "object",
+          "maxProperties": 256,
+          "propertyNames": {
+            "$ref": "#/$defs/identifier"
+          },
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/scalar"
+              },
+              {
+                "type": "array",
+                "maxItems": 4096,
+                "items": {
+                  "$ref": "#/$defs/scalar"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "behavior_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_refs",
+        "owner_refs",
+        "trigger",
+        "conditions",
+        "effects"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/source_refs"
+        },
+        "owner_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "trigger": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "conditions": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        },
+        "effects": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        }
+      }
+    },
+    "input_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_refs",
+        "semantic_action",
+        "bindings"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/source_refs"
+        },
+        "semantic_action": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "bindings": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      }
+    },
+    "asset_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_refs",
+        "semantic_role",
+        "media_type",
+        "source_sha256"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/source_refs"
+        },
+        "semantic_role": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "audio_cues": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/contract_id"
+          }
+        }
+      }
+    },
+    "state_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_refs",
+        "scope",
+        "value_type",
+        "default_value",
+        "persistence"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/source_refs"
+        },
+        "scope": {
+          "enum": [
+            "project",
+            "scene",
+            "entity",
+            "session"
+          ]
+        },
+        "value_type": {
+          "enum": [
+            "boolean",
+            "integer",
+            "number",
+            "string"
+          ]
+        },
+        "default_value": {
+          "$ref": "#/$defs/scalar"
+        },
+        "persistence": {
+          "enum": [
+            "saved",
+            "session",
+            "transient"
+          ]
+        }
+      }
+    }
+  }
+}

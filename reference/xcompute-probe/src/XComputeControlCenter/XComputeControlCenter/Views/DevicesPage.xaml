@@ -1,0 +1,89 @@
+<Page
+    x:Class="XComputeControlCenter.Views.DevicesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollMode="Disabled">
+        <StackPanel MaxWidth="940" Spacing="18" Padding="0,18,0,28">
+            <StackPanel Spacing="6">
+                <TextBlock Text="FIRST TRUST · SIGNED TEMPORARY SESSIONS" Style="{StaticResource StudioEyebrowStyle}" />
+                <TextBlock Text="Connect an Xbox." Style="{StaticResource StudioPageTitleStyle}" />
+                <TextBlock
+                    Text="Enter the Xbox address, then use its current six-digit worker code once to trust this PC. Later sessions are signed and temporary; the PIN and session id are never persisted."
+                    Style="{StaticResource StudioBodyStyle}" />
+            </StackPanel>
+
+            <Border Style="{StaticResource StudioHeroCardStyle}">
+                <StackPanel Spacing="14">
+                    <TextBox
+                        Header="Xbox IPv4 address"
+                        PlaceholderText="192.168.1.120"
+                        Text="{x:Bind ViewModel.DeviceAddress, Mode=TwoWay}"
+                        AutomationProperties.Name="Xbox IPv4 address" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <PasswordBox
+                            x:Name="PairingCodeBox"
+                            Width="220"
+                            Header="First-trust code"
+                            PlaceholderText="6 digits"
+                            MaxLength="6"
+                            PasswordRevealMode="Peek"
+                            AutomationProperties.Name="First-trust pairing code" />
+                        <Button
+                            VerticalAlignment="Bottom"
+                            Content="Trust this PC once"
+                            Click="EnrollTrust_Click" />
+                    </StackPanel>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.TrustState, Mode=OneWay}"
+                        Style="{StaticResource StudioMonoStyle}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button
+                            Content="Check device + contracts"
+                            Click="Refresh_Click" />
+                        <Button
+                            Content="Discover + save Creative Host profile"
+                            Click="DiscoverHostProfile_Click" />
+                    </StackPanel>
+                    <TextBox
+                        Header="Save profile to"
+                        Text="{x:Bind ViewModel.HostProfilePath, Mode=TwoWay}" />
+                </StackPanel>
+            </Border>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="CREATIVE HOST" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock
+                            Text="{x:Bind ViewModel.DeviceState, Mode=OneWay}"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Text="No live capability is displayed until the worker returns a valid structured profile."
+                            Style="{StaticResource StudioBodyStyle}" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="AUTHENTICATION BOUNDARY" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock Text="Windows user key store → signed one-hour session" Style="{StaticResource StudioMonoStyle}" />
+                        <TextBlock
+                            Text="The private controller key is non-exportable and remains in the current Windows user key store. Studio passes only an ephemeral session to the authoritative toolchain invocation."
+                            Style="{StaticResource StudioBodyStyle}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource StudioInnerPanelStyle}">
+                <TextBlock
+                    Text="{x:Bind ViewModel.Detail, Mode=OneWay}"
+                    Style="{StaticResource StudioBodyStyle}" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,84 @@
+<Page
+    x:Class="XComputeControlCenter.Views.EvolvePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollMode="Disabled">
+        <StackPanel MaxWidth="1060" Spacing="18" Padding="0,18,0,28">
+            <StackPanel Spacing="6">
+                <TextBlock Text="C7 · CONTINUOUS RE-ADAPTATION" Style="{StaticResource StudioEyebrowStyle}" />
+                <TextBlock Text="Move with the source." Style="{StaticResource StudioPageTitleStyle}" />
+                <TextBlock
+                    Text="Advance an authorized source revision while preserving explicit XCP overlays. Generated output never becomes the editable source of truth."
+                    Style="{StaticResource StudioBodyStyle}" />
+            </StackPanel>
+
+            <Border Style="{StaticResource StudioHeroCardStyle}">
+                <StackPanel Spacing="14">
+                    <TextBox
+                        Header="Prior C6/C7 run"
+                        Text="{x:Bind ViewModel.PriorRunDirectory, Mode=TwoWay}" />
+                    <TextBox
+                        Header="Later authorized source revision"
+                        Text="{x:Bind ViewModel.ExternalSourceDirectory, Mode=TwoWay}" />
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Hash-bound XCP overlay"
+                            Text="{x:Bind ViewModel.OverlayPath, Mode=TwoWay}" />
+                        <TextBox
+                            Grid.Column="1"
+                            Header="Evolution output"
+                            Text="{x:Bind ViewModel.EvolutionOutputDirectory, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Creative Host profile"
+                            Text="{x:Bind ViewModel.HostProfilePath, Mode=TwoWay}" />
+                        <TextBox
+                            Grid.Column="1"
+                            Header="New source revision"
+                            Text="{x:Bind ViewModel.Revision, Mode=TwoWay}" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Browse prior run" Click="PickPriorRun_Click" />
+                        <Button Content="Browse source" Click="PickSource_Click" />
+                        <Button Content="Browse overlay" Click="PickOverlay_Click" />
+                        <Button Content="Choose output parent" Click="PickOutputParent_Click" />
+                        <Button Content="Browse host profile" Click="PickHostProfile_Click" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="1 · Evolve through C7" Click="EvolveProject_Click" />
+                        <Button Content="2 · Finalize evolution report" Click="FinalizeEvolution_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource StudioCardStyle}">
+                <Grid ColumnSpacing="18">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Spacing="7">
+                        <TextBlock Text="ORDINARY C5 HANDOFF" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock
+                            Text="The evolved project is immutable, versioned and ready for the same update/observe/rollback lifecycle."
+                            Style="{StaticResource StudioBodyStyle}" />
+                    </StackPanel>
+                    <Button
+                        Grid.Column="1"
+                        Content="Continue to playtest"
+                        VerticalAlignment="Center"
+                        Click="Playtest_Click" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

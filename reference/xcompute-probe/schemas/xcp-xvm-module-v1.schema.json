@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-xvm-module-v1.schema.json",
+  "title": "XCP event-driven XVM v2 service binding module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "services"],
+  "properties": {
+    "schema_version": {"const": "xcp-xvm-module-v1"},
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {"$ref": "#/$defs/service"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["state", "constant"]},
+        "state_id": {"$ref": "#/$defs/identifier"},
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "state"}}},
+          "then": {"required": ["state_id"], "not": {"required": ["value"]}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "constant"}}},
+          "then": {"required": ["value"], "not": {"required": ["state_id"]}}
+        }
+      ]
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offset_bytes", "state_id"],
+      "properties": {
+        "offset_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1048572,
+          "multipleOf": 4
+        },
+        "state_id": {"$ref": "#/$defs/identifier"}
+      }
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "trigger_event",
+        "program_asset_id",
+        "inputs",
+        "outputs",
+        "success_event",
+        "failure_event"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "trigger_event": {"$ref": "#/$defs/contract_id"},
+        "program_asset_id": {"$ref": "#/$defs/identifier"},
+        "inputs": {
+          "type": "array",
+          "minItems": 11,
+          "maxItems": 11,
+          "items": {"$ref": "#/$defs/input"}
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/output"}
+        },
+        "success_event": {"$ref": "#/$defs/contract_id"},
+        "failure_event": {"$ref": "#/$defs/contract_id"}
+      }
+    }
+  }
+}

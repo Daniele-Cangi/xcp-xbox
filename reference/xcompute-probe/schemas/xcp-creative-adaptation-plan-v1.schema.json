@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-adaptation-plan-v1.schema.json",
+  "title": "XCP creative source adaptation plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "source_inventory_sha256",
+    "creative_ir_sha256",
+    "host",
+    "backend",
+    "items",
+    "classification_counts",
+    "decision",
+    "worker_gap"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-adaptation-plan-v1"
+    },
+    "plan_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_inventory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "creative_ir_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id",
+        "profile_sha256",
+        "discovered_through"
+      ],
+      "properties": {
+        "profile_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "discovered_through": {
+          "const": "describe_creative_host"
+        }
+      }
+    },
+    "backend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "backend_id",
+        "backend_version",
+        "input_schema_version",
+        "output_schema_version"
+      ],
+      "properties": {
+        "backend_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "backend_version": {
+          "$ref": "#/$defs/semantic_version"
+        },
+        "input_schema_version": {
+          "const": "xcp-creative-ir-v1"
+        },
+        "output_schema_version": {
+          "const": "xcp-creative-project-v1"
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item_id",
+          "source_refs",
+          "ir_refs",
+          "classification",
+          "required_host_capabilities",
+          "xcp_targets",
+          "rationale",
+          "fidelity_impact",
+          "residual_work"
+        ],
+        "properties": {
+          "item_id": {
+            "$ref": "#/$defs/identifier"
+          },
+          "source_refs": {
+            "$ref": "#/$defs/ref_array"
+          },
+          "ir_refs": {
+            "$ref": "#/$defs/ref_array"
+          },
+          "classification": {
+            "$ref": "#/$defs/classification"
+          },
+          "required_host_capabilities": {
+            "type": "array",
+            "maxItems": 256,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/contract_id"
+            }
+          },
+          "xcp_targets": {
+            "type": "array",
+            "maxItems": 256,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "fidelity_impact": {
+            "enum": [
+              "none",
+              "low",
+              "medium",
+              "high",
+              "blocking"
+            ]
+          },
+          "residual_work": {
+            "type": "array",
+            "maxItems": 256,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "human_action": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "classification": {
+                  "const": "human_intervention_required"
+                }
+              },
+              "required": [
+                "classification"
+              ]
+            },
+            "then": {
+              "required": [
+                "human_action"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "classification_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preserved_directly",
+        "translated",
+        "substituted",
+        "degraded",
+        "unsupported",
+        "human_intervention_required"
+      ],
+      "properties": {
+        "preserved_directly": {
+          "$ref": "#/$defs/count"
+        },
+        "translated": {
+          "$ref": "#/$defs/count"
+        },
+        "substituted": {
+          "$ref": "#/$defs/count"
+        },
+        "degraded": {
+          "$ref": "#/$defs/count"
+        },
+        "unsupported": {
+          "$ref": "#/$defs/count"
+        },
+        "human_intervention_required": {
+          "$ref": "#/$defs/count"
+        }
+      }
+    },
+    "decision": {
+      "enum": [
+        "ready_to_generate",
+        "ready_with_degradation",
+        "blocked_unsupported",
+        "blocked_human_intervention"
+      ]
+    },
+    "worker_gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_change_required",
+        "general_capability_missing",
+        "evidence"
+      ],
+      "properties": {
+        "native_change_required": {
+          "type": "boolean"
+        },
+        "general_capability_missing": {
+          "type": "boolean"
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ref_array": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "classification": {
+      "enum": [
+        "preserved_directly",
+        "translated",
+        "substituted",
+        "degraded",
+        "unsupported",
+        "human_intervention_required"
+      ]
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200000
+    }
+  }
+}

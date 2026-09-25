@@ -1,0 +1,120 @@
+<Page
+    x:Class="XComputeControlCenter.Views.PlaytestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollMode="Disabled">
+        <StackPanel MaxWidth="1060" Spacing="18" Padding="0,18,0,28">
+            <StackPanel Spacing="6">
+                <TextBlock Text="XBOX PREVIEW" Style="{StaticResource StudioEyebrowStyle}" />
+                <TextBlock Text="Play your project." Style="{StaticResource StudioPageTitleStyle}" />
+                <TextBlock
+                    Text="Studio takes care of validation, packaging, transfer and launch."
+                    Style="{StaticResource StudioBodyStyle}" />
+            </StackPanel>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource StudioHeroCardStyle}">
+                    <StackPanel Spacing="14">
+                        <TextBlock Text="READY TO PLAY" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock Text="{x:Bind ViewModel.ProjectTitle, Mode=OneWay}" Style="{StaticResource StudioSectionTitleStyle}" />
+                        <TextBlock
+                            Text="{x:Bind ViewModel.ProjectDirectory, Mode=OneWay}"
+                            Style="{StaticResource StudioMonoStyle}"
+                            TextTrimming="CharacterEllipsis" />
+                        <Button
+                            Content="Play on Xbox"
+                            HorizontalAlignment="Left"
+                            Click="PlayPreview_Click"
+                            AutomationProperties.Name="Play current project on Xbox" />
+                        <TextBlock
+                            Text="No preparation steps or version pair required."
+                            Style="{StaticResource StudioBodyStyle}" />
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Grid.Column="1" Spacing="14">
+                    <Border Style="{StaticResource StudioCardStyle}">
+                        <StackPanel Spacing="7">
+                            <TextBlock Text="TARGET DEVICE" Style="{StaticResource StudioEyebrowStyle}" />
+                            <TextBlock
+                                Text="{x:Bind ViewModel.DeviceAddress, Mode=OneWay}"
+                                Style="{StaticResource StudioMonoStyle}"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Text="{x:Bind ViewModel.DeviceState, Mode=OneWay}"
+                                Style="{StaticResource StudioBodyStyle}" />
+                            <Button
+                                Content="Configure"
+                                HorizontalAlignment="Left"
+                                Click="Device_Click" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource StudioCardStyle}">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="RUN DETAILS" Style="{StaticResource StudioEyebrowStyle}" />
+                            <TextBlock
+                                Text="Receipts, captures and diagnostics remain available without interrupting the normal flow."
+                                Style="{StaticResource StudioBodyStyle}" />
+                            <Button
+                                Content="Open result"
+                                HorizontalAlignment="Left"
+                                Click="Evidence_Click" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <Expander Header="Advanced · verify an update and rollback">
+                <Border Style="{StaticResource StudioCardStyle}" Margin="0,8,0,0">
+                    <StackPanel Spacing="12">
+                        <TextBlock
+                            Text="Use this only when certifying a new version. Studio will install both versions and prove the exact rollback."
+                            Style="{StaticResource StudioBodyStyle}"
+                            TextWrapping="Wrap" />
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Header="Current project" Text="{x:Bind ViewModel.ProjectDirectory, Mode=TwoWay}" />
+                            <TextBox Grid.Column="1" Header="Next version" Text="{x:Bind ViewModel.UpdateProjectDirectory, Mode=TwoWay}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="Choose current" Click="PickBaseProject_Click" />
+                            <Button Content="Choose next version" Click="PickUpdateProject_Click" />
+                            <Button Content="Verify update &amp; rollback" Click="RunLifecycle_Click" />
+                        </StackPanel>
+                        <Expander Header="Technical paths">
+                            <StackPanel Spacing="10" Padding="0,8,0,0">
+                                <TextBox Header="Bundle root" Text="{x:Bind ViewModel.LifecycleBundleRoot, Mode=TwoWay}" />
+                                <TextBox Header="Intent" Text="{x:Bind ViewModel.IntentPath, Mode=TwoWay}" />
+                                <TextBox Header="Correction ledger" Text="{x:Bind ViewModel.LedgerPath, Mode=TwoWay}" />
+                                <TextBox Header="Capture directory" Text="{x:Bind ViewModel.CaptureDirectory, Mode=TwoWay}" />
+                                <TextBox Header="Receipt" Text="{x:Bind ViewModel.ReceiptPath, Mode=TwoWay}" />
+                                <TextBox Header="Run ID" Text="{x:Bind ViewModel.RunId, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Button Content="Choose output folder" Click="PickRunOutputParent_Click" />
+                                    <Button Content="Initialize missing files" Click="InitializeLifecycle_Click" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Border>
+            </Expander>
+
+            <Border Style="{StaticResource StudioInnerPanelStyle}">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="CURRENT STEP" Style="{StaticResource StudioEyebrowStyle}" />
+                    <TextBlock Text="{x:Bind ViewModel.Detail, Mode=OneWay}" Style="{StaticResource StudioBodyStyle}" TextWrapping="Wrap" />
+                    <TextBlock Text="{x:Bind ViewModel.ErrorCode, Mode=OneWay}" Style="{StaticResource StudioMonoStyle}" Foreground="{StaticResource StudioWarningBrush}" />
+                    <TextBlock Text="{x:Bind ViewModel.Correction, Mode=OneWay}" Style="{StaticResource StudioBodyStyle}" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

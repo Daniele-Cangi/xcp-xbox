@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-data-module-v1.schema.json",
+  "title": "XCP immutable data and declared local state module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "constants", "local_state"],
+  "properties": {
+    "schema_version": {"const": "xcp-data-module-v1"},
+    "constants": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {"$ref": "#/$defs/value_entry"}
+    },
+    "local_state": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": {"$ref": "#/$defs/state_entry"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "scalar": {
+      "anyOf": [
+        {"type": "boolean"},
+        {"type": "integer", "minimum": -2147483648, "maximum": 2147483647},
+        {"type": "number", "minimum": -1000000000, "maximum": 1000000000},
+        {"type": "string", "maxLength": 16384}
+      ]
+    },
+    "value_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "value"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "value": {"$ref": "#/$defs/scalar"}
+      }
+    },
+    "state_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "default", "max_bytes", "persistence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "type": {"enum": ["boolean", "integer", "number", "string"]},
+        "default": {"$ref": "#/$defs/scalar"},
+        "max_bytes": {"type": "integer", "minimum": 1, "maximum": 1048576},
+        "persistence": {"const": "project_local"}
+      }
+    }
+  }
+}

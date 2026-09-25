@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-semantic-inventory-v1.schema.json",
+  "title": "XCP whole-project creative semantic inventory v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "semantic_inventory_id",
+    "source_inventory_sha256",
+    "producer",
+    "scope",
+    "records",
+    "summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-semantic-inventory-v1"
+    },
+    "semantic_inventory_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_inventory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter_id",
+        "adapter_version",
+        "parser_contract"
+      ],
+      "properties": {
+        "adapter_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/semantic_version"
+        },
+        "parser_contract": {
+          "const": "lossless_source_accounting_bounded_parse_v1"
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "included_source_refs",
+        "excluded_sources",
+        "parse_failures"
+      ],
+      "properties": {
+        "mode": {
+          "const": "whole_project"
+        },
+        "included_source_refs": {
+          "$ref": "#/$defs/source_refs_or_empty"
+        },
+        "excluded_sources": {
+          "type": "array",
+          "maxItems": 200000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_ref",
+              "reason"
+            ],
+            "properties": {
+              "source_ref": {
+                "$ref": "#/$defs/identifier"
+              },
+              "reason": {
+                "enum": [
+                  "documentation",
+                  "license",
+                  "build_metadata",
+                  "non_semantic_unknown"
+                ]
+              }
+            }
+          }
+        },
+        "parse_failures": {
+          "type": "array",
+          "maxItems": 10000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_ref",
+              "code",
+              "details"
+            ],
+            "properties": {
+              "source_ref": {
+                "$ref": "#/$defs/identifier"
+              },
+              "code": {
+                "$ref": "#/$defs/contract_id"
+              },
+              "details": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            }
+          }
+        }
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 400000,
+      "items": {
+        "$ref": "#/$defs/semantic_record"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_file_count",
+        "included_source_count",
+        "excluded_source_count",
+        "parse_failure_count",
+        "record_count",
+        "category_counts"
+      ],
+      "properties": {
+        "source_file_count": {
+          "$ref": "#/$defs/count"
+        },
+        "included_source_count": {
+          "$ref": "#/$defs/count"
+        },
+        "excluded_source_count": {
+          "$ref": "#/$defs/count"
+        },
+        "parse_failure_count": {
+          "$ref": "#/$defs/count"
+        },
+        "record_count": {
+          "$ref": "#/$defs/count"
+        },
+        "category_counts": {
+          "$ref": "#/$defs/category_counts"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!\\.\\.?(?:/|$))(?!.*\\/\\.\\.?(?:/|$))[A-Za-z0-9._ -]+(?:/[A-Za-z0-9._ -]+)*$"
+    },
+    "source_refs_or_empty": {
+      "type": "array",
+      "maxItems": 200000,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 400000
+    },
+    "category": {
+      "enum": [
+        "project_configuration",
+        "scene_graph",
+        "resource",
+        "rendering",
+        "animation",
+        "collision_physics",
+        "behavior",
+        "input",
+        "ui",
+        "audio",
+        "state_persistence",
+        "lifecycle",
+        "asset"
+      ]
+    },
+    "semantic_property": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value_sha256",
+        "preview"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "value_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preview": {
+          "type": "string",
+          "maxLength": 256
+        }
+      }
+    },
+    "semantic_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantic_id",
+        "category",
+        "kind",
+        "source_refs",
+        "locator",
+        "name",
+        "content_sha256",
+        "properties",
+        "dependencies"
+      ],
+      "properties": {
+        "semantic_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "category": {
+          "$ref": "#/$defs/category"
+        },
+        "kind": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "locator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "line_start",
+            "line_end"
+          ],
+          "properties": {
+            "path": {
+              "$ref": "#/$defs/relative_path"
+            },
+            "line_start": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000000
+            },
+            "line_end": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000000
+            }
+          }
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "properties": {
+          "type": "array",
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/$defs/semantic_property"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "maxItems": 4096,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relative_path"
+          }
+        }
+      }
+    },
+    "category_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_configuration",
+        "scene_graph",
+        "resource",
+        "rendering",
+        "animation",
+        "collision_physics",
+        "behavior",
+        "input",
+        "ui",
+        "audio",
+        "state_persistence",
+        "lifecycle",
+        "asset"
+      ],
+      "properties": {
+        "project_configuration": { "$ref": "#/$defs/count" },
+        "scene_graph": { "$ref": "#/$defs/count" },
+        "resource": { "$ref": "#/$defs/count" },
+        "rendering": { "$ref": "#/$defs/count" },
+        "animation": { "$ref": "#/$defs/count" },
+        "collision_physics": { "$ref": "#/$defs/count" },
+        "behavior": { "$ref": "#/$defs/count" },
+        "input": { "$ref": "#/$defs/count" },
+        "ui": { "$ref": "#/$defs/count" },
+        "audio": { "$ref": "#/$defs/count" },
+        "state_persistence": { "$ref": "#/$defs/count" },
+        "lifecycle": { "$ref": "#/$defs/count" },
+        "asset": { "$ref": "#/$defs/count" }
+      }
+    }
+  }
+}

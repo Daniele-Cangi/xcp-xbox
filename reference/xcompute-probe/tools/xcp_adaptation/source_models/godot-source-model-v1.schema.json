@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcp.local/schemas/godot-source-model-v1.schema.json",
+  "title": "Godot Source Model v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "model_id",
+    "frontend",
+    "source_identity",
+    "scene_tree",
+    "node_types_and_properties",
+    "internal_resources",
+    "external_resources",
+    "scripts_and_symbol_structure",
+    "signals_and_connections",
+    "input_map",
+    "autoloads",
+    "animations",
+    "collision_bodies_shapes_layers_and_masks",
+    "ui",
+    "audio",
+    "saved_state_candidates",
+    "project_configuration",
+    "exact_source_references",
+    "diagnostics",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "godot-source-model-v1"
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "frontend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frontend_id",
+        "frontend_version",
+        "engine_family",
+        "engine_version",
+        "extraction_mode",
+        "fallback_reason"
+      ],
+      "properties": {
+        "frontend_id": {
+          "enum": [
+            "godot2.frontend",
+            "godot3.frontend",
+            "godot4.frontend"
+          ]
+        },
+        "frontend_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "engine_family": {
+          "const": "Godot"
+        },
+        "engine_version": {
+          "type": "string"
+        },
+        "extraction_mode": {
+          "enum": [
+            "engine_assisted",
+            "file_parser",
+            "file_parser_fallback"
+          ]
+        },
+        "fallback_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "source_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_inventory_id",
+        "semantic_inventory_id",
+        "root_sha256",
+        "ecosystem",
+        "ecosystem_version",
+        "revision",
+        "entrypoints"
+      ],
+      "properties": {
+        "source_inventory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semantic_inventory_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "ecosystem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ecosystem_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entrypoints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "scene_tree": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "node_types_and_properties": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "internal_resources": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "external_resources": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "scripts_and_symbol_structure": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "signals_and_connections": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "input_map": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "autoloads": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "animations": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "collision_bodies_shapes_layers_and_masks": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "ui": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "audio": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "saved_state_candidates": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "project_configuration": {
+      "$ref": "#/$defs/semantic_records"
+    },
+    "exact_source_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_ref",
+          "path",
+          "bytes",
+          "sha256",
+          "media_type",
+          "role"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "media_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "canonicalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "encoding",
+        "json",
+        "collection_order",
+        "absolute_paths_allowed"
+      ],
+      "properties": {
+        "encoding": {
+          "const": "utf-8"
+        },
+        "json": {
+          "const": "xcp-canonical-json"
+        },
+        "collection_order": {
+          "const": "semantic_id_then_source_path"
+        },
+        "absolute_paths_allowed": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "semantic_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "semantic_id",
+          "category",
+          "kind",
+          "locator",
+          "source_refs"
+        ]
+      }
+    }
+  }
+}

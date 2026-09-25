@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-evolution-report-v1.schema.json",
+  "title": "XCP project evolution readiness and final evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "gate_id",
+    "project_id",
+    "base_version",
+    "target_version",
+    "identities",
+    "assertions",
+    "c5_lifecycle",
+    "worker_gap",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-evolution-report-v1"
+    },
+    "report_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "gate_id": {
+      "const": "C7_PROJECT_EVOLUTION_AND_CONTINUOUS_READAPTATION"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "base_version": {
+      "$ref": "#/$defs/semantic_version"
+    },
+    "target_version": {
+      "$ref": "#/$defs/semantic_version"
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/sha256"
+      },
+      "minProperties": 14,
+      "maxProperties": 32,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*_sha256$"
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/assertion"
+      }
+    },
+    "c5_lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority",
+        "receipt_sha256",
+        "correction_ledger_sha256",
+        "capture_count",
+        "update",
+        "rollback",
+        "acceptance",
+        "exact_transition_bound"
+      ],
+      "properties": {
+        "authority": {
+          "const": "C5_AGENT_NATIVE_CREATION_GATE"
+        },
+        "receipt_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "correction_ledger_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "capture_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "update": {
+          "$ref": "#/$defs/outcome"
+        },
+        "rollback": {
+          "$ref": "#/$defs/outcome"
+        },
+        "acceptance": {
+          "$ref": "#/$defs/outcome"
+        },
+        "exact_transition_bound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "worker_gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_change_required",
+        "general_capability_missing",
+        "evidence"
+      ],
+      "properties": {
+        "native_change_required": {
+          "const": false
+        },
+        "general_capability_missing": {
+          "const": false
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "decision": {
+      "enum": [
+        "blocked_conflict",
+        "ready_for_c5",
+        "pass",
+        "fail"
+      ]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "optional_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "outcome": {
+      "enum": [
+        "pass",
+        "fail",
+        "not_run"
+      ]
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assertion_id",
+        "outcome",
+        "actual",
+        "expected"
+      ],
+      "properties": {
+        "assertion_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "actual": {},
+        "expected": {}
+      }
+    }
+  }
+}

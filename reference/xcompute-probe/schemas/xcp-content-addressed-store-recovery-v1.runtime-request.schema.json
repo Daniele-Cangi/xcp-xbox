@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute.local/schemas/xcp-content-addressed-store-recovery-v1.runtime-request.schema.json",
+  "title": "XCP content-addressed store and recovery runtime request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "command",
+    "schema_version",
+    "correlation_id",
+    "operation",
+    "namespace_id",
+    "job_id",
+    "execution_id",
+    "dataset_id",
+    "execution_plan_sha256",
+    "owner_identity",
+    "generation",
+    "retention_mix",
+    "maximum_simultaneous_buffers",
+    "protected_recovery_pinned_bytes",
+    "evictable_cache_ephemeral_bytes",
+    "persistent_artifact_bytes",
+    "metadata_journal_bytes",
+    "temporary_bytes",
+    "declared_peak_bytes",
+    "declared_physical_growth_bytes",
+    "platform_available_known",
+    "platform_available_bytes"
+  ],
+  "properties": {
+    "command": {
+      "const": "probe_content_addressed_store_recovery"
+    },
+    "schema_version": {
+      "const": "xcp-content-addressed-store-recovery-v1-runtime-request"
+    },
+    "correlation_id": {
+      "$ref": "#/$defs/token64"
+    },
+    "operation": {
+      "enum": [
+        "core_matrix",
+        "seed_restart",
+        "recover_restart",
+        "cleanup_restart"
+      ]
+    },
+    "namespace_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,40}$"
+    },
+    "job_id": {
+      "$ref": "#/$defs/token64"
+    },
+    "execution_id": {
+      "$ref": "#/$defs/token64"
+    },
+    "dataset_id": {
+      "$ref": "#/$defs/token64"
+    },
+    "execution_plan_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "owner_identity": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,96}$"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "persisted_reservation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,96}$"
+    },
+    "persisted_generation": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "retention_mix": {
+      "enum": [
+        "EPHEMERAL",
+        "EPHEMERAL_CACHE",
+        "EPHEMERAL_RECOVERY",
+        "EPHEMERAL_RECOVERY_PINNED"
+      ]
+    },
+    "maximum_simultaneous_buffers": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8
+    },
+    "protected_recovery_pinned_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "evictable_cache_ephemeral_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "persistent_artifact_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "metadata_journal_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "temporary_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "declared_peak_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "declared_physical_growth_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    },
+    "platform_available_known": {
+      "type": "boolean"
+    },
+    "platform_available_bytes": {
+      "$ref": "#/$defs/exactUInt"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "recover_restart"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "required": [
+          "persisted_reservation_id",
+          "persisted_generation"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "persisted_reservation_id"
+              ]
+            },
+            {
+              "required": [
+                "persisted_generation"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "token64": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]{1,64}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "exactUInt": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    }
+  }
+}

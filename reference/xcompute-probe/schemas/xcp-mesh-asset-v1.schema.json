@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-mesh-asset-v1.schema.json",
+  "title": "XCP bounded external mesh asset v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "coordinate_system",
+    "positions",
+    "indices"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-mesh-asset-v1"
+    },
+    "coordinate_system": {
+      "const": "left_handed_y_up"
+    },
+    "positions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 65536,
+      "items": {
+        "$ref": "#/$defs/position"
+      }
+    },
+    "indices": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 196608,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535
+      }
+    }
+  },
+  "$defs": {
+    "position": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "minimum": -1000000,
+          "maximum": 1000000
+        },
+        {
+          "type": "number",
+          "minimum": -1000000,
+          "maximum": 1000000
+        },
+        {
+          "type": "number",
+          "minimum": -1000000,
+          "maximum": 1000000
+        }
+      ],
+      "items": false
+    }
+  }
+}

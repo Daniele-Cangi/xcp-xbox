@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-source-inventory-v1.schema.json",
+  "title": "XCP external creative source inventory v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "inventory_id",
+    "source",
+    "detector",
+    "authorization",
+    "root_sha256",
+    "files",
+    "scan_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-source-inventory-v1"
+    },
+    "inventory_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_name",
+        "origin_kind",
+        "origin_locator",
+        "revision",
+        "ecosystem",
+        "ecosystem_version",
+        "entrypoints"
+      ],
+      "properties": {
+        "project_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "origin_kind": {
+          "enum": [
+            "git",
+            "source_archive",
+            "authorized_local_tree"
+          ]
+        },
+        "origin_locator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "ecosystem": {
+          "$ref": "#/$defs/identifier"
+        },
+        "ecosystem_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "entrypoints": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relative_path"
+          }
+        }
+      }
+    },
+    "detector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter_id",
+        "adapter_version",
+        "confidence",
+        "evidence"
+      ],
+      "properties": {
+        "adapter_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "adapter_version": {
+          "$ref": "#/$defs/semantic_version"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "status",
+        "license_expression",
+        "license_files"
+      ],
+      "properties": {
+        "basis": {
+          "enum": [
+            "open_source_license",
+            "provided_by_rightsholder",
+            "user_attested_authorization"
+          ]
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "pending",
+            "rejected"
+          ]
+        },
+        "license_expression": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "license_files": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/relative_path"
+          }
+        }
+      }
+    },
+    "root_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "file_id",
+          "path",
+          "bytes",
+          "sha256",
+          "media_type",
+          "role",
+          "provenance"
+        ],
+        "properties": {
+          "file_id": {
+            "$ref": "#/$defs/identifier"
+          },
+          "path": {
+            "$ref": "#/$defs/relative_path"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 68719476736
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "media_type": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 128
+          },
+          "role": {
+            "enum": [
+              "project_metadata",
+              "source",
+              "scene",
+              "gameplay",
+              "input",
+              "ui",
+              "asset",
+              "state",
+              "audio",
+              "license",
+              "documentation",
+              "dependency",
+              "unknown"
+            ]
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "origin",
+              "attribution"
+            ],
+            "properties": {
+              "origin": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "attribution": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            }
+          }
+        }
+      }
+    },
+    "scan_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relative_paths_only",
+        "follow_symlinks",
+        "secrets_in_output",
+        "executable_payloads_admitted"
+      ],
+      "properties": {
+        "relative_paths_only": {
+          "const": true
+        },
+        "follow_symlinks": {
+          "const": false
+        },
+        "secrets_in_output": {
+          "const": false
+        },
+        "executable_payloads_admitted": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!\\.\\.?(?:/|$))(?!.*\\/\\.\\.?(?:/|$))[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

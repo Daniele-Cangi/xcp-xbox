@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-adaptation-handoff-v1.schema.json",
+  "title": "XCP C6 to C5 adaptation handoff v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_id",
+    "project_id",
+    "source_gate",
+    "lifecycle_gate",
+    "artifacts",
+    "lifecycle",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-adaptation-handoff-v1"
+    },
+    "handoff_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_gate": {
+      "const": "C6_AGENT_NATIVE_SOURCE_ADAPTATION_V1"
+    },
+    "lifecycle_gate": {
+      "const": "C5_AGENT_NATIVE_CREATION_GATE"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "source.inventory"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "creative.ir"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "adaptation.plan"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "xcp.project"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "source.map"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "adaptation.readiness.preliminary"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "c5.intent"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          }
+        }
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "source.inventory",
+              "creative.ir",
+              "adaptation.plan",
+              "xcp.project",
+              "source.map",
+              "adaptation.readiness.preliminary",
+              "c5.intent"
+            ]
+          },
+          "path": {
+            "$ref": "#/$defs/relative_path"
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "command",
+        "project_dir",
+        "intent",
+        "correction_ledger",
+        "finalize_command"
+      ],
+      "properties": {
+        "tool": {
+          "const": "tools/xcp_agent_lifecycle.py"
+        },
+        "command": {
+          "const": "run-live"
+        },
+        "project_dir": {
+          "const": "xcp-project"
+        },
+        "intent": {
+          "const": "c5-intent.json"
+        },
+        "correction_ledger": {
+          "const": "c5-correction-ledger.json"
+        },
+        "finalize_command": {
+          "const": "tools/xcp_source_adapt.py finalize"
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "ready_for_c5",
+        "not_ready"
+      ]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!\\.\\.?(?:/|$))(?!.*\\/\\.\\.?(?:/|$))[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$"
+    }
+  }
+}

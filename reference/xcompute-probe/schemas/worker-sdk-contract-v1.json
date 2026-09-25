@@ -1,0 +1,591 @@
+{
+  "schema_version": "worker-sdk-contract-v1",
+  "contract_id": "WORKER_SDK_CONTRACT_V1",
+  "contract_version": "1.0",
+  "status": "IMPLEMENTED_MEASURED_LOCAL",
+  "recorded_on": "2026-07-27",
+  "authority": {
+    "runtime_capabilities": "authenticated_describe_runtime",
+    "runtime_description_schema": "worker-runtime-description-0.1",
+    "runtime_description_evidence_labels_authoritative": false,
+    "promotion_and_live_claims": "docs/CURRENT_STATE.md_and_latest_promoted_evidence",
+    "free_form_status_text_authoritative": false,
+    "internal_implementation_details_authoritative": false
+  },
+  "package_strategy": {
+    "runtime_behavior_changed": false,
+    "packaged_inputs_changed": false,
+    "candidate_package_required": false,
+    "build_required": false,
+    "deploy_required": false,
+    "xbox_live_gate_required": false,
+    "reused_promoted_worker_package_version": "0.1.161.0",
+    "reused_promoted_worker_package_bytes": 1458129,
+    "reused_promoted_worker_package_sha256": "295c79a6e08f83b38ba3bc69da92d4c68a5a2545d2b92d5ee4eacd37be6f42a1"
+  },
+  "measured_runtime_prerequisites": [
+    {
+      "target": "WORKER_SESSION_PROTOCOL_BOUNDARY_V1",
+      "worker_package_version": "0.1.113.0",
+      "role": "session_protocol_negotiation_errors_and_sdk_compatibility"
+    },
+    {
+      "target": "WORKER_ARTIFACT_PUBLICATION_RUNTIME_SPLIT_V1",
+      "worker_package_version": "0.1.147.0",
+      "role": "artifact_transaction_and_publication"
+    },
+    {
+      "target": "WORKER_CANONICAL_RESULT_TELEMETRY_BOUNDARY_V1",
+      "worker_package_version": "0.1.148.0",
+      "role": "canonical_result_and_telemetry_separation"
+    },
+    {
+      "target": "WORKER_PRECOMPILED_D3D_COMMAND_RUNTIME_SPLIT_V1",
+      "worker_package_version": "0.1.161.0",
+      "role": "preserved_d3d_ownership_and_async_regression_authority"
+    },
+    {
+      "target": "AGENT_NATIVE_XVM_TOOLCHAIN_V1",
+      "worker_package_version": "0.1.162.0",
+      "role": "latest_promoted_worker_and_external_agent_toolchain_authority"
+    }
+  ],
+  "compatibility": {
+    "worker_protocol_min": "0.73",
+    "worker_protocol_max": "0.73",
+    "sdk_protocol_min": "0.73",
+    "sdk_protocol_max": "0.73",
+    "negotiation_command": "negotiate_protocol",
+    "negotiation_response_schema": "worker-protocol-negotiation-0.1",
+    "worker_compatibility_schema": "worker-sdk-compatibility-0.1",
+    "sdk_contract_version_request_value": "1.0",
+    "compatible_rule": "sdk_protocol_min <= worker_protocol <= sdk_protocol_max",
+    "incompatible_action": "FAIL_CLOSED_BEFORE_SESSION",
+    "unknown_response_fields": "IGNORE_AS_ADDITIVE",
+    "unknown_state_or_schema": "FAIL_CLOSED_NO_MUTATION"
+  },
+  "bootstrap": [
+    {
+      "order": 1,
+      "command": "negotiate_protocol",
+      "auth_required": false,
+      "required_request_fields": [
+        "command",
+        "sdk_protocol_min",
+        "sdk_protocol_max"
+      ],
+      "optional_request_fields": [
+        "sdk_contract_version"
+      ],
+      "required_response_fields": [
+        "ok",
+        "protocol_version",
+        "schema_version",
+        "sdk_compatibility_schema",
+        "compatible",
+        "compatibility_mode"
+      ]
+    },
+    {
+      "order": 2,
+      "command": "open_session_or_open_session_with_trust",
+      "auth_required": false,
+      "session_schema": "worker-session-runtime-0.1",
+      "session_material_may_be_persisted_by_ui": false
+    },
+    {
+      "order": 3,
+      "command": "describe_runtime",
+      "auth_required": true,
+      "response_schema": "worker-runtime-description-0.1",
+      "machine_readable_paths": [
+        "supported_commands",
+        "protocol_boundary",
+        "artifact_limits",
+        "graph_limits",
+        "xvm",
+        "runtime_state",
+        "claim_boundary"
+      ]
+    }
+  ],
+  "agent_native_xvm_toolchain_projection": {
+    "target": "AGENT_NATIVE_XVM_TOOLCHAIN_V1",
+    "status": "MEASURED_ON_XBOX",
+    "controller_location": "EXTERNAL_PC_OR_SERVICE",
+    "codex_runs_on_xbox": false,
+    "ordered_cycle": [
+      "negotiate_protocol",
+      "open_authenticated_session",
+      "describe_runtime",
+      "describe_submission_profile",
+      "describe_xvm_isa",
+      "generate_xvm_v2_assembly",
+      "assemble_canonical_artifact",
+      "validate_artifact_locally",
+      "upload_exact_artifact_bytes",
+      "submit_graph",
+      "branch_on_error.code_and_error.details",
+      "correct_and_resubmit_unchanged_artifact_when_admitted",
+      "retrieve_canonical_result_and_evidence"
+    ],
+    "discovery": {
+      "submission_profile_command": "describe_submission_profile",
+      "submission_profile_response_schema": "xvm-submission-profile-description-v1",
+      "submission_profile_schema": "xvm-submission-profile-v1",
+      "submission_profile_id": "xvm-v2-cpu-reference-v1",
+      "isa_command": "describe_xvm_isa",
+      "isa_response_schema": "xvm-isa-description-v1",
+      "isa_definition_source": "schemas/xvm-isa-v2.json",
+      "isa_definition_source_sha256": "57091ef5c90fe12a36ba46ac8ef709d1a57bfbb098eea7135ebf32391f1f3e10",
+      "isa_definition_generation": "src/XComputeProbe/runtime/WorkerXvmIsaV2.generated.h"
+    },
+    "assembler": {
+      "tool": "tools/xvm_assembler.py",
+      "source_sample": "samples/xvm/agent-native-xvm-toolchain-v1.xvmasm",
+      "output_schema": "xvm-program-artifact-v2",
+      "artifact_kind": "xvm-program-v2",
+      "canonical_bytes": "compact_ordered_utf8_json_plus_single_trailing_lf",
+      "sha256_binds_exact_uploaded_bytes": true,
+      "static_fuel_derived_by_existing_reference_verifier": true,
+      "manual_artifact_editing_admitted": false
+    },
+    "errors": {
+      "stable_identifier_path": "error.code",
+      "details_path": "error.details",
+      "details_schema": "xvm-error-details-v1",
+      "published_catalog_schema": "xvm-error-catalog-v1",
+      "message_is_machine_actionable": false,
+      "unknown_error_action": "PRESERVE_CODE_AND_FAIL_CLOSED"
+    },
+    "first_live_gate": {
+      "runner": "tools/run-agent-native-xvm-toolchain-v1-live.ps1",
+      "trusted_runner": "tools/run-agent-native-xvm-toolchain-v1-trusted-live.ps1",
+      "candidate_worker_package_version": "0.1.162.0",
+      "negative_error_code": "xvm.capability_not_granted",
+      "negative_missing_capability": "control_output",
+      "correction": "grant_missing_published_capability",
+      "artifact_sha256_must_remain_unchanged": true,
+      "positive_verdict": "PASS",
+      "canonical_result_required": true,
+      "worker_evidence_artifact_required": true,
+      "xbox_live_measured": true,
+      "worker_source_commit": "49f255515750afd9bbf1d825945fdff483c9517e",
+      "controller_runner_commit": "1a1970ece370623d9f89c23370d0638d06697de2",
+      "release_msix_bytes": 1468998,
+      "release_msix_sha256": "2c3f9fe2649d82f18809825fa9d4595824038cc5de5c7047a4b2d57902e33a9c",
+      "installed_package_full_name": "XComputeProbe.WorkerPrototype_0.1.162.0_x64__d8ha3mrf4bp1p",
+      "report_path": "artifacts/results/agent-native-xvm-toolchain-v1-live-0162-r2.json",
+      "report_bytes": 9571,
+      "report_sha256": "d160252969a597fad635c79b43155d9dfbc56ca6ec167865551499bab1db5d1e",
+      "checks": "29/29",
+      "violations": 0,
+      "program_artifact_bytes": 414,
+      "program_artifact_sha256": "ce09190e0f8e35b18895f3d690877919e1fe705a4efa87baed24042fe6cdd54b",
+      "cleanup": "11/11",
+      "failed_request_delta": 1,
+      "post_active_async_jobs": 0,
+      "post_active_task_plan_runs": 0
+    },
+    "package_strategy": {
+      "runtime_behavior_changed": true,
+      "packaged_inputs_changed": true,
+      "candidate_package_required": true,
+      "build_required": true,
+      "deploy_required": true,
+      "xbox_live_gate_required": true,
+      "single_candidate_cycle": true
+    },
+    "hard_boundaries": {
+      "admitted_xvm_bytecode_only": true,
+      "native_or_host_code_upload": false,
+      "native_or_host_jit": false,
+      "runtime_shader_compilation": false,
+      "client_shader_upload": false,
+      "shell_or_process": false,
+      "broad_filesystem": false,
+      "xvm_sockets": false,
+      "credentials_on_xbox": false,
+      "undeclared_host_effects": false,
+      "unbounded_resources": false
+    },
+    "local_validation": {
+      "focused_and_related_tests": "43/43",
+      "full_repository_tests": "708/708",
+      "powershell_parse": "PASS",
+      "generated_isa_header_check": "PASS",
+      "debug_x64_worker_build": "PASS_0_WARNINGS_0_ERRORS",
+      "release_x64_worker_build_and_package": "PASS_0_WARNINGS_0_ERRORS",
+      "public_uwp_capability_audit": "7/7"
+    }
+  },
+  "sdk_envelopes": {
+    "request": {
+      "schema_version": "worker-sdk-request-v1",
+      "required_fields": [
+        "schema_version",
+        "request_id",
+        "command",
+        "payload"
+      ],
+      "payload_mapping": "merge_payload_into_worker_command_object",
+      "ephemeral_auth_context_injected_by_sdk_transport": true,
+      "ephemeral_auth_context_serialized_in_request_envelope": false,
+      "session_or_credential_material_allowed": false
+    },
+    "result": {
+      "schema_version": "worker-sdk-result-v1",
+      "required_fields": [
+        "schema_version",
+        "request_id",
+        "command",
+        "ok",
+        "protocol_version"
+      ],
+      "success_field": "payload",
+      "failure_field": "error",
+      "error_code_path": "error.code",
+      "error_message_semantics": "diagnostic_only"
+    },
+    "progress_event": {
+      "schema_version": "worker-sdk-progress-event-v1",
+      "transport": "POLL_SNAPSHOT",
+      "push_channel_supported": false,
+      "required_fields": [
+        "schema_version",
+        "event_id",
+        "observed_at_utc",
+        "source_command",
+        "resource_kind",
+        "resource_id",
+        "state",
+        "terminal",
+        "result_available",
+        "raw_schema_version",
+        "raw_snapshot"
+      ],
+      "event_id_rule": "sha256_of_canonical_resource_kind_resource_id_state_and_raw_snapshot",
+      "duplicate_event_rule": "same_event_id_is_idempotent"
+    },
+    "artifact_reference": {
+      "schema_version": "worker-sdk-artifact-reference-v1",
+      "required_fields": [
+        "schema_version",
+        "artifact_id",
+        "exists",
+        "status"
+      ],
+      "existing_artifact_fields": [
+        "artifact_kind"
+      ],
+      "committed_identity_fields": [
+        "bytes",
+        "sha256"
+      ],
+      "opaque_optional_fields": [
+        "blob_handle",
+        "manifest_path"
+      ],
+      "opaque_fields_must_not_be_parsed": true
+    }
+  },
+  "schema_registry": {
+    "request": [
+      {
+        "schema": "worker-sdk-request-v1",
+        "role": "sdk_command_envelope"
+      },
+      {
+        "schema": "worker-on-device-graph-v1",
+        "role": "submit_graph_payload"
+      },
+      {
+        "schema": "cpu-gpu-evolved-backend-convergence-request-v1",
+        "role": "cpu_gpu_convergence_request"
+      },
+      {
+        "schema": "gpu-xvm-verified-production-mode-request-v1",
+        "role": "verified_production_request"
+      },
+      {
+        "schema": "xcp-provable-worlds-streaming-tiled-v1-runtime-request",
+        "role": "streaming_runtime_request"
+      },
+      {
+        "schema": "xcp-storage-scale-characterization-v1-runtime-request",
+        "role": "storage_characterization_request"
+      }
+    ],
+    "result": [
+      {
+        "schema": "worker-sdk-result-v1",
+        "role": "sdk_command_result_envelope"
+      },
+      {
+        "schema": "worker-runtime-result-envelope-0.1",
+        "role": "canonical_runtime_result"
+      },
+      {
+        "schema": "worker-runtime-functional-canonical-0.1",
+        "role": "logical_equality_payload"
+      },
+      {
+        "schema": "worker-async-job-0.18",
+        "role": "async_job_snapshot"
+      },
+      {
+        "schema": "worker-task-plan-0.29",
+        "role": "task_plan"
+      },
+      {
+        "schema": "worker-task-plan-run-control-0.1",
+        "role": "task_plan_run_snapshot"
+      },
+      {
+        "schema": "cpu-gpu-evolved-backend-convergence-result-v1",
+        "role": "cpu_gpu_convergence_result"
+      },
+      {
+        "schema": "gpu-xvm-verified-production-mode-result-v1",
+        "role": "verified_production_result"
+      },
+      {
+        "schema": "xcp-provable-worlds-streaming-tiled-v1-runtime-result",
+        "role": "streaming_runtime_result"
+      },
+      {
+        "schema": "xcp-storage-scale-characterization-v1-runtime-result",
+        "role": "storage_characterization_result"
+      }
+    ],
+    "event": [
+      {
+        "schema": "worker-sdk-progress-event-v1",
+        "role": "sdk_poll_projection"
+      },
+      {
+        "schema": "worker-async-job-0.18",
+        "role": "raw_async_poll_snapshot"
+      },
+      {
+        "schema": "worker-task-plan-run-control-0.1",
+        "role": "raw_task_plan_poll_snapshot"
+      }
+    ],
+    "artifact": [
+      {
+        "schema": "worker-sdk-artifact-reference-v1",
+        "role": "sdk_artifact_reference"
+      },
+      {
+        "schema": "worker-artifact-upload-0.1",
+        "role": "artifact_transaction_and_status"
+      },
+      {
+        "schema": "worker-artifact-binary-framing-v2-0.1",
+        "role": "binary_artifact_transfer"
+      },
+      {
+        "schema": "worker-artifact-cleanup-0.1",
+        "role": "artifact_cleanup"
+      },
+      {
+        "schema": "worker-job-result-artifact-0.1",
+        "role": "published_job_result"
+      },
+      {
+        "schema": "worker-on-device-graph-evidence-bundle-0.1",
+        "role": "graph_evidence_bundle"
+      },
+      {
+        "schema": "worker-on-device-graph-evidence-seal-0.1",
+        "role": "graph_evidence_seal"
+      }
+    ]
+  },
+  "errors": {
+    "worker_envelope_required_fields": [
+      "ok",
+      "protocol_version",
+      "error.code",
+      "error.message"
+    ],
+    "stable_identifier_path": "error.code",
+    "message_is_machine_actionable": false,
+    "sdk_may_branch_on_message": false,
+    "sdk_unknown_error_action": "PRESERVE_CODE_AND_FAIL_CLOSED",
+    "stable_namespaces": [
+      "protocol",
+      "auth",
+      "command",
+      "json",
+      "job",
+      "task_plan",
+      "task_plan_run",
+      "artifact",
+      "submit_graph",
+      "xvm",
+      "cpu_capsule",
+      "topology"
+    ]
+  },
+  "progress": {
+    "async_job": {
+      "raw_schema": "worker-async-job-0.18",
+      "submit_commands": [
+        "submit_graph_job",
+        "submit_d3d11_resident_hotloop_job",
+        "submit_d3d12_shader_shape_job",
+        "submit_d3d12_shader_shape_soak_job",
+        "submit_stored_memory_file_job"
+      ],
+      "poll_command": "get_job_status",
+      "result_command": "get_job_result",
+      "cancel_command": "cancel_job",
+      "states": [
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "canceled"
+      ],
+      "terminal_states": [
+        "succeeded",
+        "failed",
+        "canceled"
+      ],
+      "transitions": [
+        "missing->queued",
+        "queued->running",
+        "queued->canceled",
+        "running->succeeded",
+        "running->failed",
+        "running->canceled"
+      ],
+      "progress_fields": [
+        "status",
+        "queue_ordinal",
+        "cancel_requested",
+        "completed",
+        "result_available",
+        "graph_node_count",
+        "graph_checkpoint_count"
+      ],
+      "cancel_idempotent": true,
+      "terminal_state_immutable": true
+    },
+    "task_plan_run": {
+      "plan_schema": "worker-task-plan-0.29",
+      "raw_schema": "worker-task-plan-run-control-0.1",
+      "submit_command": "submit_task_plan_run",
+      "poll_command": "get_task_plan_status",
+      "result_command": "get_task_plan_result",
+      "cancel_command": "cancel_task_plan_run",
+      "states": [
+        "queued",
+        "running",
+        "blocked",
+        "completed",
+        "failed",
+        "canceling",
+        "canceled"
+      ],
+      "terminal_states": [
+        "blocked",
+        "completed",
+        "failed",
+        "canceled"
+      ],
+      "progress_fields": [
+        "status",
+        "cycle_count",
+        "total_advanced_count",
+        "blocked_poll_count",
+        "last_blocked_reason",
+        "last_next_step_id",
+        "complete",
+        "result_available",
+        "cancel_requested",
+        "error_code"
+      ],
+      "cancel_idempotent": true,
+      "terminal_state_immutable": true
+    }
+  },
+  "artifact_lifecycle": {
+    "runtime_schema": "worker-artifact-upload-0.1",
+    "states": [
+      "missing",
+      "staging",
+      "committed"
+    ],
+    "commands": [
+      "artifact_quota_preflight",
+      "begin_artifact_upload",
+      "append_artifact_chunk",
+      "append_artifact_chunk_binary",
+      "commit_artifact_upload",
+      "abort_artifact_upload",
+      "get_artifact_status",
+      "delete_artifact",
+      "reap_artifacts"
+    ],
+    "transitions": [
+      "missing->staging:begin_artifact_upload",
+      "staging->staging:append_artifact_chunk_or_binary",
+      "staging->committed:commit_artifact_upload",
+      "staging->missing:abort_artifact_upload_or_delete_artifact",
+      "committed->missing:delete_artifact",
+      "missing->missing:abort_artifact_upload_or_delete_artifact"
+    ],
+    "commit_idempotent": false,
+    "abort_idempotent": true,
+    "delete_idempotent": true,
+    "reap_is_global_maintenance": true
+  },
+  "canonical_result": {
+    "schema": "worker-runtime-result-envelope-0.1",
+    "required_sections": [
+      "functional_canonical",
+      "artifact_identity",
+      "telemetry",
+      "evidence_metadata"
+    ],
+    "logical_equality_section": "functional_canonical",
+    "telemetry_is_canonical": false,
+    "artifact_identity_is_logical_equality": false,
+    "sdk_may_recompute_canonical_result_from_telemetry": false
+  },
+  "client_requirements": [
+    "negotiate_before_opening_a_session",
+    "fail_closed_when_compatible_is_false",
+    "use_describe_runtime_supported_commands_and_machine_readable_limits",
+    "do_not_parse_free_form_status_or_error_messages",
+    "do_not_infer_capabilities_from_internal_implementation_details",
+    "project_progress_only_from_versioned_poll_snapshots",
+    "treat_cancel_as_idempotent_and_terminal_states_as_immutable",
+    "treat_artifact_handles_and_paths_as_opaque",
+    "use_functional_canonical_for_logical_equality",
+    "keep_session_and_credential_material_out_of_persistent_ui_state"
+  ],
+  "non_goals_scope": "WORKER_SDK_CONTRACT_V1_CORE_GATE_ONLY",
+  "non_goals": [
+    "new_worker_command",
+    "new_worker_capability",
+    "new_protocol_version",
+    "push_event_transport",
+    "package_rebuild",
+    "xbox_redeployment",
+    "new_live_measurement",
+    "winui_implementation",
+    "reinterpretation_of_immutable_live_evidence"
+  ],
+  "validation": {
+    "targeted_contract_tests": "8/8",
+    "related_protocol_boundary_test": "1/1",
+    "related_plan_and_protocol_tests": "8/8",
+    "combined_targeted_tests": "16/16",
+    "git_diff_check": "PASS"
+  },
+  "next_target": "XCP_STUDIO_WINUI3"
+}

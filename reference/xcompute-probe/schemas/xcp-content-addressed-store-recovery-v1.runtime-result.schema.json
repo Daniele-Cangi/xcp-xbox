@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute.local/schemas/xcp-content-addressed-store-recovery-v1.runtime-result.schema.json",
+  "title": "XCP content-addressed store and recovery runtime result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ok",
+    "delivery_train",
+    "protocol_version",
+    "correlation_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-content-addressed-store-recovery-v1-runtime-result"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "delivery_train": {
+      "const": "CONTENT_ADDRESSED_STORE_RECOVERY_V1"
+    },
+    "protocol_version": {
+      "type": "string"
+    },
+    "correlation_id": {
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "core_matrix",
+        "seed_restart",
+        "recover_restart",
+        "cleanup_restart"
+      ]
+    },
+    "storage_plan_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "static_admission": {
+      "type": "object"
+    },
+    "reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reservation_id",
+        "worker_broker_binding_agreed",
+        "release_idempotent",
+        "client_close_completed"
+      ],
+      "properties": {
+        "reservation_id": {
+          "type": "string"
+        },
+        "worker_broker_binding_agreed": {
+          "const": true
+        },
+        "release_idempotent": {
+          "const": true
+        },
+        "client_close_completed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "operation_result": {
+      "type": "object"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worker_semantic",
+        "worker_final_publication_veto",
+        "broker_semantic",
+        "broker_artifact_publication",
+        "second_artifact_system"
+      ],
+      "properties": {
+        "worker_semantic": {
+          "const": true
+        },
+        "worker_final_publication_veto": {
+          "const": true
+        },
+        "broker_semantic": {
+          "const": false
+        },
+        "broker_artifact_publication": {
+          "const": false
+        },
+        "second_artifact_system": {
+          "const": false
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "detail"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          }
+        },
+        "required": [
+          "ok"
+        ]
+      },
+      "then": {
+        "required": [
+          "operation",
+          "storage_plan_sha256",
+          "static_admission",
+          "reservation",
+          "operation_result",
+          "authority"
+        ]
+      },
+      "else": {
+        "required": [
+          "error"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

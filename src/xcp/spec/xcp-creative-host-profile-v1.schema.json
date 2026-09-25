@@ -1,0 +1,580 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:xcp:schema:xcp-creative-host-profile-v1",
+  "title": "XCP creative host discovery profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile_id",
+    "host_api_version",
+    "implementation_stage",
+    "project_schema_versions",
+    "bundle_schema_versions",
+    "module_kinds",
+    "asset_formats",
+    "capabilities",
+    "budgets",
+    "operations",
+    "observations",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-host-profile-v1"
+    },
+    "profile_id": {
+      "$ref": "#/$defs/contract_id"
+    },
+    "host_api_version": {
+      "$ref": "#/$defs/semantic_version"
+    },
+    "implementation_stage": {
+      "enum": [
+        "development_candidate",
+        "live_admitted"
+      ]
+    },
+    "project_schema_versions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/contract_id"
+      }
+    },
+    "bundle_schema_versions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/contract_id"
+      }
+    },
+    "module_kinds": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/module_kind"
+      }
+    },
+    "asset_formats": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/asset_format"
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "maxItems": 512,
+      "items": {
+        "$ref": "#/$defs/capability"
+      }
+    },
+    "budgets": {
+      "$ref": "#/$defs/budgets"
+    },
+    "operations": {
+      "$ref": "#/$defs/operations"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/lifecycle"
+    },
+    "observations": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/contract_id"
+      }
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/claim_boundary"
+    }
+  },
+  "$defs": {
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "module_kind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "schema_id",
+        "schema_sha256",
+        "admitted",
+        "required_capabilities"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "schema_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "admitted": {
+          "type": "boolean"
+        },
+        "required_capabilities": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/contract_id"
+          }
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "admitted"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "admitted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "asset_format": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "media_type",
+        "decoder",
+        "admitted",
+        "usages",
+        "limits"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128,
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*(?:\\+[a-z0-9][a-z0-9!#$&^_.+-]*)?$"
+        },
+        "decoder": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "schema_id": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "admitted": {
+          "type": "boolean"
+        },
+        "usages": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/contract_id"
+          }
+        },
+        "limits": {
+          "$ref": "#/$defs/asset_format_limits"
+        }
+      },
+      "dependentRequired": {
+        "schema_id": [
+          "schema_sha256"
+        ],
+        "schema_sha256": [
+          "schema_id"
+        ]
+      }
+    },
+    "asset_format_limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_file_bytes"
+      ],
+      "properties": {
+        "max_file_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456
+        },
+        "max_width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "max_height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "max_decoded_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "max_vertices": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 1048576
+        },
+        "max_indices": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 3145728
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_module_count",
+        "max_asset_count",
+        "max_file_count",
+        "max_file_bytes",
+        "max_project_bytes",
+        "max_installed_workspace_bytes"
+      ],
+      "properties": {
+        "max_module_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "max_asset_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8192
+        },
+        "max_file_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9216
+        },
+        "max_file_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8589934592
+        },
+        "max_bundle_manifest_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "max_module_document_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456
+        },
+        "max_project_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 68719476736
+        },
+        "max_installed_workspace_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_modules_per_kind": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "max_local_state_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 68719476736
+        },
+        "max_scene_triangles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "max_scene_animations": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "max_runtime_logs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "max_audio_clips": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "max_audio_voices": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "max_audio_pcm_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "max_xvm_services": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "max_xvm_program_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 268435456
+        },
+        "max_xvm_fuel_per_invocation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_xvm_memory_bytes": {
+          "type": "integer",
+          "minimum": 4,
+          "maximum": 68719476736
+        },
+        "max_xvm_output_bytes": {
+          "type": "integer",
+          "minimum": 4,
+          "maximum": 68719476736
+        },
+        "max_xvm_invocations_per_dispatch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "max_world2d_tiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 262144
+        },
+        "max_world2d_entities": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16384
+        },
+        "max_world2d_objectives": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "max_world2d_actions_per_dispatch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        }
+      }
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "install",
+        "activate",
+        "list",
+        "remove",
+        "rollback",
+        "launch",
+        "reload",
+        "dispatch_input",
+        "capture"
+      ],
+      "properties": {
+        "install": {
+          "type": "boolean"
+        },
+        "activate": {
+          "type": "boolean"
+        },
+        "list": {
+          "type": "boolean"
+        },
+        "remove": {
+          "type": "boolean"
+        },
+        "rollback": {
+          "type": "boolean"
+        },
+        "launch": {
+          "type": "boolean"
+        },
+        "reload": {
+          "type": "boolean"
+        },
+        "dispatch_input": {
+          "type": "boolean"
+        },
+        "capture": {
+          "type": "boolean"
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "admission",
+        "staging_surface",
+        "installed_record_schema_version",
+        "activation_record_schema_version",
+        "atomic_activation",
+        "cas_reference_protection",
+        "commands"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "xcp-creative-lifecycle-v1"
+        },
+        "admission": {
+          "enum": [
+            "development_candidate_not_live_admitted",
+            "live_admitted"
+          ]
+        },
+        "staging_surface": {
+          "const": "existing_worker_artifacts"
+        },
+        "installed_record_schema_version": {
+          "const": "xcp-creative-installed-bundle-v1"
+        },
+        "activation_record_schema_version": {
+          "const": "xcp-creative-activation-record-v1"
+        },
+        "atomic_activation": {
+          "const": "append_only_hash_chained_record"
+        },
+        "cas_reference_protection": {
+          "const": true
+        },
+        "commands": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prepare",
+            "commit",
+            "list",
+            "activate",
+            "rollback",
+            "remove",
+            "launch",
+            "reload",
+            "observe",
+            "dispatch_input",
+            "capture"
+          ],
+          "properties": {
+            "prepare": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "commit": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "list": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "activate": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "rollback": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "remove": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "launch": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "reload": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "observe": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "dispatch_input": {
+              "$ref": "#/$defs/lifecycle_command"
+            },
+            "capture": {
+              "$ref": "#/$defs/lifecycle_command"
+            }
+          }
+        }
+      }
+    },
+    "lifecycle_command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "request_schema_version"
+      ],
+      "properties": {
+        "command": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "request_schema_version": {
+          "$ref": "#/$defs/contract_id"
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_payload_upload",
+        "runtime_shader_compilation",
+        "process_creation",
+        "broad_filesystem_access",
+        "credentials_on_xbox"
+      ],
+      "properties": {
+        "native_payload_upload": {
+          "const": false
+        },
+        "runtime_shader_compilation": {
+          "const": false
+        },
+        "process_creation": {
+          "const": false
+        },
+        "broad_filesystem_access": {
+          "const": false
+        },
+        "credentials_on_xbox": {
+          "const": false
+        }
+      }
+    }
+  }
+}

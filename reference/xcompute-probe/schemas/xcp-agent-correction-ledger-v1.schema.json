@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-agent-correction-ledger-v1.schema.json",
+  "title": "XCP agent append-only correction ledger v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ledger_id",
+    "project_id",
+    "intent_sha256",
+    "entries",
+    "head_sha256",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-agent-correction-ledger-v1"
+    },
+    "ledger_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "intent_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "entries": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    },
+    "head_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "open",
+        "passed",
+        "failed",
+        "human_intervention_required"
+      ]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "file_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "before_sha256",
+        "after_sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?!\\.\\.?(?:/|$))(?!.*\\/\\.\\.?(?:/|$))[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$"
+        },
+        "before_sha256": {
+          "oneOf": [
+            {
+              "const": ""
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "after_sha256": {
+          "oneOf": [
+            {
+              "const": ""
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ordinal",
+        "stage",
+        "error",
+        "input_identity",
+        "changes",
+        "retry",
+        "evidence_refs",
+        "previous_entry_sha256",
+        "entry_sha256"
+      ],
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "stage": {
+          "enum": [
+            "creation",
+            "conversion",
+            "local_validation",
+            "live"
+          ]
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "code",
+            "details"
+          ],
+          "properties": {
+            "code": {
+              "$ref": "#/$defs/contract_id"
+            },
+            "details": {
+              "type": "object",
+              "maxProperties": 256
+            }
+          }
+        },
+        "input_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_sha256",
+            "bundle_sha256",
+            "host_profile_sha256"
+          ],
+          "properties": {
+            "project_sha256": {
+              "oneOf": [
+                {
+                  "const": ""
+                },
+                {
+                  "$ref": "#/$defs/sha256"
+                }
+              ]
+            },
+            "bundle_sha256": {
+              "oneOf": [
+                {
+                  "const": ""
+                },
+                {
+                  "$ref": "#/$defs/sha256"
+                }
+              ]
+            },
+            "host_profile_sha256": {
+              "oneOf": [
+                {
+                  "const": ""
+                },
+                {
+                  "$ref": "#/$defs/sha256"
+                }
+              ]
+            }
+          }
+        },
+        "changes": {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/file_change"
+          }
+        },
+        "change_summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "retry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outcome",
+            "error_code"
+          ],
+          "properties": {
+            "outcome": {
+              "enum": [
+                "pass",
+                "fail",
+                "not_run"
+              ]
+            },
+            "error_code": {
+              "type": "string",
+              "maxLength": 160
+            }
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 1024,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "previous_entry_sha256": {
+          "oneOf": [
+            {
+              "const": ""
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "entry_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

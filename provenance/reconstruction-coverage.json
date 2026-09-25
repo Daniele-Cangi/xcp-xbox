@@ -1,0 +1,1268 @@
+{
+  "schema_version": "xcp-reconstruction-coverage-v1",
+  "audit_date": "2026-09-24",
+  "source_repository": "Daniele-Cangi/Xbox-series-Agent",
+  "destination_repository": "Daniele-Cangi/XCP",
+  "hardware_facing_migration_policy": {
+    "components": [
+      "studio_core",
+      "studio_winui",
+      "studio_toolchain_overlay",
+      "c5_lifecycle",
+      "bridge_transport",
+      "worker_native",
+      "xvm_native_worker",
+      "gpu_graph_scheduling",
+      "storage_persistence",
+      "native_module",
+      "topology_broker",
+      "shared_native_abi",
+      "cpu_capsule_framework"
+    ],
+    "default_transformations": [
+      "EXACT_EXTRACTION",
+      "MECHANICAL_RELOCATION"
+    ],
+    "parity_verified_refactor": "PC-only parity plus unchanged hardware-facing contract required",
+    "public_core_replaces_reference": false
+  },
+  "source_refs": {
+    "g1": "e2ff97446c1e5420c6f0c8d84b2bdeee881340f2",
+    "p4_r10": "4acb86a11396f4e3e4416afe6fc6ae18a22d3a9d",
+    "p5_r12_documented": "1f847761fb1e13c8989c88036a64350db95e181e",
+    "draft_p5": "acb696d3ba38d276824054ceeebb82bbe2d82182",
+    "source_main": "b08c0f25299c5e1927746ff1dabb173e22eda67e",
+    "public_core_pr1": "9a3a52d1c3ecd5071886ae1cfa47629849db2996"
+  },
+  "reference_identities": {
+    "g1_1_8_0_manifest_sha256": "86d2cefebd9e01d69e3eb7bd15c17b70a7a501decdcb6f0fbef109515ed46346",
+    "p4_toolchain_1_9_0_manifest_sha256": "39d4db52184b239f75c90115f12e5e3743c5c818a89df966ff66f3cf6236ba69",
+    "p4_r10_zip_sha256": "2f23c8ea24239e486db257df56c7aee34134f6aafdec719d70f96d746496fbb4",
+    "p4_r10_manifest_sha256": "355161fdae93e144d195521a79811e68d5b87c0fedcf2a34536fb540068d3c29",
+    "p5_toolchain_1_9_1_manifest_sha256": "2d53d979a96ec8fce3413fb27cee3a94a2f22fdaa6a0891fe6257b6f6e558130",
+    "p5_r12_zip_sha256": "0e41f63055296fb6b0599ff08749efb8c66af1f4c6442ed606210fca888fed84",
+    "p5_r12_manifest_sha256": "98c467b4de98f6fe2b36cdaa341063525fe251d9041260936b9b43c7bdd1d4cd",
+    "worker_0_1_181_0_msix_sha256": "0b7bf086f2423caefae876239a4ea394afa10346f15b0bf564469aed5d08d06c"
+  },
+  "historical_artifacts": [
+    {
+      "id": "p4_r10_zip",
+      "status": "FOUND_AND_HASH_VERIFIED",
+      "bytes": 98904899,
+      "sha256": "2f23c8ea24239e486db257df56c7aee34134f6aafdec719d70f96d746496fbb4",
+      "transfer": "excluded: historical signed release binary"
+    },
+    {
+      "id": "p5_r12_zip",
+      "status": "FOUND_AND_HASH_VERIFIED",
+      "bytes": 98905296,
+      "sha256": "0e41f63055296fb6b0599ff08749efb8c66af1f4c6442ed606210fca888fed84",
+      "transfer": "excluded: historical signed candidate binary"
+    },
+    {
+      "id": "worker_0_1_181_0_msix_in_both_zips",
+      "status": "FOUND_AND_HASH_VERIFIED",
+      "bytes": 1844458,
+      "sha256": "0b7bf086f2423caefae876239a4ea394afa10346f15b0bf564469aed5d08d06c",
+      "transfer": "excluded: signed historical binary"
+    },
+    {
+      "id": "cpu_capsule_1_3_0_0_msix",
+      "status": "FOUND_AND_HASH_VERIFIED",
+      "bytes": 11532,
+      "sha256": "cecced4658678bd62d6f11642ad2e91453525ee05c14a60f21449a79310ff4ce",
+      "transfer": "excluded: signed historical binary; absent from r10/r12 ZIPs"
+    },
+    {
+      "id": "p4_receipt_and_capture",
+      "status": "DOCUMENTED_ONLY",
+      "transfer": "excluded: operational evidence not sanitized"
+    },
+    {
+      "id": "p5_clean_machine_xbox_result",
+      "status": "MISSING",
+      "transfer": "none: gate remains open"
+    }
+  ],
+  "status_values": [
+    "EXACT_EXTRACTION",
+    "MECHANICAL_RELOCATION",
+    "PARITY_VERIFIED_REFACTOR",
+    "NEW_IMPLEMENTATION",
+    "PENDING_PARITY",
+    "EXCLUDED_WITH_REASON",
+    "BLOCKED"
+  ],
+  "components": [
+    {
+      "id": "public_core_pr1",
+      "role": "New installable API and portable conformance kept from PR #1",
+      "entrypoint": "src/xcp/cli.py",
+      "source": {
+        "ref": "public_core_pr1",
+        "anchor": "src/xcp/cli.py",
+        "sha256": "35fe6e2f3521211ba869e4ad2ca8a61cba6661b6663a6a7b3daf5d2b4b80c6ed",
+        "scope": [
+          "src/xcp/",
+          "tests/"
+        ]
+      },
+      "build_dependencies": [
+        "Python >=3.10",
+        "jsonschema"
+      ],
+      "runtime_dependencies": [
+        "Python"
+      ],
+      "generated": [],
+      "destination": "src/xcp/",
+      "provenance": "first_party_new",
+      "transformation": "NEW_IMPLEMENTATION",
+      "original_tests": [],
+      "transferred_tests": [
+        "tests/test_cli.py",
+        "tests/test_platform_contracts.py",
+        "tests/test_xvm_reference.py"
+      ],
+      "verification": [
+        "PC_TESTED_IN_PR1"
+      ],
+      "status": "NEW_IMPLEMENTATION",
+      "scope_tier": "ADJACENT_PUBLIC_CORE",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Separate portable API; its equivalence to the product reference is not established.",
+      "pc_checks": []
+    },
+    {
+      "id": "g1_frozen_toolchain",
+      "role": "Exact 73-file C5/C6/C7/G1 product base",
+      "entrypoint": "tools/export_xcp_agent_kit.py",
+      "source": {
+        "ref": "g1",
+        "anchor": "xcompute-probe/tools/export_xcp_agent_kit.py",
+        "sha256": "ad4d05a3699f24f8be8e4e4f879c07716196feaf0145f454cc4ad5e8d9fd7d22",
+        "scope": [
+          "exporter KIT_FILES at G1 commit"
+        ]
+      },
+      "build_dependencies": [
+        "Python >=3.11",
+        "jsonschema >=4.18,<5",
+        "72 exact checked-in source files plus generated requirements.txt"
+      ],
+      "runtime_dependencies": [
+        "Python",
+        "jsonschema"
+      ],
+      "generated": [
+        "xcp-agent-kit-manifest.json"
+      ],
+      "destination": "reference/xcompute-probe/",
+      "provenance": "first_party_owner_authorized; 73 exact source files registered per file",
+      "transformation": "EXACT_EXTRACTION code/schemas; PUBLIC_PROFILE_SANITIZATION for four profiles",
+      "original_tests": [
+        "tests/unit/test_xcp_agent_native_creation_v1.py",
+        "tests/unit/test_xcp_agent_native_source_adaptation_v1.py"
+      ],
+      "transferred_tests": [
+        "tests/test_reference_toolchain.py"
+      ],
+      "verification": [
+        "HISTORICAL_G1_IDENTITY_LOCKED",
+        "FOUR_PROFILE_EVIDENCE_REDACTIONS",
+        "PUBLIC_1_8_0_1_MANIFEST_REPRODUCED",
+        "HARDWARE_PENDING_NEW_BUILD"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Live Xbox lifecycle and fidelity remain unverified from a public build.",
+      "pc_checks": []
+    },
+    {
+      "id": "studio_toolchain_overlay",
+      "role": "P4 1.9.0 and P5 1.9.1 C5 lifecycle overlays and kit verification",
+      "entrypoint": "tools/export_xcp_studio_toolchain.py",
+      "source": {
+        "ref": "draft_p5",
+        "anchor": "xcompute-probe/tools/export_xcp_studio_toolchain.py",
+        "sha256": "fff37ce02bc043dd7885ae1b8bc3bf103e319363dc10bee64113939f4a3c204a",
+        "scope": [
+          "tools/export_xcp_studio_toolchain.py",
+          "tools/export_xcp_g2_agent_kit.py",
+          "tools/xcp_agent_lifecycle.py"
+        ]
+      },
+      "build_dependencies": [
+        "g1_frozen_toolchain",
+        "public checked-in 1.9.0/1.9.1 lifecycle overlays"
+      ],
+      "runtime_dependencies": [
+        "Python",
+        "jsonschema"
+      ],
+      "generated": [
+        "xcp-agent-kit-manifest.json"
+      ],
+      "destination": "reference/overlays/; tools/export_reference_toolchain.py",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION lifecycle overlays; PUBLIC_PROFILE_SANITIZATION inherited; NEW_IMPLEMENTATION public export wrapper",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_portable_toolchain_v1.py"
+      ],
+      "transferred_tests": [
+        "tests/test_reference_toolchain.py"
+      ],
+      "verification": [
+        "HISTORICAL_STUDIO_IDENTITIES_LOCKED",
+        "PUBLIC_1_9_0_1_MANIFEST_REPRODUCED",
+        "PUBLIC_1_9_1_1_MANIFEST_REPRODUCED",
+        "ORIGINAL_EXPORTER_CONTROL_FLOW_PARITY_PENDING",
+        "HARDWARE_PENDING_NEW_BUILD"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Studio-to-worker live lifecycle remains hardware-only.",
+      "pc_checks": []
+    },
+    {
+      "id": "studio_core",
+      "role": "Project library, workflow, trust and receipts",
+      "entrypoint": "src/XComputeControlCenter/XComputeControlCenter.Core/XComputeControlCenter.Core.csproj",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeControlCenter/XComputeControlCenter.Core/XComputeControlCenter.Core.csproj",
+        "sha256": "222d6c4e63ad3e7c8e3b6c5320011b9617280a99d22a697408fba64bcf6e76d5",
+        "scope": [
+          "src/XComputeControlCenter/XComputeControlCenter.Core/"
+        ]
+      },
+      "build_dependencies": [
+        ".NET 8 SDK"
+      ],
+      "runtime_dependencies": [
+        "studio_toolchain_overlay",
+        "studio_python_runtime"
+      ],
+      "generated": [
+        "Core assembly"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeControlCenter/XComputeControlCenter.Core/XComputeControlCenter.Core.csproj",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; identical in available draft P5)",
+      "original_tests": [
+        "tests/winui/XComputeControlCenter.Core.Tests/"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/winui/XComputeControlCenter.Core.Tests/"
+      ],
+      "verification": [
+        "SOURCE_TRANSFERRED",
+        "P4_DRAFT_P5_SOURCE_EQUAL",
+        "STAGED_CORE_TESTS_34_34_RELEASE_PASS",
+        "STAGED_WINUI_RELEASE_BUILD_PASS",
+        "STAGED_WINUI_PUBLISH_XBF_PRI_PRESENT",
+        "HARDWARE_PENDING_NEW_BUILD",
+        "LOCAL_WINDOWS_MAIN_WINDOW_STARTUP_PASS_NO_XBOX"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "PC workflow tested from extracted distribution; live console workflow remains open.",
+      "pc_checks": []
+    },
+    {
+      "id": "studio_winui",
+      "role": "WinUI shell for Guided/Expert Create, Adapt, Evolve and Playtest",
+      "entrypoint": "src/XComputeControlCenter/XComputeControlCenter/XComputeControlCenter.csproj",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeControlCenter/XComputeControlCenter/XComputeControlCenter.csproj",
+        "sha256": "7a1f7cbf86e808e1b2a5543ebbb3ecf463bb020c111ba4300ba82f32ea08d3e2",
+        "scope": [
+          "src/XComputeControlCenter/XComputeControlCenter/"
+        ]
+      },
+      "build_dependencies": [
+        "studio_core",
+        ".NET 8",
+        "Microsoft.WindowsAppSDK 1.8.260710003"
+      ],
+      "runtime_dependencies": [
+        "studio_toolchain_overlay",
+        "studio_python_runtime",
+        "Windows App SDK self-contained files"
+      ],
+      "generated": [
+        "XBF",
+        "PRI",
+        "one-folder win-x64 publish"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeControlCenter/XComputeControlCenter/XComputeControlCenter.csproj",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_product_shell_v1.py",
+        "tests/winui/XComputeControlCenter.Core.Tests/"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/winui/XComputeControlCenter.Core.Tests/"
+      ],
+      "verification": [
+        "SOURCE_TRANSFERRED",
+        "P4_DRAFT_P5_SOURCE_EQUAL",
+        "STAGED_CORE_TESTS_34_34_RELEASE_PASS",
+        "STAGED_WINUI_RELEASE_BUILD_PASS",
+        "STAGED_WINUI_PUBLISH_XBF_PRI_PRESENT",
+        "HARDWARE_PENDING_NEW_BUILD",
+        "LOCAL_WINDOWS_MAIN_WINDOW_STARTUP_PASS_NO_XBOX"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "WinUI published and launched locally; full GUI click automation remains open.",
+      "pc_checks": []
+    },
+    {
+      "id": "studio_python_runtime",
+      "role": "Application-local isolated CPython and pinned wheels",
+      "entrypoint": "tools/build_xcp_studio_python_runtime.py",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/tools/build_xcp_studio_python_runtime.py",
+        "sha256": "e402d7731abc874cb83b2e2ca9548b2adb87221b8a908f017b70f34ff67ba7d8",
+        "scope": [
+          "profiles/studio/xcp-studio-python-runtime-v1.json",
+          "tools/build_xcp_studio_python_runtime.py"
+        ]
+      },
+      "build_dependencies": [
+        "CPython 3.13.15 embed ZIP",
+        "five pinned wheel downloads with digests"
+      ],
+      "runtime_dependencies": [
+        "Windows x64"
+      ],
+      "generated": [
+        "xcp-studio-python-runtime-manifest.json",
+        "isolated _pth runtime"
+      ],
+      "destination": "reference/xcompute-probe/tools/build_xcp_studio_python_runtime.py; reference/xcompute-probe/profiles/studio/xcp-studio-python-runtime-v1.json",
+      "provenance": "first_party_builder; upstream redistribution notices pending review",
+      "transformation": "EXACT_EXTRACTION (P4 source; identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_preview_v0_1.py"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/winui/XComputeControlCenter.Core.Tests/StudioPythonRuntimeTests.cs",
+        "tools/verify_development_distribution.py"
+      ],
+      "verification": [
+        "SOURCE_BYTES_P4_DRAFT_P5_IDENTICAL",
+        "PINNED_CPYTHON_3_13_15_AND_FIVE_WHEELS_HASH_VERIFIED",
+        "LOCAL_RUNTIME_BUILD_AND_ISOLATED_SMOKE_PASS",
+        "STUDIO_DEV_FOLDER_RUNTIME_MANIFEST_VERIFIED",
+        "HARDWARE_PENDING_NEW_BUILD"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Pinned Python runs PC project operations; no Xbox claim.",
+      "pc_checks": []
+    },
+    {
+      "id": "project_builder_and_schemas",
+      "role": "Deterministic creative project and bundle",
+      "entrypoint": "tools/xcp_creative_project.py",
+      "source": {
+        "ref": "draft_p5",
+        "anchor": "xcompute-probe/tools/xcp_creative_project.py",
+        "sha256": "637e609801cef8dd4faef2d262e437dc449336a5e1551034ffc0f6d5a6469976",
+        "scope": [
+          "tools/xcp_creative_project.py",
+          "schemas/xcp-creative-*.schema.json",
+          "profiles/creative/"
+        ]
+      },
+      "build_dependencies": [
+        "Python",
+        "jsonschema"
+      ],
+      "runtime_dependencies": [
+        "Python"
+      ],
+      "generated": [
+        "canonical bundle",
+        "bundle manifest"
+      ],
+      "destination": "reference/xcompute-probe/tools/xcp_creative_project.py and schemas/profiles; src/xcp/project.py remains a separate new API; reference/xcompute-probe/samples/creative/hello-shapes/",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION for G1 product source; separate partial refactor in PR #1",
+      "original_tests": [
+        "tests/unit/test_xcp_creative_project_v1.py"
+      ],
+      "transferred_tests": [
+        "tests/test_platform_contracts.py",
+        "reference/xcompute-probe/tests/unit/test_xcp_creative_project_v1.py"
+      ],
+      "verification": [
+        "PC_TESTED_NEW_API",
+        "PARITY_NOT_ESTABLISHED",
+        "G1_PRODUCT_SOURCE_TRANSFERRED_EXACT",
+        "P4_ORIGINAL_PROJECT_BUILDER_23_PC_TESTS_PASS"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "PC project and example build pass; installed Xbox creative host not validated.",
+      "pc_checks": []
+    },
+    {
+      "id": "c5_lifecycle",
+      "role": "Intent, correction ledger and create/build/install/activate/observe/capture",
+      "entrypoint": "tools/xcp_agent_lifecycle.py",
+      "source": {
+        "ref": "draft_p5",
+        "anchor": "xcompute-probe/tools/xcp_agent_lifecycle.py",
+        "sha256": "687b09c78ea23b1de3879348d7d4498f9bc5630d485179341a755f6ae8ce5e24",
+        "scope": [
+          "tools/xcp_agent_lifecycle.py",
+          "schemas/xcp-agent-*.schema.json"
+        ]
+      },
+      "build_dependencies": [
+        "project_builder_and_schemas",
+        "bridge_transport"
+      ],
+      "runtime_dependencies": [
+        "worker protocol 0.73 for live path"
+      ],
+      "generated": [
+        "receipt",
+        "correction ledger",
+        "capture"
+      ],
+      "destination": "reference/xcompute-probe/tools/xcp_agent_lifecycle.py; reference/overlays/studio-1.9.0/tools/xcp_agent_lifecycle.py; reference/overlays/studio-1.9.1/tools/xcp_agent_lifecycle.py",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_complete_lifecycle_v1.py",
+        "tests/unit/test_xcp_agent_native_creation_v1.py"
+      ],
+      "transferred_tests": [
+        "tests/test_reference_toolchain.py"
+      ],
+      "verification": [
+        "SOURCE_TRANSFERRED",
+        "PUBLIC_PRODUCT_KIT_MANIFESTS_REPRODUCED",
+        "HISTORICAL_KIT_IDENTITIES_REFERENCE_ONLY",
+        "LIFECYCLE_BEHAVIOR_PARITY_PENDING",
+        "HARDWARE_PENDING_NEW_BUILD"
+      ],
+      "status": "EXACT_EXTRACTION",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Frozen implementation/source identity; live session and receipt parity open.",
+      "pc_checks": []
+    },
+    {
+      "id": "bridge_transport",
+      "role": "Studio bridge, worker SDK, discovery and authenticated transport",
+      "entrypoint": "tools/xcp_studio_live_adapter.py",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/tools/xcp_studio_live_adapter.py",
+        "sha256": "75c4ea8cde503654eb9a084f038c1208ec9859df4c2ab4fac8286e0aa60184b7",
+        "scope": [
+          "tools/xcp_studio_live_adapter.py",
+          "tools/xcp_worker_transport.py",
+          "schemas/worker-sdk-contract-v1.json"
+        ]
+      },
+      "build_dependencies": [
+        "Python"
+      ],
+      "runtime_dependencies": [
+        "worker protocol 0.73",
+        "ephemeral external trust/session context"
+      ],
+      "generated": [
+        "structured worker result"
+      ],
+      "destination": "reference/xcompute-probe/tools/xcp_studio_live_adapter.py; reference/xcompute-probe/tools/xcp_worker_transport.py",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION for reference bridge, transport and synthetic adapter test",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_live_adapter_v1.py",
+        "tests/unit/test_worker_sdk_contract_v1.py"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/unit/test_xcp_studio_live_adapter_v1.py",
+        "tests/test_reference_worker_transport.py"
+      ],
+      "verification": [
+        "EXACT_EXTRACTION",
+        "PC_SYNTHETIC_ADAPTER_7_TESTS_PASS",
+        "PC_SYNTHETIC_TRANSPORT_7_TESTS_PASS",
+        "HARDWARE_PENDING_NEW_BUILD"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "PC adapter and transport tests use synthetic/mock worker responses; real Xbox transport open.",
+      "pc_checks": []
+    },
+    {
+      "id": "adaptation_semantics",
+      "role": "Godot source inventory, Source Model, semantic IR, planning and lowering",
+      "entrypoint": "tools/xcp_source_adapt.py",
+      "source": {
+        "ref": "draft_p5",
+        "anchor": "xcompute-probe/tools/xcp_source_adapt.py",
+        "sha256": "412ad9e82198668e13a52ac4c6d5bf8ff2f14ff59280eeed14654e3d24e42820",
+        "scope": [
+          "tools/xcp_adaptation/",
+          "tools/xcp_source_adapt.py",
+          "schemas/xcp-creative-source-*.schema.json",
+          "schemas/xcp-creative-semantic-*.schema.json"
+        ]
+      },
+      "build_dependencies": [
+        "Python",
+        "jsonschema",
+        "project_builder_and_schemas"
+      ],
+      "runtime_dependencies": [
+        "authorized source files",
+        "optional Godot for engine-assisted observation"
+      ],
+      "generated": [
+        "source inventory",
+        "semantic IR",
+        "adaptation plan"
+      ],
+      "destination": "reference/xcompute-probe/tools/xcp_source_adapt.py; reference/xcompute-probe/tools/xcp_adaptation/; src/xcp/adapters/godot.py remains separate",
+      "provenance": "first_party_code; third-party fixtures excluded",
+      "transformation": "partial new implementation in PR #1",
+      "original_tests": [
+        "tests/unit/test_godot_source_model_v1.py",
+        "tests/unit/test_godot_adaptive_semantic_spine_v1.py"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/unit/test_xcp_source_adapt_tool_v1.py"
+      ],
+      "verification": [
+        "PARITY_NOT_ESTABLISHED",
+        "ORIGINAL_SYNTHETIC_PC_ADAPTATION_TESTS_TRANSFERRED"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "PREVIEW_AND_LAB",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Synthetic PC adaptation tests pass; external-source fidelity and human playtest open.",
+      "pc_checks": []
+    },
+    {
+      "id": "project_evolution",
+      "role": "Versioned project evolution and reconciliation",
+      "entrypoint": "tools/xcp_project_evolve.py",
+      "source": {
+        "ref": "draft_p5",
+        "anchor": "xcompute-probe/tools/xcp_project_evolve.py",
+        "sha256": "7c9da59d117b8d82c467dd9866a5fe6375a19359c682caa540fe2c4a982593ad",
+        "scope": [
+          "tools/xcp_project_evolve.py",
+          "schemas/xcp-creative-evolution-*.schema.json"
+        ]
+      },
+      "build_dependencies": [
+        "project_builder_and_schemas",
+        "adaptation_semantics"
+      ],
+      "runtime_dependencies": [
+        "Python"
+      ],
+      "generated": [
+        "evolution report",
+        "reconciliation plan"
+      ],
+      "destination": "reference/xcompute-probe/tools/xcp_project_evolve.py and related schemas",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION for G1 product source",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_project_library_portable_toolchain_v1.py"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/unit/test_xcp_project_evolve_v1.py"
+      ],
+      "verification": [
+        "SOURCE_IDENTIFIED",
+        "G1_PRODUCT_SOURCE_TRANSFERRED_EXACT",
+        "ORIGINAL_PC_TESTS_TRANSFERRED_WITH_PUBLIC_PROFILE_ASSERTION_ADAPTED"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "PREVIEW_AND_LAB",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Synthetic PC evolution tests pass; Xbox live validation and fidelity open.",
+      "pc_checks": []
+    },
+    {
+      "id": "xvm_python_reference",
+      "role": "ISA, assembler, verifier, interpreter, fuel and snapshots",
+      "entrypoint": "tools/xvm_reference.py",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/tools/xvm_reference.py",
+        "sha256": "d45817dd0cbeb348d09729fc515186b2ff7c01212eb2e5e08f3a8cedecc0eb15",
+        "scope": [
+          "tools/xvm_reference.py",
+          "tools/xvm_assembler.py",
+          "schemas/xvm-isa-v2.json",
+          "samples/xvm/*.xvmasm",
+          "samples/xvm/xvm-v2-*.json"
+        ]
+      },
+      "build_dependencies": [
+        "Python"
+      ],
+      "runtime_dependencies": [
+        "Python"
+      ],
+      "generated": [
+        "canonical XVM artifact"
+      ],
+      "destination": "reference/xcompute-probe/tools/xvm_reference.py; reference/xcompute-probe/tools/xvm_assembler.py; reference/xcompute-probe/samples/xvm/; src/xcp/xvm/ remains separate",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION for P4 Python reference and samples; separate new PR #1 API",
+      "original_tests": [
+        "tests/unit/test_xvm_reference.py"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/unit/test_xvm_reference.py",
+        "reference/xcompute-probe/tests/unit/test_agent_native_xvm_toolchain_v1.py",
+        "tests/test_reference_xvm_parity.py",
+        "tests/test_reference_xvm_assembler.py"
+      ],
+      "verification": [
+        "EXACT_EXTRACTION",
+        "P4_PYTHON_REFERENCE_25_PC_TESTS_PASS",
+        "P4_GENERATED_ISA_HEADER_CHECK_PASS",
+        "PYTHON_CPP_EXECUTION_PARITY_PENDING",
+        "NO_NEW_XBOX_VALIDATION",
+        "P4_PR1_PYTHON_EXECUTION_5_PC_VECTORS_MATCH",
+        "P4_PR1_PYTHON_REJECTION_2_PC_VECTORS_MATCH",
+        "P4_ASSEMBLER_VALIDATE_EXECUTE_2_PC_SOURCES_PASS"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "PREVIEW_AND_LAB",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Portable interpreter/assembler execute; native worker parity and GPU execution open.",
+      "pc_checks": []
+    },
+    {
+      "id": "xvm_native_worker",
+      "role": "C++ admission, verifier, CPU interpreter, fuel and snapshot/resume",
+      "entrypoint": "src/XComputeProbe/runtime/WorkerXvmRuntime.cpp",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeProbe/runtime/WorkerXvmRuntime.cpp",
+        "sha256": "5015c97fed5f4020ce4231421802ff275a2e61031f96df8cd674c7e7bbf965ab",
+        "scope": [
+          "src/XComputeProbe/runtime/WorkerXvm*",
+          "tools/generate_xvm_isa_header.py"
+        ]
+      },
+      "build_dependencies": [
+        "worker_native",
+        "shared_native_abi",
+        "generated ISA header"
+      ],
+      "runtime_dependencies": [
+        "worker package"
+      ],
+      "generated": [
+        "WorkerXvmIsaV2.generated.h"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeProbe/runtime/WorkerXvmRuntime.cpp; reference/xcompute-probe/tools/generate_xvm_isa_header.py",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_agent_native_xvm_toolchain_v1.py"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION",
+        "PC_BUILD_ONLY_RUNTIME_PARITY_PENDING",
+        "P4_GENERATED_ISA_HEADER_CHECK_PASS"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "PREVIEW_AND_LAB",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Native code compiles, but no real worker execution or CPU/GPU parity from this build.",
+      "pc_checks": [
+        "tools/check_reference_worker_graph.py",
+        "reference/xcompute-probe/tools/generate_xvm_isa_header.py"
+      ]
+    },
+    {
+      "id": "worker_native",
+      "role": "Xbox public-UWP worker, Creative Host, install/activation, rendering/input/audio/state/observation",
+      "entrypoint": "src/XComputeProbe/XComputeProbe.vcxproj",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeProbe/XComputeProbe.vcxproj",
+        "sha256": "0ba59b5522d70ff90714b075076514bff19fcb421b92eadf75d1de9d524b7a29",
+        "scope": [
+          "src/XComputeProbe/",
+          "src/shared/"
+        ]
+      },
+      "build_dependencies": [
+        "MSBuild v145",
+        "Windows SDK 10.0",
+        "native_module",
+        "topology_broker",
+        "shared_native_abi",
+        "HLSL compiler",
+        "generated headers"
+      ],
+      "runtime_dependencies": [
+        "cpu_capsule_framework >=1.3.0.0",
+        "Microsoft.VCLibs.140.00 >=14.0.33519.0"
+      ],
+      "generated": [
+        "worker MSIX",
+        "compiled shaders"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeProbe/XComputeProbe.vcxproj",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_xcp_creative_foreground_runtime_v1.py",
+        "tests/unit/test_xcp_creative_install_lifecycle_v1.py"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION",
+        "NATIVE_MODULE_AND_BROKER_PRESENT_IN_BUILT_MSIX",
+        "BUILT_MSIX_CAPSULE_AND_VCLIBS_DEPENDENCIES_VERIFIED"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Development package builds; install, activation, execution and state preservation on Xbox open.",
+      "pc_checks": [
+        "tools/check_reference_worker_graph.py",
+        "tools/check_development_packages.py"
+      ]
+    },
+    {
+      "id": "creative_host_lifecycle",
+      "role": "Worker Creative Host install, activation, foreground, input and observation contract",
+      "entrypoint": "src/XComputeProbe/runtime/WorkerCreativeInstallRuntime.cpp",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeProbe/runtime/WorkerCreativeInstallRuntime.cpp",
+        "sha256": "c38e80427e9b121e8337768d8332d1dacef224e8c616f7819d520bada541d897",
+        "scope": [
+          "src/XComputeProbe/runtime/WorkerCreative*",
+          "src/XComputeProbe/runtime/WorkerCommandServer*",
+          "profiles/creative/xcp-creative-host-development-v1.json"
+        ]
+      },
+      "build_dependencies": [
+        "worker_native",
+        "shared_native_abi"
+      ],
+      "runtime_dependencies": [
+        "worker package",
+        "CPU Capsule framework for applicable paths"
+      ],
+      "generated": [
+        "installed bundle and activation records",
+        "foreground and capture results"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeProbe/runtime/WorkerCreative*; reference/xcompute-probe/profiles/creative/xcp-creative-host-development-v1.json",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION",
+      "original_tests": [
+        "tests/unit/test_xcp_creative_install_lifecycle_v1.py"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/unit/test_xcp_creative_install_lifecycle_v1.py"
+      ],
+      "verification": [
+        "P4_SOURCE_AND_PROFILE_EXACT",
+        "PC_SCHEMA_AND_STATIC_CONTRACT_6_TESTS_PASS",
+        "LOCAL_NATIVE_BUILD_PASS",
+        "RUNTIME_AND_XBOX_BEHAVIOR_PENDING"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "PC tests are static contracts; activation/foreground/rollback require Xbox.",
+      "pc_checks": []
+    },
+    {
+      "id": "gpu_graph_scheduling",
+      "role": "Offline HLSL, XVM GPU, graph runtime, async jobs, cancellation and result publication",
+      "entrypoint": "src/XComputeProbe/runtime/WorkerGpuXvmExecutor.cpp",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeProbe/runtime/WorkerGpuXvmExecutor.cpp",
+        "sha256": "336af29195418f4d402cc0b129d22df5df25f02c1b413bfd660e4f747483bdaf",
+        "scope": [
+          "src/XComputeProbe/shaders/",
+          "src/XComputeProbe/runtime/WorkerGpu*",
+          "src/XComputeProbe/runtime/WorkerAsyncJobRuntime.*",
+          "src/XComputeProbe/runtime/WorkerArtifactPublicationRuntime.*"
+        ]
+      },
+      "build_dependencies": [
+        "worker_native",
+        "HLSL compiler",
+        "shader/profile mapping"
+      ],
+      "runtime_dependencies": [
+        "bounded GPU worker admission"
+      ],
+      "generated": [
+        "compiled shader objects",
+        "GPU evidence"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeProbe/runtime/WorkerGpuXvmExecutor.cpp",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_gpu_xvm_verified_production_mode_v1.py",
+        "tests/unit/test_gpu_xvm_full_isa_v2_complete_matrix_v1.py"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION",
+        "PC_BUILD_ONLY_RUNTIME_PARITY_PENDING"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Compiled in worker; GPU scheduling and rendering require Xbox.",
+      "pc_checks": [
+        "tools/build_development_distribution.ps1"
+      ]
+    },
+    {
+      "id": "storage_persistence",
+      "role": "Artifact store, CAS, reservation ledger, recovery and persistent compute",
+      "entrypoint": "src/XComputeProbe/runtime/WorkerArtifactStore.cpp",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeProbe/runtime/WorkerArtifactStore.cpp",
+        "sha256": "a82cce780692108f8b105aca503f20e8844842baa80e9ea02b5cd9a97d769d1e",
+        "scope": [
+          "src/XComputeProbe/runtime/WorkerArtifact*",
+          "src/XComputeProbe/runtime/WorkerContentAddressedStoreRecovery.*",
+          "src/XComputeProbe/runtime/WorkerStorage*",
+          "src/shared/XcpStorageReservationLedger.h"
+        ]
+      },
+      "build_dependencies": [
+        "worker_native",
+        "shared_native_abi",
+        "topology_broker"
+      ],
+      "runtime_dependencies": [
+        "bounded local Xbox storage"
+      ],
+      "generated": [
+        "CAS/journal/checkpoint artifacts"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeProbe/runtime/WorkerArtifactStore.cpp; reference/xcompute-probe/src/XComputeProbe/runtime/WorkerContentAddressedStoreRecovery.cpp; reference/xcompute-probe/schemas/xcp-content-addressed-store-recovery-v1.runtime-*.schema.json",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_xcp_content_addressed_store_recovery_v1.py",
+        "tests/unit/test_xcp_storage_scale_characterization_v1.py"
+      ],
+      "transferred_tests": [
+        "tests/test_reference_storage_recovery.py"
+      ],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION",
+        "PC_BUILD_ONLY_RUNTIME_PARITY_PENDING"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "PC checks cover schemas, journal/root safety wiring, fault cases and reservation ordering statically. The original gate tests also bind older package identities, Xbox measurement hashes and trusted-live runners, so those historical assertions are not imported as development runtime evidence. Restart/recovery and storage-scale behavior require Xbox.",
+      "pc_checks": [
+        "tools/build_development_distribution.ps1"
+      ]
+    },
+    {
+      "id": "native_module",
+      "role": "Worker deployment DLL",
+      "entrypoint": "src/XComputeProbeNativeModule/XComputeProbeNativeModule.vcxproj",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeProbeNativeModule/XComputeProbeNativeModule.vcxproj",
+        "sha256": "89a91ddac6da66707e9eac5dcda14e4fbec8d709bca38c325ce7da08faf68579",
+        "scope": [
+          "src/XComputeProbeNativeModule/"
+        ]
+      },
+      "build_dependencies": [
+        "MSBuild v145",
+        "Windows SDK"
+      ],
+      "runtime_dependencies": [
+        "worker package"
+      ],
+      "generated": [
+        "XComputeNativeModule.dll"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeProbeNativeModule/XComputeProbeNativeModule.vcxproj",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tools/build.ps1"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "DLL packaged; on-device registration and activation open.",
+      "pc_checks": [
+        "tools/build_development_distribution.ps1"
+      ]
+    },
+    {
+      "id": "topology_broker",
+      "role": "Conditional WinRT App Service broker and persistent-compute coordinator",
+      "entrypoint": "src/XComputeTopologyBroker/XComputeTopologyBroker.vcxproj",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeTopologyBroker/XComputeTopologyBroker.vcxproj",
+        "sha256": "c909ab9956a8725e4b2a1103b4b7fe07eca3e56b6b6e9fdce4b1deda7c799516",
+        "scope": [
+          "src/XComputeTopologyBroker/"
+        ]
+      },
+      "build_dependencies": [
+        "MSBuild v145",
+        "MIDL",
+        "CppWinRT",
+        "shared_native_abi"
+      ],
+      "runtime_dependencies": [
+        "worker App Service registration"
+      ],
+      "generated": [
+        "WinMD",
+        "module.g.cpp",
+        "BrokerTask.g.h",
+        "broker DLL"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeTopologyBroker/XComputeTopologyBroker.vcxproj",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tools/package.ps1"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "DLL/WinMD packaged; on-device App Service behavior open.",
+      "pc_checks": [
+        "tools/build_development_distribution.ps1"
+      ]
+    },
+    {
+      "id": "shared_native_abi",
+      "role": "Capsule ABI and topology/storage ledgers",
+      "entrypoint": "src/shared/XComputeCpuCapsuleHotKernelV1Abi.h",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/shared/XComputeCpuCapsuleHotKernelV1Abi.h",
+        "sha256": "5cf3c272ac20f2b443a34f0e9795dc66bf3212906073bbffc6417d22b3627ee6",
+        "scope": [
+          "src/shared/"
+        ]
+      },
+      "build_dependencies": [
+        "C++ headers"
+      ],
+      "runtime_dependencies": [
+        "same ABI in worker/capsule/broker"
+      ],
+      "generated": [],
+      "destination": "reference/xcompute-probe/src/shared/XComputeCpuCapsuleHotKernelV1Abi.h",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tools/package.ps1"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Header and linked builds present; runtime ABI execution open.",
+      "pc_checks": [
+        "tools/build_development_distribution.ps1"
+      ]
+    },
+    {
+      "id": "cpu_capsule_framework",
+      "role": "Signed framework package and CPU capsule module",
+      "entrypoint": "src/XComputeCpuCapsule/XComputeCpuCapsule.vcxproj",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/src/XComputeCpuCapsule/XComputeCpuCapsule.vcxproj",
+        "sha256": "29f5cb2d9614b9909c5b02807ba35d60c581bd5a7ced4f8d242abe65f2c5c002",
+        "scope": [
+          "src/XComputeCpuCapsule/",
+          "tools/package-cpu-capsule-package-graph-v1.ps1"
+        ]
+      },
+      "build_dependencies": [
+        "MSBuild v145",
+        "MakeAppx",
+        "development signing",
+        "shared_native_abi"
+      ],
+      "runtime_dependencies": [
+        "install before worker",
+        "same publisher as worker",
+        "version >=1.3.0.0"
+      ],
+      "generated": [
+        "framework MSIX",
+        "signed development certificate (private key external)"
+      ],
+      "destination": "reference/xcompute-probe/src/XComputeCpuCapsule/XComputeCpuCapsule.vcxproj",
+      "provenance": "first_party_owner_authorized",
+      "transformation": "EXACT_EXTRACTION (P4 source; anchor identical in available draft P5)",
+      "original_tests": [
+        "tests/unit/test_cpu_capsule_package_graph_v1.py"
+      ],
+      "transferred_tests": [],
+      "verification": [
+        "SOURCE_TRANSFERRED_P4",
+        "LOCAL_MSBUILD_V145_RELEASE_PASS",
+        "NO_NEW_XBOX_VALIDATION",
+        "LOCAL_1_3_0_0_DLL_BUILD_PASS",
+        "UNSIGNED_FRAMEWORK_MSIX_BUILT_AND_GRAPH_VERIFIED",
+        "DEVELOPMENT_SIGNING_PENDING"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "DLL/framework package signed; dependency loading and CPU execution on Xbox open.",
+      "pc_checks": [
+        "tools/check_development_packages.py"
+      ]
+    },
+    {
+      "id": "build_packaging",
+      "role": "Native build, capsule packaging, Studio publish, historical verifier and development distribution",
+      "entrypoint": "tools/build.ps1",
+      "source": {
+        "ref": "p4_r10",
+        "anchor": "xcompute-probe/tools/build.ps1",
+        "sha256": "886577b15ae4ebe9b315328976b9dcd441c0c9d48b15c05c565001191421b627",
+        "scope": [
+          "tools/build.ps1",
+          "tools/package.ps1",
+          "tools/package_xcp_studio_preview.py",
+          "packaging/studio-preview/"
+        ]
+      },
+      "build_dependencies": [
+        "MSBuild v145",
+        "Windows SDK",
+        ".NET 8",
+        "Python",
+        "signing tool"
+      ],
+      "runtime_dependencies": [
+        "development signing identity and certificate trust"
+      ],
+      "generated": [
+        "worker/framework MSIX",
+        "Studio one-folder publish and development assembly",
+        "development manifests"
+      ],
+      "destination": "reference/xcompute-probe/tools/build.ps1 (frozen); tools/prepare_reference_worker.py; tools/stage_development_package_identities.py; tools/build_development_distribution.ps1; tools/assemble_development_distribution.py; tools/verify_development_distribution.py",
+      "provenance": "first_party_code; external runtime notices pending",
+      "transformation": "EXACT_EXTRACTION (four scripts) plus MECHANICAL_RELOCATION (OneDrive error text); new public wrappers",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_preview_v0_1.py"
+      ],
+      "transferred_tests": [
+        "tools/verify_development_distribution.py"
+      ],
+      "verification": [
+        "P4_NATIVE_BUILD_TOOLING_TRANSFERRED",
+        "LOCAL_WORKER_MODULE_BROKER_RELEASE_BUILD_PASS",
+        "LOCAL_UNSIGNED_CAPSULE_1_3_0_0_BUILD_PASS",
+        "BUILT_PACKAGE_GRAPH_VERIFIED",
+        "SDK_VCLIBS_IDENTITY_AND_LOCAL_SIGNATURE_VALID",
+        "DEVELOPMENT_SIGNING_CI_PASS_INSTALLATION_PENDING",
+        "LOCAL_FRESH_ZIP_EXTRACTION_AND_STUDIO_CORE_PROJECT_WORKFLOW_PASS"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "Fresh extraction and PC workflow pass; device installation remains open.",
+      "pc_checks": [
+        "tools/assemble_development_distribution.py",
+        "tools/verify_development_distribution.py"
+      ]
+    },
+    {
+      "id": "community_conformance",
+      "role": "Portable parity, Windows build and safe Xbox evidence protocol",
+      "entrypoint": "tools/invoke-xcp-studio-p5-clean-machine-validation.ps1",
+      "source": {
+        "ref": "draft_p5",
+        "anchor": "xcompute-probe/tools/invoke-xcp-studio-p5-clean-machine-validation.ps1",
+        "sha256": "e277f5e697980696d61f8b20e256668ed9d6911ca6adab9494100d8c8b609222",
+        "scope": [
+          "tests/unit/",
+          "tests/winui/",
+          "docs/studio-preview/"
+        ]
+      },
+      "build_dependencies": [
+        "Python",
+        ".NET 8",
+        "Windows toolchain"
+      ],
+      "runtime_dependencies": [
+        "Xbox Developer Mode only for community hardware tests"
+      ],
+      "generated": [
+        "redacted reviewable report"
+      ],
+      "destination": ".github/workflows/tests.yml; reference/xcompute-probe/tests/winui/; reference/xcompute-probe/tests/unit/test_xcp_studio_live_adapter_v1.py; tests/test_reference_worker_transport.py; docs/COMMUNITY_XBOX_REPRODUCTION.md",
+      "provenance": "first_party_tests; operational evidence excluded",
+      "transformation": "EXACT_EXTRACTION for selected original tests; NEW_IMPLEMENTATION for PC vectors and CI",
+      "original_tests": [
+        "tests/unit/test_xcp_studio_preview_v0_1.py",
+        "tests/winui/XComputeControlCenter.Core.Tests/"
+      ],
+      "transferred_tests": [
+        "reference/xcompute-probe/tests/winui/XComputeControlCenter.Core.Tests/",
+        "reference/xcompute-probe/tests/unit/test_xcp_studio_live_adapter_v1.py",
+        "tests/test_reference_worker_transport.py",
+        "tests/test_xvm_reference.py"
+      ],
+      "verification": [
+        "HISTORICAL_HARDWARE_REFERENCE_P4_ONLY",
+        "HARDWARE_PENDING_NEW_BUILD",
+        "WINDOWS_STUDIO_CORE_34_TESTS_PASS",
+        "WINDOWS_WORKER_BUILD_AND_SIGN_PASS",
+        "PC_ADAPTER_AND_TRANSPORT_14_TESTS_PASS",
+        "COMMUNITY_CONSOLE_ATTEMPT_PROTOCOL_PREPARED_NOT_RUN"
+      ],
+      "status": "PENDING_PARITY",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "residual_gap": "PC checks and attempt protocol exist; no new community hardware evidence yet.",
+      "pc_checks": []
+    }
+  ],
+  "public_reconstruction_identities": {
+    "public_g1_1_8_0_1_manifest_sha256": "63bc6a745ef24f78b06762689b29dea921457d5a270c7c655ffb1b8a8aad94c7",
+    "public_studio_1_9_0_1_manifest_sha256": "3f4db5a9a671db35634c1930c84772e8a5f6b3295d2fdb5363ba6c32c1ab7e57",
+    "public_studio_1_9_1_1_manifest_sha256": "827237cb78a5546c42aa853ff13a7a6847fb8b86a8ba7bfdc1979f466acfc03d"
+  },
+  "capability_decisions": [
+    {
+      "id": "p4_g1_studio_to_worker_preview",
+      "scope_tier": "P4_G1_PREVIEW",
+      "disposition": "TRANSFERRED",
+      "basis": "Studio, toolchain, lifecycle, transport, worker, native module, broker and Capsule source/build graph; PC build and package checks",
+      "open": "Xbox install, activation, transport, rendering, input, audio and state evidence"
+    },
+    {
+      "id": "pc_creation_adaptation_evolution",
+      "scope_tier": "PREVIEW_AND_LAB",
+      "disposition": "TRANSFERRED",
+      "basis": "Original builder, adaptation and evolution tools plus synthetic PC tests and extracted Studio Core workflow",
+      "open": "External source fidelity and human/on-device playtest"
+    },
+    {
+      "id": "xvm_cpu_assembler_reference",
+      "scope_tier": "PREVIEW_AND_LAB",
+      "disposition": "TRANSFERRED",
+      "basis": "Original ISA, assembler, interpreter, samples and PC execution tests",
+      "open": "Native worker parity"
+    },
+    {
+      "id": "gpu_xvm_runtime",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "TRANSFERRED",
+      "basis": "P4 native/HLSL source included and worker compiled",
+      "open": "GPU execution, scheduling, differential parity and performance on Xbox"
+    },
+    {
+      "id": "cas_recovery_storage_scale",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "TRANSFERRED",
+      "basis": "P4 native source, two recovery schemas and PC static contract checks; worker compiled",
+      "open": "Restart/redeploy/recovery and storage scale measurement on Xbox"
+    },
+    {
+      "id": "process_topology_persistent_compute",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "TRANSFERRED",
+      "basis": "P4 broker, native ABI and coordinator source compiled",
+      "open": "App Service topology and persistent compute behavior on Xbox"
+    },
+    {
+      "id": "broader_lab_live_test_corpus",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "DEFERRED",
+      "basis": "Original live runners and evidence-bound tests are not needed for PC package assembly",
+      "open": "Transfer selected PC-only cases after removing operational evidence dependencies; live cases require Xbox"
+    },
+    {
+      "id": "historical_signed_packages",
+      "scope_tier": "HISTORICAL_REFERENCE",
+      "disposition": "EXCLUDED",
+      "basis": "Historical identity and hashes remain in audit; signing keys and binaries are not development source",
+      "open": "No import planned"
+    },
+    {
+      "id": "third_party_game_assets",
+      "scope_tier": "LABORATORY_EXTENSION",
+      "disposition": "EXCLUDED",
+      "basis": "Provenance/licensing is not established; synthetic project sample is included",
+      "open": "Contributors may use their own authorized assets locally"
+    }
+  ]
+}

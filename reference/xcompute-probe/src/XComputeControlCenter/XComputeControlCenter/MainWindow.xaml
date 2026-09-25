@@ -1,0 +1,170 @@
+<Window
+    x:Class="XComputeControlCenter.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="XCP Studio">
+    <Grid
+        x:Name="ShellRoot"
+        Background="{StaticResource StudioBackgroundBrush}"
+        Loaded="ShellRoot_Loaded">
+        <NavigationView
+            x:Name="ShellNavigation"
+            PaneDisplayMode="Left"
+            IsSettingsVisible="False"
+            IsBackButtonVisible="Collapsed"
+            IsPaneToggleButtonVisible="True"
+            IsPaneOpen="True"
+            OpenPaneLength="244"
+            CompactPaneLength="52"
+            SelectionFollowsFocus="Enabled"
+            SelectionChanged="ShellNavigation_SelectionChanged">
+
+            <NavigationView.PaneHeader>
+                <StackPanel Padding="10,18,8,18" Spacing="2">
+                    <TextBlock
+                        Text="XCP"
+                        FontSize="25"
+                        FontWeight="SemiBold"
+                        CharacterSpacing="360"
+                        Foreground="{StaticResource StudioAccentBrush}"
+                        AutomationProperties.Name="XCP Studio" />
+                    <TextBlock
+                        Text="CREATIVE STUDIO"
+                        FontSize="10.5"
+                        CharacterSpacing="120"
+                        Foreground="{StaticResource StudioSecondaryTextBrush}" />
+                </StackPanel>
+            </NavigationView.PaneHeader>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    x:Name="HomeItem"
+                    Content="Home"
+                    Tag="home"
+                    Icon="Home"
+                    AutomationProperties.Name="Navigate to Home" />
+                <NavigationViewItem
+                    Content="Create from zero"
+                    Tag="create"
+                    Icon="Add"
+                    AutomationProperties.Name="Navigate to Create from zero" />
+                <NavigationViewItem
+                    Content="Project workspace"
+                    Tag="projects"
+                    Icon="Folder"
+                    AutomationProperties.Name="Navigate to Project workspace" />
+                <NavigationViewItem
+                    Content="Adapt source"
+                    Tag="adapt"
+                    Icon="Download"
+                    AutomationProperties.Name="Navigate to Adapt external source" />
+                <NavigationViewItem
+                    Content="Evolve project"
+                    Tag="evolve"
+                    Icon="Sync"
+                    AutomationProperties.Name="Navigate to Project evolution" />
+                <NavigationViewItem
+                    Content="Playtest on Xbox"
+                    Tag="playtest"
+                    Icon="Play"
+                    AutomationProperties.Name="Navigate to Playtest" />
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem
+                    Content="Xbox device"
+                    Tag="devices"
+                    Icon="World"
+                    AutomationProperties.Name="Navigate to Xbox device" />
+                <NavigationViewItem
+                    Content="Evidence"
+                    Tag="evidence"
+                    Icon="Permissions"
+                    AutomationProperties.Name="Navigate to Evidence" />
+            </NavigationView.FooterMenuItems>
+
+            <NavigationView.PaneFooter>
+                <StackPanel Padding="16,8,12,14" Spacing="3">
+                    <Border
+                        Height="1"
+                        Background="{StaticResource StudioBorderBrush}"
+                        Margin="0,0,0,8" />
+                    <TextBlock
+                        Text="C5 · C6 · C7"
+                        FontFamily="Cascadia Mono, Consolas"
+                        FontSize="10.5"
+                        Foreground="{StaticResource StudioAccentBrush}" />
+                    <TextBlock
+                        Text="worker .166 preserved"
+                        FontSize="10.5"
+                        Foreground="{StaticResource StudioMutedTextBrush}" />
+                </StackPanel>
+            </NavigationView.PaneFooter>
+
+            <NavigationView.Content>
+                <Grid Padding="28,16,28,20" RowSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Spacing="2" VerticalAlignment="Center">
+                            <TextBlock
+                                Text="{x:Bind ViewModel.Selected.Title, Mode=OneWay}"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                CharacterSpacing="65" />
+                            <TextBlock
+                                Text="{x:Bind ViewModel.Selected.Description, Mode=OneWay}"
+                                FontSize="11.5"
+                                TextTrimming="CharacterEllipsis"
+                                Foreground="{StaticResource StudioMutedTextBrush}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Orientation="Horizontal"
+                            Spacing="12"
+                            VerticalAlignment="Center">
+                            <StackPanel Spacing="1">
+                                <TextBlock
+                                    Text="{x:Bind ViewModel.LocalState, Mode=OneWay}"
+                                    FontSize="11.5"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Text="{x:Bind ViewModel.DeviceState, Mode=OneWay}"
+                                    FontSize="10.5"
+                                    TextAlignment="Right"
+                                    Foreground="{StaticResource StudioMutedTextBrush}" />
+                            </StackPanel>
+                            <ProgressRing
+                                Width="22"
+                                Height="22"
+                                IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" />
+                            <Button
+                                Width="34"
+                                Height="34"
+                                Padding="0"
+                                Click="Refresh_Click"
+                                ToolTipService.ToolTip="Refresh authoritative contracts"
+                                AutomationProperties.Name="Refresh authoritative contracts">
+                                <SymbolIcon Symbol="Refresh" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <Frame
+                        x:Name="ContentFrame"
+                        Grid.Row="1"
+                        IsNavigationStackEnabled="False" />
+                </Grid>
+            </NavigationView.Content>
+        </NavigationView>
+    </Grid>
+</Window>

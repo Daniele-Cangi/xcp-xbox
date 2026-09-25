@@ -1,0 +1,31 @@
+{
+  "schema_version": "xcp-creative-project-v1",
+  "project_id": "hello-shapes",
+  "version": "1.0.0",
+  "title": "Hello Shapes",
+  "description": "A neutral interactive canvas project used to validate the portable XCP creative bundle foundation.",
+  "entry_module": "main",
+  "modules": [
+    {
+      "id": "main",
+      "kind": "xcp.canvas2d.v1",
+      "path": "modules/main.json",
+      "depends_on": []
+    }
+  ],
+  "assets": [
+    {
+      "id": "palette",
+      "path": "assets/palette.json",
+      "media_type": "application/json"
+    }
+  ],
+  "requested_capabilities": [
+    "input.gamepad",
+    "render.canvas2d"
+  ],
+  "tags": [
+    "foundation",
+    "interactive"
+  ]
+}

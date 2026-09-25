@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-world2d-campaign-module-v1.schema.json",
+  "title": "XCP deterministic multi-scene world2d campaign module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "entry_scene",
+    "scenes",
+    "transitions",
+    "input_bindings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-world2d-campaign-module-v1"
+    },
+    "entry_scene": {
+      "$ref": "#/$defs/identifier"
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 128,
+      "items": {
+        "$ref": "#/$defs/scene"
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/transition"
+      }
+    },
+    "input_bindings": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/input_binding"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "module_id",
+        "pack_id",
+        "ordinal",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "module_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "pack_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "from_scene",
+        "event",
+        "to_scene"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "from_scene": {
+          "$ref": "#/$defs/identifier"
+        },
+        "event": {
+          "const": "world.level-completed"
+        },
+        "to_scene": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "source",
+        "command"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "source": {
+          "enum": [
+            "gamepad.a",
+            "keyboard.space"
+          ]
+        },
+        "command": {
+          "const": "advance_scene"
+        }
+      }
+    }
+  }
+}

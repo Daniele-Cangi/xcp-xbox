@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-reconciliation-plan-v1.schema.json",
+  "title": "XCP three-way source/overlay reconciliation plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "project_id",
+    "identities",
+    "operations",
+    "conflicts",
+    "human_choices",
+    "overlay_preserved",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-reconciliation-plan-v1"
+    },
+    "plan_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_project_tree_sha256",
+        "target_generated_tree_sha256",
+        "overlay_sha256",
+        "semantic_diff_sha256"
+      ],
+      "properties": {
+        "base_project_tree_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target_generated_tree_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "overlay_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "semantic_diff_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/result"
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "human_choices": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/choice"
+      }
+    },
+    "overlay_preserved": {
+      "type": "boolean"
+    },
+    "decision": {
+      "enum": [
+        "ready_to_materialize",
+        "blocked_conflict"
+      ]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "optional_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "document",
+        "pointer",
+        "op",
+        "conflict_policy",
+        "base_value_sha256",
+        "source_value_sha256",
+        "overlay_value_sha256",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "document": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "pointer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "op": {
+          "enum": [
+            "add",
+            "replace",
+            "remove"
+          ]
+        },
+        "conflict_policy": {
+          "enum": [
+            "require_human",
+            "overlay_wins",
+            "source_wins"
+          ]
+        },
+        "base_value_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "source_value_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "overlay_value_sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "result": {
+          "enum": [
+            "applied_overlay",
+            "already_equivalent",
+            "applied_overlay_over_source_change",
+            "kept_source_by_explicit_choice",
+            "conflict_requires_human"
+          ]
+        }
+      }
+    },
+    "choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "selection",
+        "rationale"
+      ],
+      "properties": {
+        "operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selection": {
+          "enum": [
+            "overlay_wins",
+            "source_wins"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      }
+    }
+  }
+}

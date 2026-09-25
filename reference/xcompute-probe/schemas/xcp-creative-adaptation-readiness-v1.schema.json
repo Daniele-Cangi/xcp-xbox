@@ -1,0 +1,539 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-adaptation-readiness-v1.schema.json",
+  "title": "XCP creative adaptation fidelity and readiness report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "identities",
+    "validation",
+    "fidelity",
+    "corrections",
+    "c5_lifecycle",
+    "differences",
+    "residual_work",
+    "worker_gap",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-adaptation-readiness-v1"
+    },
+    "report_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_inventory_sha256",
+        "creative_ir_sha256",
+        "adaptation_plan_sha256",
+        "xcp_project_sha256",
+        "source_map_sha256",
+        "host_profile_sha256"
+      ],
+      "properties": {
+        "source_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "creative_ir_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "adaptation_plan_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "xcp_project_sha256": {
+          "$ref": "#/$defs/sha256_or_empty"
+        },
+        "source_map_sha256": {
+          "$ref": "#/$defs/sha256_or_empty"
+        },
+        "host_profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inventory",
+        "creative_ir",
+        "adaptation_plan",
+        "xcp_project",
+        "source_map"
+      ],
+      "properties": {
+        "inventory": {
+          "$ref": "#/$defs/outcome"
+        },
+        "creative_ir": {
+          "$ref": "#/$defs/outcome"
+        },
+        "adaptation_plan": {
+          "$ref": "#/$defs/outcome"
+        },
+        "xcp_project": {
+          "$ref": "#/$defs/outcome"
+        },
+        "source_map": {
+          "$ref": "#/$defs/outcome"
+        }
+      }
+    },
+    "fidelity": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 16,
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "dimension": {
+                "const": "gameplay"
+              }
+            },
+            "required": [
+              "dimension"
+            ]
+          },
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "dimension": {
+                "const": "input"
+              }
+            },
+            "required": [
+              "dimension"
+            ]
+          },
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "dimension": {
+                "const": "ui"
+              }
+            },
+            "required": [
+              "dimension"
+            ]
+          },
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "dimension": {
+                "const": "assets"
+              }
+            },
+            "required": [
+              "dimension"
+            ]
+          },
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "dimension": {
+                "const": "state"
+              }
+            },
+            "required": [
+              "dimension"
+            ]
+          },
+          "minContains": 1
+        }
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dimension",
+          "status",
+          "score",
+          "differences",
+          "residual_work"
+        ],
+        "properties": {
+          "dimension": {
+            "enum": [
+              "gameplay",
+              "input",
+              "ui",
+              "assets",
+              "state",
+              "audio",
+              "rendering_2d",
+              "rendering_3d",
+              "behavior",
+              "performance",
+              "accessibility",
+              "other"
+            ]
+          },
+          "status": {
+            "enum": [
+              "exact",
+              "acceptable",
+              "degraded",
+              "blocked",
+              "not_applicable"
+            ]
+          },
+          "score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "differences": {
+            "$ref": "#/$defs/text_array"
+          },
+          "residual_work": {
+            "$ref": "#/$defs/text_array"
+          }
+        }
+      }
+    },
+    "corrections": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stage",
+          "error",
+          "change",
+          "retry_outcome",
+          "evidence_refs"
+        ],
+        "properties": {
+          "stage": {
+            "enum": [
+              "conversion",
+              "live"
+            ]
+          },
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "details"
+            ],
+            "properties": {
+              "code": {
+                "$ref": "#/$defs/contract_id"
+              },
+              "details": {
+                "type": "object",
+                "maxProperties": 128
+              }
+            }
+          },
+          "change": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "retry_outcome": {
+            "$ref": "#/$defs/outcome"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/evidence_refs"
+          }
+        }
+      }
+    },
+    "c5_lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority",
+        "install",
+        "launch",
+        "observe",
+        "capture",
+        "update",
+        "rollback",
+        "cleanup"
+      ],
+      "properties": {
+        "authority": {
+          "const": "C5_AGENT_NATIVE_CREATION_GATE"
+        },
+        "install": {
+          "$ref": "#/$defs/lifecycle_step"
+        },
+        "launch": {
+          "$ref": "#/$defs/lifecycle_step"
+        },
+        "observe": {
+          "$ref": "#/$defs/lifecycle_step"
+        },
+        "capture": {
+          "$ref": "#/$defs/lifecycle_step"
+        },
+        "update": {
+          "$ref": "#/$defs/lifecycle_step"
+        },
+        "rollback": {
+          "$ref": "#/$defs/lifecycle_step"
+        },
+        "cleanup": {
+          "$ref": "#/$defs/lifecycle_step"
+        }
+      }
+    },
+    "differences": {
+      "$ref": "#/$defs/text_array"
+    },
+    "residual_work": {
+      "$ref": "#/$defs/text_array"
+    },
+    "worker_gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_change_required",
+        "general_capability_missing",
+        "evidence_refs"
+      ],
+      "properties": {
+        "native_change_required": {
+          "type": "boolean"
+        },
+        "general_capability_missing": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      }
+    },
+    "decision": {
+      "enum": [
+        "ready_playable",
+        "ready_playable_with_degradation",
+        "not_ready",
+        "human_intervention_required"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "enum": [
+              "ready_playable",
+              "ready_playable_with_degradation"
+            ]
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "identities": {
+            "properties": {
+              "xcp_project_sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "source_map_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          },
+          "validation": {
+            "properties": {
+              "inventory": {
+                "const": "pass"
+              },
+              "creative_ir": {
+                "const": "pass"
+              },
+              "adaptation_plan": {
+                "const": "pass"
+              },
+              "xcp_project": {
+                "const": "pass"
+              },
+              "source_map": {
+                "const": "pass"
+              }
+            }
+          },
+          "corrections": {
+            "minItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "properties": {
+                    "stage": {
+                      "const": "conversion"
+                    }
+                  },
+                  "required": [
+                    "stage"
+                  ]
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "stage": {
+                      "const": "live"
+                    }
+                  },
+                  "required": [
+                    "stage"
+                  ]
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "c5_lifecycle": {
+            "properties": {
+              "install": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "launch": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "observe": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "capture": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "update": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "rollback": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "cleanup": {
+                "properties": {
+                  "outcome": {
+                    "const": "pass"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sha256_or_empty": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "pass",
+        "fail",
+        "not_run"
+      ]
+    },
+    "text_array": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "maxItems": 1024,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      }
+    },
+    "lifecycle_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "evidence_refs"
+      ],
+      "properties": {
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        }
+      }
+    }
+  }
+}

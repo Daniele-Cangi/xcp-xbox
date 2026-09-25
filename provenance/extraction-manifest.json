@@ -1,0 +1,548 @@
+{
+  "schema_version": "xcp-extraction-manifest-v1",
+  "source_repository": "Daniele-Cangi/Xbox-series-Agent",
+  "source_commit": "4e544a44dd267150fe2bc2f005c51338647a56e0",
+  "destination_repository": "Daniele-Cangi/XCP",
+  "audit_date": "2026-09-23",
+  "components": [
+    {
+      "source_path": null,
+      "destination_path": "examples/godot-minimal/main.tscn",
+      "classification": "synthetic_fixture",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "86a2cb16fdb821d99146190e2f1b5c7a5cf66a801d51f3e1a15965a0840c63c3"
+    },
+    {
+      "source_path": null,
+      "destination_path": "examples/godot-minimal/project.godot",
+      "classification": "synthetic_fixture",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "d991d9c1e94b1ea3e6b794d0555bebc84382e2bac71561d00135eef7602b994b"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/__init__.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "bc61edfa7d3843fb87a2fbfd0f3b56f20e8a76f0208b1f7030295224b7b58a41"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/__main__.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/adapters/__init__.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "3d52a4c5828289b1b54d647e532a570ca08aabd0f1351f27eb5d1bb5f9809261"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xcp_adaptation/adapters/godot4.py",
+      "destination_path": "src/xcp/adapters/godot.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "replaceable bounded Godot structural frontend",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "rewritten",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "9ac7b7befffef5fb050aa16103cc10d1f2c63d01ad8c78274b9264fccabfcdcb",
+      "source_sha256": "11fe2c4cb57b660b11c0b77bfea0e2d047e6b826f47922d3c94b60dad620aa61"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xvm_assembler.py",
+      "destination_path": "src/xcp/cli.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "public entrypoint for reference tools",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "rewritten",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "35fe6e2f3521211ba869e4ad2ca8a61cba6661b6663a6a7b3daf5d2b4b80c6ed",
+      "source_sha256": "8bb809fd8c00e0879c9356b97aaa1453c0e9dd52099c2c4b7dfc2266decffe85"
+    },
+    {
+      "source_path": "xcompute-probe/tests/unit/test_xvm_reference.py",
+      "destination_path": "src/xcp/conformance/__init__.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "local executable conformance suites",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "rewritten",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "2f93d81244bc444d94f3f15e82a54a581433bae69f7cc7126fffd2c127745009",
+      "source_sha256": "02e9c997ce6d81cb4b5689b80e9c938e47e9cbbca388fa3c7281b85d54270df1"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/conformance/godot_fixture/main.tscn",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "86a2cb16fdb821d99146190e2f1b5c7a5cf66a801d51f3e1a15965a0840c63c3"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/conformance/godot_fixture/project.godot",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "d991d9c1e94b1ea3e6b794d0555bebc84382e2bac71561d00135eef7602b994b"
+    },
+    {
+      "source_path": "xcompute-probe/samples/xvm/xvm-v2-call-chain.json",
+      "destination_path": "src/xcp/conformance/vectors/xvm-v2-call-chain.json",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "copied",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "51d35520b0dcec308f538e63e2a5b8646789b29c4ac3bc7647897b1219d80220",
+      "source_sha256": "51d35520b0dcec308f538e63e2a5b8646789b29c4ac3bc7647897b1219d80220"
+    },
+    {
+      "source_path": "xcompute-probe/samples/xvm/xvm-v2-cancel-resume-loop.json",
+      "destination_path": "src/xcp/conformance/vectors/xvm-v2-cancel-resume-loop.json",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "copied",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "a07545c3cbb602331d01b25067de2efd33ae59b76cafc0cb04eaaa7ac1877b7a",
+      "source_sha256": "a07545c3cbb602331d01b25067de2efd33ae59b76cafc0cb04eaaa7ac1877b7a"
+    },
+    {
+      "source_path": "xcompute-probe/samples/xvm/xvm-v2-structured-control-phase-b.json",
+      "destination_path": "src/xcp/conformance/vectors/xvm-v2-structured-control-phase-b.json",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "copied",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "5fcb031c499023295103a670f49e88a8dc4ac7a4720b0f9a32bfcfd3b521534e",
+      "source_sha256": "5fcb031c499023295103a670f49e88a8dc4ac7a4720b0f9a32bfcfd3b521534e"
+    },
+    {
+      "source_path": "xcompute-probe/samples/xvm/xvm-v2-structured-control-v2.json",
+      "destination_path": "src/xcp/conformance/vectors/xvm-v2-structured-control-v2.json",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "copied",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "87d5753eeab71d5dead7e427becb197f068d546393954209bd1c825f49364b22",
+      "source_sha256": "87d5753eeab71d5dead7e427becb197f068d546393954209bd1c825f49364b22"
+    },
+    {
+      "source_path": "xcompute-probe/samples/xvm/xvm-v2-typed-memory-v1.json",
+      "destination_path": "src/xcp/conformance/vectors/xvm-v2-typed-memory-v1.json",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "copied",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "9dbe0516ae257d6e4a0de38d50afca5f2abf0abc192d629bac18db3e19299358",
+      "source_sha256": "9dbe0516ae257d6e4a0de38d50afca5f2abf0abc192d629bac18db3e19299358"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xcp_adaptation/core/contracts.py",
+      "destination_path": "src/xcp/contracts.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "neutral source, semantic, plan and target interfaces",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "rewritten",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "3b81a0785d538e0bcdd2b83d8bd423f2ae59f36b5e16e66f9e93c804e6d16fc3",
+      "source_sha256": "976dbb09c9972bf4cc98e31af26095bf3e3561afb73d30dcffbe733fff4e64c8"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xcp_adaptation/fidelity/differential.py",
+      "destination_path": "src/xcp/evidence.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "exact-bound observation and comparison contract",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "rewritten",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "40944a5889a0f6a0a7741124cceb65a17cf0c921277b97b23cab80ade07c97f6",
+      "source_sha256": "863ea4aa94e9fed762eeccdb0ba76aba2709bfa175a13ad3eeff836fe7f11d1e"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xcp_creative_project.py",
+      "destination_path": "src/xcp/project.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "deterministic project and bundle contract reference",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "ac18be12a2f7525c4db140998bf819edfddc4f68bf6a9acb4ab9e5f9daa7f307",
+      "source_sha256": "637e609801cef8dd4faef2d262e437dc449336a5e1551034ffc0f6d5a6469976"
+    },
+    {
+      "source_path": "xcompute-probe/schemas/xcp-creative-bundle-v1.schema.json",
+      "destination_path": "src/xcp/spec/xcp-creative-bundle-v1.schema.json",
+      "classification": "stable_contract",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "c8b225dc8d4733e9eba62eb1c3a5676be9f04e363ce9a3c4db31c861d1762cd4",
+      "source_sha256": "ad13cf5f25e1c77d4239393da24881d3f622c7febc4fb0b8443282e4ef8379d3"
+    },
+    {
+      "source_path": "xcompute-probe/schemas/xcp-creative-host-profile-v1.schema.json",
+      "destination_path": "src/xcp/spec/xcp-creative-host-profile-v1.schema.json",
+      "classification": "stable_contract",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "64b3823834a2e7e190ca3011d5c1c61b883b77cc340eddc7bd1bf0353f2c0fab",
+      "source_sha256": "9ccb5f0f76afd97c7d9f335b9fff3b529e86bff4a0c562e9998aa686a66fe447"
+    },
+    {
+      "source_path": "xcompute-probe/schemas/xcp-creative-project-v1.schema.json",
+      "destination_path": "src/xcp/spec/xcp-creative-project-v1.schema.json",
+      "classification": "stable_contract",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "6284bf2655691f74fdc9ae62f0e2f04e20e83c517b596ce7ca2f3cede9021cc2",
+      "source_sha256": "c3bd78a792e3ea2f27763699bcfbff503502bb7835b59a373a183c2ea2ff244a"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/spec/xcp-platform-contracts-v1.schema.json",
+      "classification": "stable_contract",
+      "reason_for_inclusion": "versioned neutral source, intent, target and evidence wire schemas",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "0abedb681beb9c47d84b3aa13bf749c08f1c70e1be9434273efc74bfec278ca5"
+    },
+    {
+      "source_path": "xcompute-probe/schemas/xvm-isa-v2.json",
+      "destination_path": "src/xcp/spec/xvm-isa-v2.json",
+      "classification": "stable_contract",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "copied",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "57091ef5c90fe12a36ba46ac8ef709d1a57bfbb098eea7135ebf32391f1f3e10",
+      "source_sha256": "57091ef5c90fe12a36ba46ac8ef709d1a57bfbb098eea7135ebf32391f1f3e10"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/targets/__init__.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "e464ea3f6f8937b0c94e6e2df46647c1c586864db971a3834604842e9513c550"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xcp_adaptation/lowering/backend.py",
+      "destination_path": "src/xcp/targets/archive.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "local structural target proving admission and lowering",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "rewritten",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "8c80de5f35847ddbb2b9246b923faeab174ec945512d929a5c4b984a0a6d7264",
+      "source_sha256": "1209e129b49162d50ed663a74e47948fd0a6c650b499c4b934e78350b149e205"
+    },
+    {
+      "source_path": null,
+      "destination_path": "src/xcp/xvm/__init__.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "4f38c861a470156478c5aa763e097ec91a1c5d63c58e03127c34e0047ee89a5d"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xvm_assembler.py",
+      "destination_path": "src/xcp/xvm/assembler.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "canonical XVM artifact assembly",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "d7bf4fa4aa63cd39e62a76d6b3b072da4daeed3e885a3171559ba7a693fb29f2",
+      "source_sha256": "8bb809fd8c00e0879c9356b97aaa1453c0e9dd52099c2c4b7dfc2266decffe85"
+    },
+    {
+      "source_path": "xcompute-probe/tools/xvm_reference.py",
+      "destination_path": "src/xcp/xvm/reference.py",
+      "classification": "reference_implementation",
+      "reason_for_inclusion": "standalone XVM v2 verifier and CPU oracle",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q",
+        "xcp conformance all"
+      ],
+      "destination_sha256": "ca205aa83100485af263954ce4ba4cf3cb3686d3b0960d4cf9cdc7099a64ac9a",
+      "source_sha256": "d45817dd0cbeb348d09729fc515186b2ff7c01212eb2e5e08f3a8cedecc0eb15"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_cli.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "ad1e7d31cde91208dd5c931d3f09046ff4afbfc9c8b6d8dd4a081bf5c9facd24"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_platform_contracts.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "13a361ea3ad69a99d6292fbdb364a9a10f3b25ead69144e1f13aa2155b152802"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_release_hygiene.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "public-release hygiene regression test",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "eb984e0b152ad7b32079a6194bc4081f7ef42de78f211cb1b45bb5979974b1a1"
+    },
+    {
+      "source_path": "xcompute-probe/tests/unit/test_xvm_reference.py",
+      "destination_path": "tests/test_xvm_reference.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_owner_authorized",
+      "provenance_status": "first-party Git authorship and owner-directed extraction; no external headers",
+      "transformation": "refactored",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "8bcbfeb8461d390d00b33e0c7d3cf322cd37c513abd40c3300a0978286592073",
+      "source_sha256": "02e9c997ce6d81cb4b5689b80e9c938e47e9cbbca388fa3c7281b85d54270df1"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tools/public_release_check.py",
+      "classification": "public_tooling",
+      "reason_for_inclusion": "portable public reference, synthetic fixture or conformance support",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q"
+      ],
+      "destination_sha256": "ff47651f4d8284e45125c6a27f1ea8ec3237621c39015b7c61a67631f5970f95"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_reference_worker_transport.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "PC-only wire, error, and session vectors for byte-exact P4 transport",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q tests/test_reference_worker_transport.py"
+      ],
+      "destination_sha256": "e3720cd6679a1749d5a99ba91a5cf4a3660fad0b4aab3c3a1c4fd78b82bb5053"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tools/inspect_reference_vclibs.py",
+      "classification": "build",
+      "reason_for_inclusion": "read-only inspection of external SDK dependency identity",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q tests/test_reference_vclibs.py"
+      ],
+      "destination_sha256": "294bceec829efb637c11a9b6f9effffc82e1abdd76cb53f0d6901bcb6af8704b"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_reference_vclibs.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "synthetic package identity and rejection vectors",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q tests/test_reference_vclibs.py"
+      ],
+      "destination_sha256": "112958e83485341981c24393c9e4f6ef96a670e9d92f842f66da1ad494fd179a"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_reference_xvm_parity.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "bounded PC comparison of frozen P4 XVM with separate new public Python API",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q tests/test_reference_xvm_parity.py"
+      ],
+      "destination_sha256": "ae20d3230315980c40c040f18fb1a0ae71debb6e47ff1dfba7a7d8acbd63b717"
+    },
+    {
+      "source_path": null,
+      "destination_path": "tests/test_reference_xvm_assembler.py",
+      "classification": "conformance",
+      "reason_for_inclusion": "PC-only assembler/validator/executor flow on exact P4 source examples",
+      "license_status": "first_party_new",
+      "provenance_status": "authored for XCP; no imported external material",
+      "transformation": "new",
+      "tests": [
+        "python -m pytest -q tests/test_reference_xvm_assembler.py"
+      ],
+      "destination_sha256": "933cbb226c5ec466391a8d0a5d1c6aafcb066e9de8e33f30cac7ea77025af959"
+    }
+  ]
+}

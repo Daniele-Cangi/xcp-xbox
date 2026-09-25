@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6E774E5A-2D78-49C0-B03D-9DFB24B5FA31}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>XComputeTopologyBroker</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
+    <CppWinRTEnabled>true</CppWinRTEnabled>
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetName>XComputeTopologyBroker</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <PreprocessorDefinitions>WINAPI_FAMILY=WINAPI_FAMILY_APP;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/permissive- %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>XComputeTopologyBroker.def</ModuleDefinitionFile>
+      <AdditionalDependencies>windowsapp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <OutputDirectory>$(ProjectDir)$(IntDir)</OutputDirectory>
+      <MetadataFileName>$(ProjectDir)$(IntDir)WinMDInput\BrokerTask.winmd</MetadataFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Midl Include="BrokerTask.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="BrokerTask.h" />
+    <ClInclude Include="WorkerPersistentComputeCoordinatorRuntime.h" />
+    <ClInclude Include="WorkerProcessTopologyBrokerHeartbeat.h" />
+    <ClInclude Include="WorkerProcessTopologyBrokerPhaseRuntime.h" />
+    <ClInclude Include="WorkerProcessTopologyBrokerProtocol.h" />
+    <ClInclude Include="WorkerProcessTopologyBrokerRuntime.h" />
+    <ClInclude Include="WorkerProcessTopologyBrokerStorageRuntime.h" />
+    <ClInclude Include="..\shared\XcpProcessTopologyLifecycleJournal.h" />
+    <ClInclude Include="..\shared\XcpStorageReservationLedger.h" />
+    <ClInclude Include="XComputeTopologyBroker.BrokerTask.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="BrokerTask.cpp" />
+    <ClCompile Include="WorkerPersistentComputeCoordinatorRuntime.cpp" />
+    <ClCompile Include="WorkerProcessTopologyBrokerHeartbeat.cpp" />
+    <ClCompile Include="WorkerProcessTopologyBrokerPhaseRuntime.cpp" />
+    <ClCompile Include="WorkerProcessTopologyBrokerProtocol.cpp" />
+    <ClCompile Include="WorkerProcessTopologyBrokerRuntime.cpp" />
+    <ClCompile Include="WorkerProcessTopologyBrokerStorageRuntime.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XComputeTopologyBroker.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="GetResolvedWinMD" Returns="@(WinMDFullPath)">
+    <ItemGroup>
+      <WinMDFullPath Include="$(OutDir)$(RootNamespace).winmd">
+        <TargetPath>$(RootNamespace).winmd</TargetPath>
+        <Primary>true</Primary>
+        <Implementation>$(TargetName)$(TargetExt)</Implementation>
+        <FileType>winmd</FileType>
+        <WinMDFile>true</WinMDFile>
+        <ProjectType>$(ConfigurationType)</ProjectType>
+      </WinMDFullPath>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <XComputeCppWinRTTool>$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\cppwinrt.exe</XComputeCppWinRTTool>
+    <XComputeMdMergeTool>$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\mdmerge.exe</XComputeMdMergeTool>
+    <XComputeMdMergeMetadataDirectory>$(WindowsSdkDir)UnionMetadata\$(TargetPlatformVersion)</XComputeMdMergeMetadataDirectory>
+  </PropertyGroup>
+  <Target Name="XComputePrepareMidlOutput" BeforeTargets="Midl">
+    <MakeDir Directories="$(ProjectDir)$(IntDir);$(ProjectDir)$(IntDir)WinMDInput;$(OutDir)" />
+  </Target>
+  <Target Name="XComputeComposeWinMD"
+          AfterTargets="Midl"
+          BeforeTargets="XComputeGenerateCppWinRTComponent"
+          Inputs="$(ProjectDir)$(IntDir)WinMDInput\BrokerTask.winmd"
+          Outputs="$(OutDir)$(RootNamespace).winmd">
+    <Error Condition="!Exists('$(XComputeMdMergeTool)')"
+           Text="The Windows SDK mdmerge.exe tool was not found at $(XComputeMdMergeTool)." />
+    <Error Condition="!Exists('$(ProjectDir)$(IntDir)WinMDInput\BrokerTask.winmd')"
+           Text="The raw BrokerTask.winmd MIDL output was not found." />
+    <Error Condition="!Exists('$(XComputeMdMergeMetadataDirectory)')"
+           Text="The Windows SDK union metadata directory was not found at $(XComputeMdMergeMetadataDirectory)." />
+    <MakeDir Directories="$(OutDir)" />
+    <Exec Command="&quot;$(XComputeMdMergeTool)&quot; -i &quot;$(ProjectDir)$(IntDir)WinMDInput&quot; -o &quot;$(OutDir).&quot; -metadata_dir &quot;$(XComputeMdMergeMetadataDirectory)&quot; -partial -n 1 -v" />
+    <Error Condition="!Exists('$(OutDir)$(RootNamespace).winmd')"
+           Text="mdmerge did not produce $(OutDir)$(RootNamespace).winmd." />
+  </Target>
+  <Target Name="XComputeGenerateCppWinRTComponent"
+          AfterTargets="Midl"
+          BeforeTargets="ClCompile"
+          DependsOnTargets="XComputeComposeWinMD"
+          Inputs="BrokerTask.idl;$(OutDir)$(RootNamespace).winmd"
+          Outputs="$(GeneratedFilesDir)module.g.cpp;$(GeneratedFilesDir)BrokerTask.g.h">
+    <Error Condition="!Exists('$(XComputeCppWinRTTool)')"
+           Text="The Windows SDK cppwinrt.exe tool was not found at $(XComputeCppWinRTTool)." />
+    <Error Condition="!Exists('$(OutDir)$(RootNamespace).winmd')"
+           Text="The composed XComputeTopologyBroker.winmd output was not found at $(OutDir)$(RootNamespace).winmd." />
+    <MakeDir Directories="$(GeneratedFilesDir)" />
+    <Exec Command="&quot;$(XComputeCppWinRTTool)&quot; -input &quot;$(OutDir)$(RootNamespace).winmd&quot; -reference sdk -output &quot;$(GeneratedFilesDir).&quot; -component -overwrite" />
+  </Target>
+</Project>
+
+
+

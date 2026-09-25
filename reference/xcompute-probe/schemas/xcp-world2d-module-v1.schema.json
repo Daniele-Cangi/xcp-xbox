@@ -1,0 +1,367 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-world2d-module-v1.schema.json",
+  "title": "XCP deterministic grid world 2D module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "world",
+    "tiles",
+    "entities",
+    "input_bindings",
+    "objectives"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-world2d-module-v1"
+    },
+    "world": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height",
+        "background",
+        "columns",
+        "rows",
+        "cell_size"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "background": {
+          "$ref": "#/$defs/color"
+        },
+        "columns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "cell_size": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 512
+        }
+      }
+    },
+    "tiles": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "$ref": "#/$defs/tile"
+      }
+    },
+    "entities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "input_bindings": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/input_binding"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/objective"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "color": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^(#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?|[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*)$"
+    },
+    "cell": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 511
+        },
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 511
+        }
+      ],
+      "items": false
+    },
+    "tile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "position",
+        "kind",
+        "solid",
+        "color",
+        "visible"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "position": {
+          "$ref": "#/$defs/cell"
+        },
+        "kind": {
+          "enum": [
+            "floor",
+            "solid",
+            "hazard",
+            "goal",
+            "climbable",
+            "decorative"
+          ]
+        },
+        "solid": {
+          "type": "boolean"
+        },
+        "color": {
+          "$ref": "#/$defs/color"
+        },
+        "asset_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifetime_turns",
+        "blast_radius"
+      ],
+      "properties": {
+        "lifetime_turns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "blast_radius": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32
+        },
+        "inventory_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "inventory_cost": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "archetype",
+        "position",
+        "color",
+        "solid",
+        "pushable",
+        "destructible",
+        "collectible",
+        "controllable",
+        "initially_visible"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "archetype": {
+          "$ref": "#/$defs/identifier"
+        },
+        "position": {
+          "$ref": "#/$defs/cell"
+        },
+        "color": {
+          "$ref": "#/$defs/color"
+        },
+        "asset_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "solid": {
+          "type": "boolean"
+        },
+        "pushable": {
+          "type": "boolean"
+        },
+        "destructible": {
+          "type": "boolean"
+        },
+        "collectible": {
+          "type": "boolean"
+        },
+        "controllable": {
+          "type": "boolean"
+        },
+        "inventory_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "inventory_amount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "activation": {
+          "$ref": "#/$defs/activation"
+        },
+        "initially_visible": {
+          "type": "boolean"
+        },
+        "z_index": {
+          "type": "integer",
+          "minimum": -32768,
+          "maximum": 32767
+        }
+      }
+    },
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "source",
+        "command",
+        "target_entity"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "source": {
+          "enum": [
+            "gamepad.dpad_up",
+            "gamepad.dpad_down",
+            "gamepad.dpad_left",
+            "gamepad.dpad_right",
+            "gamepad.a",
+            "gamepad.b",
+            "gamepad.x",
+            "gamepad.y",
+            "keyboard.up",
+            "keyboard.down",
+            "keyboard.left",
+            "keyboard.right",
+            "keyboard.space",
+            "keyboard.r"
+          ]
+        },
+        "command": {
+          "enum": [
+            "move_up",
+            "move_down",
+            "move_left",
+            "move_right",
+            "activate",
+            "reset"
+          ]
+        },
+        "target_entity": {
+          "$ref": "#/$defs/identifier"
+        },
+        "template_entity": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command": {
+                "const": "activate"
+              }
+            },
+            "required": [
+              "command"
+            ]
+          },
+          "then": {
+            "required": [
+              "template_entity"
+            ]
+          }
+        }
+      ]
+    },
+    "objective": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "target",
+        "count",
+        "completion_event"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "type": {
+          "enum": [
+            "reach_tile",
+            "collect_count",
+            "destroy_all"
+          ]
+        },
+        "target": {
+          "$ref": "#/$defs/identifier"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "completion_event": {
+          "$ref": "#/$defs/contract_id"
+        }
+      }
+    }
+  }
+}

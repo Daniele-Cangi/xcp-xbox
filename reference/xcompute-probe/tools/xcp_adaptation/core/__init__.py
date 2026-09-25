@@ -1,0 +1,53 @@
+"""Shared contracts and deterministic primitives for source adaptation."""
+
+from .contracts import (
+    CapabilityPlanner,
+    CreativeIrEmitter,
+    EngineSourceModel,
+    FidelityOracle,
+    SemanticPass,
+    SourceAdapter,
+    XcpLoweringBackend,
+)
+from .runtime import (
+    CLASSIFICATIONS,
+    IDENTIFIER,
+    INTENT_SCHEMA,
+    LEDGER_SCHEMA,
+    PROFILE,
+    RECEIPT_SCHEMA,
+    ROOT,
+    SCHEMAS,
+    SourceAdaptError,
+    _document_sha,
+    _load_json,
+    _portable_id,
+    _validate,
+    _validate_schema,
+    _write_new,
+)
+
+__all__ = [
+    "CapabilityPlanner",
+    "CLASSIFICATIONS",
+    "CreativeIrEmitter",
+    "EngineSourceModel",
+    "FidelityOracle",
+    "IDENTIFIER",
+    "INTENT_SCHEMA",
+    "LEDGER_SCHEMA",
+    "PROFILE",
+    "RECEIPT_SCHEMA",
+    "ROOT",
+    "SCHEMAS",
+    "SemanticPass",
+    "SourceAdaptError",
+    "SourceAdapter",
+    "XcpLoweringBackend",
+    "_document_sha",
+    "_load_json",
+    "_portable_id",
+    "_validate",
+    "_validate_schema",
+    "_write_new",
+]

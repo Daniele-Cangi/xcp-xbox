@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A1E0DE7C-D7B1-4E6B-89F5-0ACB0829F7D5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>XComputeProbe</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
+    <CppWinRTEnabled>true</CppWinRTEnabled>
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <XComputeManifestFlavor Condition="'$(XComputeManifestFlavor)' == ''">baseline</XComputeManifestFlavor>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <PreprocessorDefinitions>WINAPI_FAMILY=WINAPI_FAMILY_APP;_UNICODE;UNICODE;XCOMPUTE_MANIFEST_FLAVOR=L&quot;$(XComputeManifestFlavor)&quot;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/permissive- %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>d3d11.lib;d3d12.lib;dxgi.lib;d2d1.lib;dwrite.lib;windowscodecs.lib;xaudio2.lib;windowsapp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Direct3DApp.h" />
+    <ClInclude Include="ProbeResult.h" />
+    <ClInclude Include="native\StaticNativeModule.h" />
+    <ClInclude Include="probes\ProbeRunner.h" />
+    <ClInclude Include="runtime\WorkerArtifactManifestCompute.h" />
+    <ClInclude Include="runtime\WorkerArtifactPublicationRuntime.h" />
+    <ClInclude Include="runtime\WorkerCanonicalResultTelemetryRuntime.h" />
+    <ClInclude Include="runtime\WorkerPrecompiledD3DCommandRuntime.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyIpcProjection.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyLifecycleRuntime.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyMemoryProbe.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyPhaseProtocol.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyProtocol.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyRefusalEvidence.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyTransport.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyRuntime.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyWorkloadWitness.h" />
+    <ClInclude Include="runtime\WorkerProcessTopologyStorageProbe.h" />
+    <ClInclude Include="runtime\WorkerContentAddressedStoreRecovery.h" />
+    <ClInclude Include="runtime\WorkerCreativeInstallRuntime.h" />
+    <ClInclude Include="runtime\WorkerCreativeForegroundRuntime.h" />
+    <ClInclude Include="runtime\WorkerCreativeWorld2DRuntime.h" />
+    <ClInclude Include="runtime\WorkerCreativeHostProfile.generated.h" />
+    <ClInclude Include="runtime\WorkerCreativeHostRuntime.h" />
+    <ClInclude Include="runtime\WorkerPersistentComputeCoordinatorRuntime.h" />
+    <ClInclude Include="runtime\WorkerProvableWorldsStreamingRuntime.h" />
+    <ClInclude Include="runtime\WorkerStorageScaleCharacterizationRuntime.h" />
+    <ClInclude Include="..\shared\XcpStorageReservationLedger.h" />
+    <ClInclude Include="runtime\WorkerArtifactStore.h" />
+    <ClInclude Include="runtime\WorkerAsyncJobRuntime.h" />
+    <ClInclude Include="runtime\WorkerTaskPlanRuntime.h" />
+    <ClInclude Include="runtime\WorkerCommandServer.h" />
+    <ClInclude Include="runtime\WorkerCpuCapsuleRuntime.h" />
+    <ClInclude Include="runtime\WorkerCpuCapsuleModule.h" />
+    <ClInclude Include="runtime\WorkerCpuGpuConvergenceBackend.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmDifferentialRuntime.h" />
+    <ClInclude Include="runtime\WorkerVerifiedProductionMode.h" />
+    <ClInclude Include="runtime\WorkerXvmCpuCapsuleBackend.h" />
+    <ClInclude Include="..\shared\XComputeCpuCapsuleHotKernelV1Abi.h" />
+    <ClInclude Include="..\shared\XComputeCpuCapsuleProvableWorldsV1Abi.h" />
+    <ClInclude Include="..\shared\XcpProcessTopologyLifecycleJournal.h" />
+    <ClInclude Include="runtime\WorkerProtocolBoundary.h" />
+    <ClInclude Include="runtime\WorkerSessionRuntime.h" />
+    <ClInclude Include="runtime\WorkerDiagnostics.h" />
+    <ClInclude Include="runtime\WorkerGraphAdmission.h" />
+    <ClInclude Include="runtime\WorkerGraphCheckpointing.h" />
+    <ClInclude Include="runtime\WorkerGraphExecution.h" />
+    <ClInclude Include="runtime\WorkerGraphExpansion.h" />
+    <ClInclude Include="runtime\WorkerGraphOrchestration.h" />
+    <ClInclude Include="runtime\WorkerGraphPublishing.h" />
+    <ClInclude Include="runtime\WorkerGraphResourceLedger.h" />
+    <ClInclude Include="runtime\WorkerGraphRuntime.h" />
+    <ClInclude Include="runtime\WorkerGraphValidation.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmExecutor.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmExecutionPlan.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmFullIsaV2Profiles.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmMicrotraceProfile.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmMicrotracePhaseBProfile.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmProfileContract.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmSpmdPhaseBProfile.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmSpmdGeneralizedProfile.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmProvableWorldsProfile.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmProvableWorlds.h" />
+    <ClInclude Include="runtime\WorkerGpuXvmStateCodec.h" />
+    <ClInclude Include="runtime\WorkerMacroCatalog.h" />
+    <ClInclude Include="runtime\WorkerPrototype.h" />
+    <ClInclude Include="runtime\WorkerResultEnvelope.h" />
+    <ClInclude Include="runtime\WorkerRuntimeDescription.h" />
+    <ClInclude Include="runtime\WorkerXvmAdmission.h" />
+    <ClInclude Include="runtime\WorkerXvmCpuExecutionPlan.h" />
+    <ClInclude Include="runtime\WorkerXvmCpuTieredRuntime.h" />
+    <ClInclude Include="runtime\WorkerXvmFuelAnalysis.h" />
+    <ClInclude Include="runtime\WorkerXvmInterpreter.h" />
+    <ClInclude Include="runtime\WorkerXvmIsa.h" />
+    <ClInclude Include="runtime\WorkerXvmIsaV2.generated.h" />
+    <ClInclude Include="runtime\WorkerXvmRuntime.h" />
+    <ClInclude Include="runtime\WorkerXvmSnapshot.h" />
+    <ClInclude Include="runtime\WorkerXvmSnapshotAuthority.h" />
+    <ClInclude Include="runtime\WorkerXvmSpmdRuntime.h" />
+    <ClInclude Include="runtime\WorkerXvmTypes.h" />
+    <ClInclude Include="runtime\WorkerXvmVerifier.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Direct3DApp.cpp" />
+    <ClCompile Include="ProbeResult.cpp" />
+    <ClCompile Include="native\StaticNativeModule.cpp" />
+    <ClCompile Include="probes\ProbeRunner.cpp" />
+    <ClCompile Include="runtime\WorkerArtifactManifestCompute.cpp" />
+    <ClCompile Include="runtime\WorkerArtifactPublicationRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerCanonicalResultTelemetryRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerPrecompiledD3DCommandRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyIpcProjection.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyLifecycleRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyMemoryProbe.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyPhaseProtocol.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyProtocol.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyRefusalEvidence.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyTransport.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyWorkloadWitness.cpp" />
+    <ClCompile Include="runtime\WorkerProcessTopologyStorageProbe.cpp" />
+    <ClCompile Include="runtime\WorkerContentAddressedStoreRecovery.cpp" />
+    <ClCompile Include="runtime\WorkerCreativeInstallRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerCreativeForegroundRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerCreativeWorld2DRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerCreativeHostRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerPersistentComputeCoordinatorRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerProvableWorldsStreamingRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerStorageScaleCharacterizationRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerArtifactStore.cpp" />
+    <ClCompile Include="runtime\WorkerAsyncJobRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerTaskPlanRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerCommandServer.cpp" />
+    <ClCompile Include="runtime\WorkerCpuCapsuleRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerCpuCapsuleModule.cpp" />
+    <ClCompile Include="runtime\WorkerCpuGpuConvergenceBackend.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmDifferentialRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerVerifiedProductionMode.cpp" />
+    <ClCompile Include="runtime\WorkerXvmCpuCapsuleBackend.cpp" />
+    <ClCompile Include="runtime\WorkerProtocolBoundary.cpp" />
+    <ClCompile Include="runtime\WorkerSessionRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerDiagnostics.cpp" />
+    <ClCompile Include="runtime\WorkerGraphAdmission.cpp" />
+    <ClCompile Include="runtime\WorkerGraphCheckpointing.cpp" />
+    <ClCompile Include="runtime\WorkerGraphExecution.cpp" />
+    <ClCompile Include="runtime\WorkerGraphExpansion.cpp" />
+    <ClCompile Include="runtime\WorkerGraphOrchestration.cpp" />
+    <ClCompile Include="runtime\WorkerGraphPublishing.cpp" />
+    <ClCompile Include="runtime\WorkerGraphResourceLedger.cpp" />
+    <ClCompile Include="runtime\WorkerGraphRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerGraphValidation.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmExecutor.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmExecutionPlan.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmFullIsaV2Profiles.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmMicrotraceProfile.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmMicrotracePhaseBProfile.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmProfileContract.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmSpmdPhaseBProfile.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmSpmdGeneralizedProfile.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmProvableWorldsProfile.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmProvableWorlds.cpp" />
+    <ClCompile Include="runtime\WorkerGpuXvmStateCodec.cpp" />
+    <ClCompile Include="runtime\WorkerMacroCatalog.cpp" />
+    <ClCompile Include="runtime\WorkerPrototype.cpp" />
+    <ClCompile Include="runtime\WorkerResultEnvelope.cpp" />
+    <ClCompile Include="runtime\WorkerRuntimeDescription.cpp" />
+    <ClCompile Include="runtime\WorkerXvmAdmission.cpp" />
+    <ClCompile Include="runtime\WorkerXvmCpuExecutionPlan.cpp" />
+    <ClCompile Include="runtime\WorkerXvmCpuTieredRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerXvmFuelAnalysis.cpp" />
+    <ClCompile Include="runtime\WorkerXvmInterpreter.cpp" />
+    <ClCompile Include="runtime\WorkerXvmIsa.cpp" />
+    <ClCompile Include="runtime\WorkerXvmRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerXvmPreAdmission.cpp" />
+    <ClCompile Include="runtime\WorkerXvmSnapshot.cpp" />
+    <ClCompile Include="runtime\WorkerXvmSnapshotAuthority.cpp" />
+    <ClCompile Include="runtime\WorkerXvmSpmdRuntime.cpp" />
+    <ClCompile Include="runtime\WorkerXvmTypes.cpp" />
+    <ClCompile Include="runtime\WorkerXvmVerifier.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FXCompile Include="shaders\ColorVertexShader.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\ColorPixelShader.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\IntCompute.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\FloatCompute.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmIntegerNucleus.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmIntegerGeneralV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmResidentExecutionCoreV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmGpuMicrotraceV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmGpuMicrotracePhaseBV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmFullIsaV2FullCallReturnV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmSpmdManyLanePhaseB4x3V1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmSpmdManyLaneGeneralized8x8V1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmProvableWorldsV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmFullIsaV2RecoveredTrapV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmFullIsaV2LegacyBranchV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmFullIsaV2LoopControlV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\XvmFullIsaV2TypedStructuredV1.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\MatrixMemoryCopy.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\MatrixAlu8.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\MatrixAlu32.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\MatrixAlu128.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\DomainHashMix.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\DomainImageKernel.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+    <FXCompile Include="shaders\DomainMatrixTile.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+    </FXCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+    <None Include="Package.baseline.appxmanifest" />
+    <None Include="Package.codegen-candidate.appxmanifest" />
+    <None Include="Package.expanded-candidate.appxmanifest" />
+    <None Include="Package.gamebucket-candidate.appxmanifest" />
+    <None Include="Package.gamebucket-minimal.appxmanifest" />
+    <None Include="Package.gamebucket-native.appxmanifest" />
+    <None Include="Package.gamebucket-d3d11compute.appxmanifest" />
+    <None Include="Package.gamebucket-shaderruntime.appxmanifest" />
+    <None Include="Package.worker-prototype.appxmanifest" />
+    <None Include="Package.worker-prototype-0178.appxmanifest" />
+    <None Include="Package.worker-prototype-0179.appxmanifest" />
+    <None Include="Package.worker-prototype-0180.appxmanifest" />
+    <None Include="ProbeConfig.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\XComputeProbeNativeModule\$(Platform)\$(Configuration)\XComputeNativeModule.dll">
+      <Link>XComputeNativeModule.dll</Link>
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XComputeTopologyBroker\XComputeTopologyBroker.vcxproj" Condition="'$(XComputeManifestFlavor)' == 'worker-prototype'">
+      <Project>{6E774E5A-2D78-49C0-B03D-9DFB24B5FA31}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Logo.png" />
+    <Image Include="Assets\SmallLogo.png" />
+    <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\SplashScreen.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

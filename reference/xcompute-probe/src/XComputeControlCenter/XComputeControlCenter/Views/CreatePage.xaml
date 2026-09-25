@@ -1,0 +1,116 @@
+<Page
+    x:Class="XComputeControlCenter.Views.CreatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollMode="Disabled">
+        <StackPanel MaxWidth="980" Spacing="18" Padding="0,18,0,28">
+            <StackPanel Spacing="6">
+                <TextBlock Text="FROM ZERO · ORDINARY XCP PROJECT" Style="{StaticResource StudioEyebrowStyle}" />
+                <TextBlock Text="Create the first playable version." Style="{StaticResource StudioPageTitleStyle}" />
+                <TextBlock
+                    Text="Describe the project once. Studio creates the canonical files and prepares the hidden lifecycle workspace automatically."
+                    Style="{StaticResource StudioBodyStyle}" />
+            </StackPanel>
+
+            <Border Style="{StaticResource StudioHeroCardStyle}">
+                <StackPanel Spacing="14">
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Project directory"
+                            PlaceholderText="C:\projects\my-xcp-project"
+                            Text="{x:Bind ViewModel.ProjectDirectory, Mode=TwoWay}"
+                            AutomationProperties.Name="New project directory" />
+                        <Button Grid.Column="1" Content="Choose parent" Click="PickProjectParent_Click" VerticalAlignment="Bottom" />
+                    </Grid>
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Project ID"
+                            Text="{x:Bind ViewModel.ProjectId, Mode=TwoWay}" />
+                        <TextBox
+                            Grid.Column="1"
+                            Header="Project title"
+                            Text="{x:Bind ViewModel.ProjectTitle, Mode=TwoWay}" />
+                    </Grid>
+                    <TextBox
+                        Header="What do you want to make?"
+                        Text="{x:Bind ViewModel.ProjectDescription, Mode=TwoWay}"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        MinHeight="92" />
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Header="Optional Creative Host profile"
+                            Text="{x:Bind ViewModel.HostProfilePath, Mode=TwoWay}" />
+                        <Button Grid.Column="1" Content="Browse" Click="PickHostProfile_Click" VerticalAlignment="Bottom" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button
+                            Content="Create project"
+                            Click="CreateProject_Click"
+                            AutomationProperties.Name="Create canonical XCP project" />
+                        <Button
+                            Content="Continue in workspace"
+                            Click="Workspace_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource StudioInnerPanelStyle}">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="CURRENT STEP" Style="{StaticResource StudioEyebrowStyle}" />
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Detail, Mode=OneWay}"
+                        Style="{StaticResource StudioBodyStyle}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Text="{x:Bind ViewModel.ErrorCode, Mode=OneWay}"
+                        Style="{StaticResource StudioMonoStyle}"
+                        Foreground="{StaticResource StudioWarningBrush}" />
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Correction, Mode=OneWay}"
+                        Style="{StaticResource StudioBodyStyle}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Expander Header="Advanced lifecycle files">
+                <Border Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="12">
+                        <TextBlock
+                            Text="Studio manages these files automatically. Open this section only for inspection or recovery."
+                            Style="{StaticResource StudioBodyStyle}" />
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                Header="Intent"
+                                Text="{x:Bind ViewModel.IntentPath, Mode=TwoWay}" />
+                            <TextBox
+                                Grid.Column="1"
+                                Header="Correction ledger"
+                                Text="{x:Bind ViewModel.LedgerPath, Mode=TwoWay}" />
+                        </Grid>
+                        <Button
+                            Content="Initialize missing lifecycle files"
+                            HorizontalAlignment="Left"
+                            Click="InitializeLifecycle_Click" />
+                    </StackPanel>
+                </Border>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-evolution-reuse-v1.schema.json",
+  "title": "XCP content-hash evolution reuse manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "project_id",
+    "cache_identity",
+    "entries",
+    "counts",
+    "reused_bytes",
+    "rebuilt_bytes",
+    "final_project_tree_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-evolution-reuse-v1"
+    },
+    "manifest_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "cache_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_revision",
+        "adapter_id",
+        "adapter_version",
+        "backend_id",
+        "backend_version",
+        "host_profile_sha256",
+        "overlay_sha256"
+      ],
+      "properties": {
+        "source_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "adapter_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "adapter_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "backend_id": {
+          "const": "xcp.creative_ir_to_project.v1"
+        },
+        "backend_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "host_profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "overlay_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reused_by_content_hash",
+        "rebuilt",
+        "overlay_applied",
+        "removed"
+      ],
+      "properties": {
+        "reused_by_content_hash": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rebuilt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "overlay_applied": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "removed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "reused_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rebuilt_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "final_project_tree_sha256": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "optional_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "disposition",
+        "source_path",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "disposition": {
+          "enum": [
+            "reused_by_content_hash",
+            "rebuilt",
+            "overlay_applied",
+            "removed"
+          ]
+        },
+        "source_path": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "sha256": {
+          "$ref": "#/$defs/optional_sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 68719476736
+        }
+      }
+    }
+  }
+}

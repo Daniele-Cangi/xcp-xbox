@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:xcp:schema:platform-contracts-v1",
+  "title": "XCP platform core contracts v1",
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_file": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "semantic_record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "source_path", "source_sha256", "properties"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "source_path": {"type": "string", "minLength": 1},
+        "source_sha256": {"$ref": "#/$defs/sha256"},
+        "properties": {"type": "object"}
+      }
+    },
+    "source_observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "adapter_id", "adapter_version", "files"],
+      "properties": {
+        "schema_version": {"const": "xcp-source-observation-v1"},
+        "adapter_id": {"type": "string", "minLength": 1},
+        "adapter_version": {"type": "string", "minLength": 1},
+        "files": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source_file"}}
+      }
+    },
+    "source_model": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "observation_sha256", "adapter_id", "records", "diagnostics"],
+      "properties": {
+        "schema_version": {"const": "xcp-source-model-v1"},
+        "observation_sha256": {"$ref": "#/$defs/sha256"},
+        "adapter_id": {"type": "string", "minLength": 1},
+        "records": {"type": "array", "items": {"$ref": "#/$defs/semantic_record"}},
+        "diagnostics": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "project_intent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "project_id", "summary", "invariants", "acceptance"],
+      "properties": {
+        "schema_version": {"const": "xcp-project-intent-v2"},
+        "project_id": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1},
+        "invariants": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "acceptance": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false,
+          "required": ["key", "tolerance"], "properties": {
+            "key": {"type": "string", "minLength": 1}, "tolerance": {"type": "number", "minimum": 0}}}
+        }
+      }
+    },
+    "semantic_ir": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "source_model_sha256", "records", "required_capabilities"],
+      "properties": {
+        "schema_version": {"const": "xcp-semantic-ir-v1"},
+        "source_model_sha256": {"$ref": "#/$defs/sha256"},
+        "records": {"type": "array", "items": {"$ref": "#/$defs/semantic_record"}},
+        "required_capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "target_profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "target_id", "target_version", "capabilities"],
+      "properties": {
+        "schema_version": {"const": "xcp-target-profile-v1"},
+        "target_id": {"type": "string", "minLength": 1},
+        "target_version": {"type": "string", "minLength": 1},
+        "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "admission_plan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "intent_sha256", "source_model_sha256", "ir_sha256", "target_profile_sha256", "capabilities"],
+      "properties": {
+        "schema_version": {"const": "xcp-admission-plan-v1"},
+        "intent_sha256": {"$ref": "#/$defs/sha256"},
+        "source_model_sha256": {"$ref": "#/$defs/sha256"},
+        "ir_sha256": {"$ref": "#/$defs/sha256"},
+        "target_profile_sha256": {"$ref": "#/$defs/sha256"},
+        "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "evidence_identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_sha256", "source_model_sha256", "ir_sha256", "intent_sha256", "project_sha256", "plan_sha256", "target_profile_sha256", "execution_sha256", "result_sha256"],
+      "properties": {
+        "source_sha256": {"$ref": "#/$defs/sha256"},
+        "source_model_sha256": {"$ref": "#/$defs/sha256"},
+        "ir_sha256": {"$ref": "#/$defs/sha256"},
+        "intent_sha256": {"$ref": "#/$defs/sha256"},
+        "project_sha256": {"$ref": "#/$defs/sha256"},
+        "plan_sha256": {"$ref": "#/$defs/sha256"},
+        "target_profile_sha256": {"$ref": "#/$defs/sha256"},
+        "execution_sha256": {"$ref": "#/$defs/sha256"},
+        "result_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "identity", "role", "values"],
+      "properties": {
+        "schema_version": {"const": "xcp-observation-v1"},
+        "identity": {"$ref": "#/$defs/evidence_identity"},
+        "role": {"enum": ["source", "target"]},
+        "values": {"type": "object"}
+      }
+    },
+    "execution_receipt": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "plan_sha256", "target_profile_sha256", "execution_sha256", "result_sha256", "status", "target_observation_sha256"],
+      "properties": {
+        "schema_version": {"const": "xcp-execution-receipt-v2"},
+        "plan_sha256": {"$ref": "#/$defs/sha256"},
+        "target_profile_sha256": {"$ref": "#/$defs/sha256"},
+        "execution_sha256": {"$ref": "#/$defs/sha256"},
+        "result_sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"enum": ["succeeded", "failed", "canceled"]},
+        "target_observation_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "comparison": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "source_identity", "target_identity", "source_observation_sha256", "target_observation_sha256", "execution_receipt_sha256", "execution_succeeded", "fidelity", "comparisons", "sha256"],
+      "properties": {
+        "schema_version": {"const": "xcp-comparison-v1"},
+        "source_identity": {"$ref": "#/$defs/evidence_identity"},
+        "target_identity": {"$ref": "#/$defs/evidence_identity"},
+        "source_observation_sha256": {"$ref": "#/$defs/sha256"},
+        "target_observation_sha256": {"$ref": "#/$defs/sha256"},
+        "execution_receipt_sha256": {"$ref": "#/$defs/sha256"},
+        "execution_succeeded": {"type": "boolean"},
+        "fidelity": {"enum": ["pass", "diverged", "insufficient"]},
+        "comparisons": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["key", "status"],
+            "properties": {
+              "key": {"type": "string", "minLength": 1},
+              "status": {"enum": ["pass", "diverged", "missing"]},
+              "tolerance": {"type": "number", "minimum": 0},
+              "source_present": {"type": "boolean"},
+              "target_present": {"type": "boolean"},
+              "source_value_sha256": {"$ref": "#/$defs/sha256"},
+              "target_value_sha256": {"$ref": "#/$defs/sha256"},
+              "distance": {"type": "number", "minimum": 0}
+            }
+          }
+        },
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "replay_comparison": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "context_sha256", "first_observation_sha256", "second_observation_sha256", "first_receipt_sha256", "second_receipt_sha256", "status", "sha256"],
+      "properties": {
+        "schema_version": {"const": "xcp-replay-comparison-v1"},
+        "context_sha256": {"$ref": "#/$defs/sha256"},
+        "first_observation_sha256": {"$ref": "#/$defs/sha256"},
+        "second_observation_sha256": {"$ref": "#/$defs/sha256"},
+        "first_receipt_sha256": {"$ref": "#/$defs/sha256"},
+        "second_receipt_sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"enum": ["equal", "diverged", "insufficient"]},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "stage_evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "context_sha256", "stage", "outcome", "artifact_sha256"],
+      "properties": {
+        "schema_version": {"const": "xcp-stage-evidence-v1"},
+        "context_sha256": {"$ref": "#/$defs/sha256"},
+        "stage": {"enum": ["source_observation", "source_model", "semantic_ir", "planning", "lowering", "target_runtime", "verification"]},
+        "outcome": {"enum": ["passed", "failed"]},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "stage_attribution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "comparison_sha256", "context_sha256", "first_failed_stage", "stage_evidence_sha256", "sha256"],
+      "properties": {
+        "schema_version": {"const": "xcp-stage-attribution-v1"},
+        "comparison_sha256": {"$ref": "#/$defs/sha256"},
+        "context_sha256": {"$ref": "#/$defs/sha256"},
+        "first_failed_stage": {"enum": ["undetermined", "source_observation", "source_model", "semantic_ir", "planning", "lowering", "target_runtime", "verification"]},
+        "stage_evidence_sha256": {"type": "array", "items": {"$ref": "#/$defs/sha256"}},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

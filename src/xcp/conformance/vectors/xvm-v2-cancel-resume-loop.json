@@ -1,0 +1,33 @@
+{
+  "schema_version": "xvm-program-artifact-v2",
+  "isa_version": "xvm-v2",
+  "profile": "integer-deterministic-v2",
+  "program_id": "xvm-v2-cancel-resume-loop",
+  "memory_bytes": 64,
+  "output_bytes": 16,
+  "max_fuel": 8000000,
+  "max_call_depth": 1,
+  "capabilities": [
+    "artifact_input",
+    "artifact_output",
+    "control_output"
+  ],
+  "functions": [
+    { "entry_pc": 11, "end_pc": 12 }
+  ],
+  "bytecode_words": [
+    2, 0, 0, 0,
+    1, 1, 1, 0,
+    11, 60, 6, 0,
+    11, 65536, 5, 0,
+    3, 0, 0, 1,
+    12, 3, 0, 0,
+    12, 2, 0, 0,
+    15, 11, 0, 0,
+    13, 0, 0, 0,
+    14, 1, 0, 0,
+    0, 0, 0, 0,
+    4, 0, 0, 1,
+    16, 0, 0, 0
+  ]
+}

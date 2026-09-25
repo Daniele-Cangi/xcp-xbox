@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-audio-module-v1.schema.json",
+  "title": "XCP bounded event-driven audio module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "buses", "clips", "cues"],
+  "properties": {
+    "schema_version": {"const": "xcp-audio-module-v1"},
+    "buses": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/bus"}
+    },
+    "clips": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {"$ref": "#/$defs/clip"}
+    },
+    "cues": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {"$ref": "#/$defs/cue"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "gain": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "bus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "gain"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "gain": {"$ref": "#/$defs/gain"}
+      }
+    },
+    "clip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "asset_id", "bus_id", "gain", "loop"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "asset_id": {"$ref": "#/$defs/identifier"},
+        "bus_id": {"$ref": "#/$defs/identifier"},
+        "gain": {"$ref": "#/$defs/gain"},
+        "loop": {"type": "boolean"}
+      }
+    },
+    "cue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "event", "clip_id", "gain"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "event": {"$ref": "#/$defs/contract_id"},
+        "clip_id": {"$ref": "#/$defs/identifier"},
+        "gain": {"$ref": "#/$defs/gain"}
+      }
+    }
+  }
+}

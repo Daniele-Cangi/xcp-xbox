@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-creative-source-map-v1.schema.json",
+  "title": "XCP creative source to project mapping v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "mapping_id",
+    "source_inventory_sha256",
+    "creative_ir_sha256",
+    "adaptation_plan_sha256",
+    "xcp_project_sha256",
+    "entries",
+    "unmapped_source_refs",
+    "untraced_xcp_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-creative-source-map-v1"
+    },
+    "mapping_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "source_inventory_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "creative_ir_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "adaptation_plan_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "xcp_project_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mapping_type",
+          "source_refs",
+          "ir_refs",
+          "xcp_refs",
+          "classification"
+        ],
+        "properties": {
+          "mapping_type": {
+            "enum": [
+              "one_to_one",
+              "one_to_many",
+              "many_to_one",
+              "many_to_many"
+            ]
+          },
+          "source_refs": {
+            "$ref": "#/$defs/ref_array"
+          },
+          "ir_refs": {
+            "$ref": "#/$defs/ref_array"
+          },
+          "xcp_refs": {
+            "$ref": "#/$defs/xcp_ref_array"
+          },
+          "classification": {
+            "enum": [
+              "preserved_directly",
+              "translated",
+              "substituted",
+              "degraded",
+              "unsupported",
+              "human_intervention_required"
+            ]
+          }
+        }
+      }
+    },
+    "unmapped_source_refs": {
+      "type": "array",
+      "maxItems": 200000,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "untraced_xcp_refs": {
+      "type": "array",
+      "maxItems": 200000,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ref_array": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "xcp_ref_array": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256,
+        "pattern": "^(project|module|asset|state):[a-z][a-z0-9]*(?:[._:/-][a-z0-9]+)*$"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "xcp-agent-native-creation-v1",
+  "program_id": "XCP_CREATIVE_PLATFORM_V1",
+  "gate_id": "C5_AGENT_NATIVE_CREATION_GATE",
+  "status": "PUBLIC_RECONSTRUCTION_AWAITING_VALIDATION",
+  "authority": {
+    "project_schema": "schemas/xcp-creative-project-v1.schema.json",
+    "bundle_schema": "schemas/xcp-creative-bundle-v1.schema.json",
+    "host_profile_schema": "schemas/xcp-creative-host-profile-v1.schema.json",
+    "intent_schema": "schemas/xcp-agent-project-intent-v1.schema.json",
+    "correction_ledger_schema": "schemas/xcp-agent-correction-ledger-v1.schema.json",
+    "lifecycle_receipt_schema": "schemas/xcp-agent-lifecycle-receipt-v1.schema.json",
+    "portable_builder": "tools/xcp_creative_project.py",
+    "agent_lifecycle_tool": "tools/xcp_agent_lifecycle.py",
+    "blind_gate_finalizer": "tools/xcp_agent_blind_gate.py",
+    "blind_gate_report_schema": "schemas/xcp-agent-blind-creation-gate-v1.schema.json",
+    "agent_kit_exporter": "tools/export_xcp_agent_kit.py",
+    "worker_sdk_contract": "schemas/worker-sdk-contract-v1.json"
+  },
+  "ordered_cycle": [
+    "discover",
+    "author_intent",
+    "create_project",
+    "validate",
+    "build",
+    "verify",
+    "install",
+    "activate",
+    "launch",
+    "observe",
+    "interact",
+    "evaluate_acceptance",
+    "correct_from_structured_error",
+    "update",
+    "capture",
+    "rollback",
+    "cleanup"
+  ],
+  "success_model": {
+    "lifecycle_success_is_sufficient": false,
+    "intent_acceptance_required": true,
+    "all_blocking_assertions_must_pass": true,
+    "structured_observation_required": true,
+    "capture_required": true,
+    "rollback_required": true,
+    "cleanup_required": true
+  },
+  "correction_model": {
+    "stable_branch_key": "error.code",
+    "details_path": "error.details",
+    "message_branching_allowed": false,
+    "append_only_hash_chain": true,
+    "failed_attempts_preserved": true,
+    "retry_identity_bound": true
+  },
+  "repository_independence": {
+    "exportable_kit_required": true,
+    "repository_access_required_after_export": false,
+    "samples_in_exported_kit": false,
+    "credentials_in_exported_kit": false,
+    "session_material_persisted": false,
+    "host_profile_must_be_discovered": true
+  },
+  "first_gate": {
+    "projects": [
+      "one_interactive_game_created_from_zero",
+      "one_non_game_utility_created_from_zero"
+    ],
+    "copied_from_samples_allowed": false,
+    "required_corrections": [
+      "one_structured_local_error",
+      "one_structured_live_error"
+    ],
+    "root_controller_free_form_interpretation_allowed": false
+  },
+  "package_strategy": {
+    "pc_side_by_default": true,
+    "public_worker_package_required_for_live_validation": true
+  },
+  "validation": {
+    "status": "NOT_VALIDATED_FROM_PUBLIC_BUILD",
+    "historical_operational_evidence_included": false
+  }
+}

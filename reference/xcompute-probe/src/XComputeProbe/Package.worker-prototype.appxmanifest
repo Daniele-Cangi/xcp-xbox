@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap mp">
+  <!-- 0.1.153.0 remains immutable Full T2; 0.1.154.0 remains immutable T4+T5; 0.1.155.0 remains immutable T6+T7; 0.1.156.0 is the failed same-lease T8 diagnostic; 0.1.157.0 remains immutable restart-reauthorization T8+T9; 0.1.158.0 and 0.1.159.0 remain immutable storage-scale diagnostics; 0.1.160.0 is the promoted 8 GiB product-ceiling result; 0.1.161.0 is the promoted precompiled-D3D ownership-split result; 0.1.162.0 is the promoted agent-native XVM toolchain result; 0.1.163.0 is the failed Creative activation-path diagnostic; 0.1.164.0 is the promoted XCP Creative Platform C1+C2+C3-min result; 0.1.165.0 remains the promoted C3-complete result; 0.1.166.0 preserves the historical C5+C6 lifecycle-only result; 0.1.167.0 is the non-promoted creative operator-overlay diagnostic; 0.1.168.0 is the non-promoted single-world source-fidelity diagnostic; 0.1.169.0 is the non-promoted campaign-state restart diagnostic; 0.1.170.0 remains the campaign persistence candidate; 0.1.171.0 is the non-promoted creative render-target recovery diagnostic; 0.1.172.0 is the fresh/restored campaign scene materialization candidate; 0.1.173.0 is the non-promoted Creative capability-admission divergence diagnostic; 0.1.174.0 remains the corrective motion-admission candidate; 0.1.175.0 is the non-promoted physical-input ownership and UI-alignment candidate; 0.1.176.0 is the superseded G2P2G physical scene-input delivery and bounded foreground-observation diagnostic; 0.1.177.0 is the G2P2G per-input semantic-causality candidate. -->
+  <Identity Name="XComputeProbe.WorkerPrototype" Publisher="CN=LocalDev" Version="0.1.177.0" ProcessorArchitecture="x64" />
+  <mp:PhoneIdentity PhoneProductId="d1e0de7c-d7b1-4e6b-89f5-0acb0829f7db" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>XCP WORKER</DisplayName>
+    <PublisherDisplayName>LocalDev</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Xbox" MinVersion="10.0.18362.0" MaxVersionTested="10.0.26100.0" />
+    <PackageDependency Name="XComputeProbe.CpuCapsule.Framework" Publisher="CN=LocalDev" MinVersion="1.3.0.0" MaxMajorVersionTested="1" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="XComputeProbe.App">
+      <uap:VisualElements
+        DisplayName="XCP WORKER"
+        Description="LocalFolder search and patch worker prototype"
+        BackgroundColor="#0B1220"
+        Square150x150Logo="Assets\Logo.png"
+        Square44x44Logo="Assets\SmallLogo.png">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0B1220" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="XComputeTopologyBroker.BrokerTask" ResourceGroup="xcp.process.topology.probe.v1">
+          <uap:AppService Name="xcp.process.topology.probe.v1" />
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+  </Capabilities>
+</Package>

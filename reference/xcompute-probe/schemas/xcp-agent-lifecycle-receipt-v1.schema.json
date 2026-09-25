@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-agent-lifecycle-receipt-v1.schema.json",
+  "title": "XCP agent project lifecycle receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "project_id",
+    "project_version",
+    "intent_sha256",
+    "project_sha256",
+    "bundle_sha256",
+    "host_profile_sha256",
+    "operations",
+    "acceptance",
+    "artifacts",
+    "correction_ledger_sha256",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-agent-lifecycle-receipt-v1"
+    },
+    "run_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "project_version": {
+      "$ref": "#/$defs/semantic_version"
+    },
+    "intent_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "project_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "bundle_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "host_profile_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "install_id": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "plan_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "version_transition": {
+      "$ref": "#/$defs/version_transition"
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/acceptance_result"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "correction_ledger_sha256": {
+      "oneOf": [
+        {
+          "const": ""
+        },
+        {
+          "$ref": "#/$defs/sha256"
+        }
+      ]
+    },
+    "decision": {
+      "enum": [
+        "pass",
+        "fail",
+        "incomplete",
+        "human_intervention_required"
+      ]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ordinal",
+        "name",
+        "outcome",
+        "response_schema_version",
+        "error_code",
+        "evidence_refs"
+      ],
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "name": {
+          "enum": [
+            "discover",
+            "validate",
+            "build",
+            "verify",
+            "install",
+            "activate",
+            "launch",
+            "observe",
+            "interact",
+            "capture",
+            "update",
+            "rollback",
+            "cleanup"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_run"
+          ]
+        },
+        "response_schema_version": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "error_code": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 1024,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "acceptance_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assertion_id",
+        "phase",
+        "severity",
+        "outcome",
+        "actual",
+        "expected"
+      ],
+      "properties": {
+        "assertion_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "phase": {
+          "enum": [
+            "local",
+            "live"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "blocker",
+            "advisory"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_observed"
+          ]
+        },
+        "actual": {},
+        "expected": {}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "reference",
+        "bytes",
+        "sha256"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/contract_id"
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 68719476736
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "version_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_version",
+        "project_sha256",
+        "bundle_sha256",
+        "install_id"
+      ],
+      "properties": {
+        "project_version": {
+          "$ref": "#/$defs/semantic_version"
+        },
+        "project_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bundle_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "install_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "version_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "base",
+        "update",
+        "rollback",
+        "exact_update_activated",
+        "exact_base_restored"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "xcp-agent-version-transition-v1"
+        },
+        "base": {
+          "$ref": "#/$defs/version_identity"
+        },
+        "update": {
+          "$ref": "#/$defs/version_identity"
+        },
+        "rollback": {
+          "$ref": "#/$defs/version_identity"
+        },
+        "exact_update_activated": {
+          "const": true
+        },
+        "exact_base_restored": {
+          "const": true
+        }
+      }
+    }
+  }
+}

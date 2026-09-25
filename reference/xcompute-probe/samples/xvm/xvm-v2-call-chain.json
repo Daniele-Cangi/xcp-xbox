@@ -1,0 +1,34 @@
+{
+  "schema_version": "xvm-program-artifact-v2",
+  "isa_version": "xvm-v2",
+  "profile": "integer-deterministic-v2",
+  "program_id": "xvm-v2-call-chain",
+  "memory_bytes": 64,
+  "output_bytes": 16,
+  "max_fuel": 64,
+  "max_call_depth": 1,
+  "capabilities": [
+    "artifact_input",
+    "artifact_output",
+    "control_output"
+  ],
+  "functions": [
+    { "entry_pc": 8, "end_pc": 10 },
+    { "entry_pc": 11, "end_pc": 12 }
+  ],
+  "bytecode_words": [
+    2, 0, 0, 0,
+    2, 1, 1, 0,
+    15, 8, 0, 0,
+    1, 3, 3, 0,
+    15, 11, 0, 0,
+    13, 2, 0, 0,
+    14, 3, 0, 0,
+    0, 0, 0, 0,
+    4, 2, 0, 1,
+    6, 2, 2, 5,
+    16, 0, 0, 0,
+    5, 2, 2, 3,
+    16, 0, 0, 0
+  ]
+}

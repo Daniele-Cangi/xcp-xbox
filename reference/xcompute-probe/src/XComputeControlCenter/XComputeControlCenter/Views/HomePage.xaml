@@ -1,0 +1,136 @@
+<Page
+    x:Class="XComputeControlCenter.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollMode="Disabled">
+        <StackPanel MaxWidth="1160" Spacing="18" Padding="0,18,0,28">
+            <StackPanel Spacing="6">
+                <TextBlock Text="ONE PROJECT · MANY AUTHORS" Style="{StaticResource StudioEyebrowStyle}" />
+                <TextBlock Text="Make something for Xbox." Style="{StaticResource StudioPageTitleStyle}" />
+                <TextBlock
+                    Text="Start with an idea, bring an existing codebase, or continue an adaptation. XCP Studio keeps people and agents on the same project format and the same C5 lifecycle."
+                    Style="{StaticResource StudioBodyStyle}"
+                    MaxWidth="760"
+                    HorizontalAlignment="Left" />
+            </StackPanel>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource StudioHeroCardStyle}">
+                    <StackPanel Spacing="14">
+                        <TextBlock Text="01 · CREATE" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock Text="Begin with an idea" Style="{StaticResource StudioSectionTitleStyle}" />
+                        <TextBlock
+                            Text="Create a canonical project, edit it visually or as source, then build the exact same files."
+                            Style="{StaticResource StudioBodyStyle}" />
+                        <Button
+                            Content="Create from zero"
+                            HorizontalAlignment="Left"
+                            Click="Create_Click"
+                            AutomationProperties.Name="Start a new XCP project" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource StudioHeroCardStyle}">
+                    <StackPanel Spacing="14">
+                        <TextBlock Text="02 · ADAPT" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock Text="Bring existing source" Style="{StaticResource StudioSectionTitleStyle}" />
+                        <TextBlock
+                            Text="Detect its ecosystem, inspect fidelity and translate it through Creative IR without an engine-to-Xbox shortcut."
+                            Style="{StaticResource StudioBodyStyle}" />
+                        <Button
+                            Content="Adapt a project"
+                            HorizontalAlignment="Left"
+                            Click="Adapt_Click"
+                            AutomationProperties.Name="Adapt an external source project" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource StudioHeroCardStyle}">
+                    <StackPanel Spacing="14">
+                        <TextBlock Text="03 · PLAYTEST" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock Text="Play on your Xbox" Style="{StaticResource StudioSectionTitleStyle}" />
+                        <TextBlock
+                            Text="Continue with your latest project. Studio validates, packages, transfers and starts it for you."
+                            Style="{StaticResource StudioBodyStyle}" />
+                        <Button
+                            Content="Play on Xbox"
+                            HorizontalAlignment="Left"
+                            Click="Playtest_Click"
+                            AutomationProperties.Name="Play the current project on Xbox" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="LOCAL CREATIVE TOOLCHAIN" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock
+                            Text="{x:Bind ViewModel.LocalState, Mode=OneWay}"
+                            FontSize="17"
+                            FontWeight="SemiBold"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Text="C5 creation · C6 adaptation · C7 evolution"
+                            Style="{StaticResource StudioBodyStyle}" />
+                        <TextBlock
+                            Text="{x:Bind ViewModel.ToolchainIdentity, Mode=OneWay}"
+                            Style="{StaticResource StudioMonoStyle}"
+                            AutomationProperties.Name="Resolved portable toolchain identity" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource StudioCardStyle}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="SELECTED XBOX" Style="{StaticResource StudioEyebrowStyle}" />
+                        <TextBlock
+                            Text="{x:Bind ViewModel.DeviceState, Mode=OneWay}"
+                            FontSize="17"
+                            FontWeight="SemiBold"
+                            TextWrapping="Wrap" />
+                        <Button
+                            Content="Configure device"
+                            HorizontalAlignment="Left"
+                            Click="Device_Click"
+                            AutomationProperties.Name="Configure the Xbox connection" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource StudioInnerPanelStyle}">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource StudioPillStyle}">
+                        <TextBlock
+                            Text="NO MOCKS"
+                            FontSize="10.5"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource StudioAccentBrush}" />
+                    </Border>
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.Detail, Mode=OneWay}"
+                        Style="{StaticResource StudioBodyStyle}"
+                        VerticalAlignment="Center" />
+                    <Button
+                        Grid.Column="2"
+                        Content="Inspect evidence"
+                        Click="Evidence_Click" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

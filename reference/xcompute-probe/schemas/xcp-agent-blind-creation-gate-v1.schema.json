@@ -1,0 +1,584 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-agent-blind-creation-gate-v1.schema.json",
+  "title": "XCP blind C5 creation gate report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "decision",
+    "recorded_on",
+    "runtime",
+    "controller_commits",
+    "kits",
+    "authoring",
+    "repository_independence",
+    "projects",
+    "failed_attempts",
+    "aggregate",
+    "final_state_evidence",
+    "boundaries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "xcp-agent-blind-creation-gate-report-v1"
+    },
+    "gate_id": {
+      "const": "C5_AGENT_NATIVE_CREATION_GATE"
+    },
+    "status": {
+      "const": "IMPLEMENTED_MEASURED_ON_XBOX"
+    },
+    "decision": {
+      "const": "pass"
+    },
+    "recorded_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_version",
+        "worker_package_version",
+        "worker_package_bytes",
+        "worker_package_sha256",
+        "package_listing",
+        "host_profile_sha256",
+        "worker_package_changed_for_gate"
+      ],
+      "properties": {
+        "protocol_version": {
+          "const": "0.73"
+        },
+        "worker_package_version": {
+          "const": "0.1.166.0"
+        },
+        "worker_package_bytes": {
+          "const": 1789690
+        },
+        "worker_package_sha256": {
+          "const": "1cb76af32b62f6edba60071f6fa0cbedeb87a0696123de67665a35baa86e5527"
+        },
+        "package_listing": {
+          "const": "XComputeProbe.WorkerPrototype_0.1.166.0_x64__d8ha3mrf4bp1p"
+        },
+        "host_profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "worker_package_changed_for_gate": {
+          "const": false
+        }
+      }
+    },
+    "controller_commits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "game_live",
+        "utility_live",
+        "finalizer"
+      ],
+      "properties": {
+        "game_live": {
+          "$ref": "#/$defs/commit"
+        },
+        "utility_live": {
+          "$ref": "#/$defs/commit"
+        },
+        "finalizer": {
+          "$ref": "#/$defs/commit"
+        }
+      }
+    },
+    "kits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authoring",
+        "live_lifecycle",
+        "finalizer"
+      ],
+      "properties": {
+        "authoring": {
+          "$ref": "#/$defs/kit"
+        },
+        "live_lifecycle": {
+          "$ref": "#/$defs/kit"
+        },
+        "finalizer": {
+          "$ref": "#/$defs/kit"
+        }
+      }
+    },
+    "authoring": {
+      "$ref": "#/$defs/file_identity"
+    },
+    "repository_independence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_files_read",
+        "repository_metadata_read",
+        "internet_used",
+        "samples_used",
+        "credentials_used",
+        "author_live_access_used",
+        "root_free_form_interpretation_used"
+      ],
+      "properties": {
+        "repository_files_read": {
+          "const": 0
+        },
+        "repository_metadata_read": {
+          "const": 0
+        },
+        "internet_used": {
+          "const": false
+        },
+        "samples_used": {
+          "const": false
+        },
+        "credentials_used": {
+          "const": false
+        },
+        "author_live_access_used": {
+          "const": false
+        },
+        "root_free_form_interpretation_used": {
+          "const": false
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/project"
+      }
+    },
+    "failed_attempts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "structured_local_error_codes",
+        "structured_live_error_codes",
+        "preserved"
+      ],
+      "properties": {
+        "structured_local_error_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/error_code"
+          }
+        },
+        "structured_live_error_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/error_code"
+          }
+        },
+        "preserved": {
+          "const": true
+        }
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projects_passed",
+        "projects_total",
+        "experience_kinds",
+        "operations_passed",
+        "operations_total",
+        "acceptance_passed",
+        "acceptance_total",
+        "captures_verified",
+        "captures_total",
+        "correction_entries_passed",
+        "correction_entries_total",
+        "natural_local_correction_codes",
+        "natural_live_correction_codes",
+        "final_state_checks_passed",
+        "final_state_checks_total"
+      ],
+      "properties": {
+        "projects_passed": {
+          "const": 2
+        },
+        "projects_total": {
+          "const": 2
+        },
+        "experience_kinds": {
+          "const": [
+            "game",
+            "utility"
+          ]
+        },
+        "operations_passed": {
+          "const": 28
+        },
+        "operations_total": {
+          "const": 28
+        },
+        "acceptance_passed": {
+          "const": 12
+        },
+        "acceptance_total": {
+          "const": 12
+        },
+        "captures_verified": {
+          "const": 6
+        },
+        "captures_total": {
+          "const": 6
+        },
+        "correction_entries_passed": {
+          "minimum": 4,
+          "type": "integer"
+        },
+        "correction_entries_total": {
+          "minimum": 4,
+          "type": "integer"
+        },
+        "natural_local_correction_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/error_code"
+          }
+        },
+        "natural_live_correction_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/error_code"
+          }
+        },
+        "final_state_checks_passed": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "final_state_checks_total": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      }
+    },
+    "final_state_evidence": {
+      "$ref": "#/$defs/final_state_identity"
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worker_gap_after_gate",
+        "native_change_required_after_gate",
+        "restricted_capability_leaks",
+        "runtime_shader_compilation",
+        "native_or_host_code_upload",
+        "claim_boundary_expanded",
+        "topology_152_promoted",
+        "t3_reopened",
+        "next_target"
+      ],
+      "properties": {
+        "worker_gap_after_gate": {
+          "const": false
+        },
+        "native_change_required_after_gate": {
+          "const": false
+        },
+        "restricted_capability_leaks": {
+          "const": 0
+        },
+        "runtime_shader_compilation": {
+          "const": false
+        },
+        "native_or_host_code_upload": {
+          "const": false
+        },
+        "claim_boundary_expanded": {
+          "const": false
+        },
+        "topology_152_promoted": {
+          "const": false
+        },
+        "t3_reopened": {
+          "const": false
+        },
+        "next_target": {
+          "const": "C7_PROJECT_EVOLUTION_AND_CONTINUOUS_READAPTATION"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "error_code": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "file_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "kit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "kit_version",
+        "manifest_sha256",
+        "file_count",
+        "total_bytes"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "kit_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "file_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "total_bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "final_state_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "bytes",
+        "sha256",
+        "checks_passed",
+        "checks_total"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "checks_passed": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "checks_total": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      }
+    },
+    "version_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "project_sha256",
+        "bundle_sha256"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "project_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bundle_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "count_pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "passed",
+        "total"
+      ],
+      "properties": {
+        "passed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experience_kind",
+        "project_id",
+        "base",
+        "update",
+        "intent_sha256",
+        "receipt",
+        "operations",
+        "acceptance",
+        "captures",
+        "ledger",
+        "final_installs"
+      ],
+      "properties": {
+        "experience_kind": {
+          "enum": [
+            "game",
+            "utility"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+        },
+        "base": {
+          "$ref": "#/$defs/version_identity"
+        },
+        "update": {
+          "$ref": "#/$defs/version_identity"
+        },
+        "intent_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt": {
+          "$ref": "#/$defs/file_identity"
+        },
+        "operations": {
+          "$ref": "#/$defs/count_pair"
+        },
+        "acceptance": {
+          "$ref": "#/$defs/count_pair"
+        },
+        "captures": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/file_identity"
+          }
+        },
+        "ledger": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "bytes",
+            "sha256",
+            "status",
+            "entry_count",
+            "head_sha256",
+            "correction_codes"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "status": {
+              "const": "passed"
+            },
+            "entry_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "head_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "correction_codes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/error_code"
+              }
+            }
+          }
+        },
+        "final_installs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "active_install_id",
+            "rollback_install_id"
+          ],
+          "properties": {
+            "active_install_id": {
+              "$ref": "#/$defs/sha256"
+            },
+            "rollback_install_id": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        }
+      }
+    }
+  }
+}

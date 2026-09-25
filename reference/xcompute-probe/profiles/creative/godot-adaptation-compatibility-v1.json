@@ -1,0 +1,204 @@
+{
+  "schema_version": "godot-adaptation-compatibility-v1",
+  "program_id": "XCP_CREATIVE_PLATFORM_V1",
+  "gate_id": "G1_GODOT_ADAPTATION_COMPATIBILITY_V1",
+  "status": "PUBLIC_RECONSTRUCTION_AWAITING_VALIDATION",
+  "authority": {
+    "program_doc": "docs/XCP_CREATIVE_PLATFORM_V1.md",
+    "gate_doc": "docs/GODOT_ADAPTATION_COMPATIBILITY_V1.md",
+    "c6_profile": "profiles/creative/xcp-agent-native-source-adaptation-v1.json",
+    "c7_profile": "profiles/creative/xcp-project-evolution-v1.json",
+    "legacy_cli_and_compatibility_oracle": "tools/xcp_source_adapt.py",
+    "target_internal_package": "tools/xcp_adaptation",
+    "lifecycle_owner": "C5_AGENT_NATIVE_CREATION_GATE"
+  },
+  "g1_contract": {
+    "change_kind": "PC_SIDE_INTERNAL_REFACTOR",
+    "implementation_status": "IMPLEMENTED_MEASURED_PC_SIDE",
+    "internal_package_is_new_public_entrypoint": false,
+    "engine_to_xbox_direct_conversion": false,
+    "internal_module_layout": [
+      "core",
+      "adapters",
+      "source_models",
+      "semantics",
+      "ir",
+      "planning",
+      "lowering",
+      "fidelity",
+      "handoff"
+    ],
+    "adapter_boundary_stages": [
+      "source_detection",
+      "source_inspection",
+      "source_inventory_and_provenance",
+      "source_model_interface",
+      "semantic_extraction_and_inventory",
+      "creative_ir_emission"
+    ],
+    "adapter_may_plan_capabilities": false,
+    "adapter_may_lower_to_xcp_project": false,
+    "adapter_may_construct_c5_handoff": false,
+    "adapter_may_target_xbox": false,
+    "source_model_v1_defined_and_implemented": true,
+    "source_model_cross_project_validation_complete": false,
+    "godot4_engine_assisted_scaffold_present": true,
+    "godot4_authoritative_frontend_complete": false,
+    "versioned_replaceable_stages": [
+      "extraction",
+      "semantic_ir_and_passes",
+      "lowering",
+      "source_fidelity_comparison"
+    ],
+    "minilens_specific_fidelity_rules_allowed": false,
+    "generalization_target": "ANY_AUTHORIZED_GODOT_PROJECT",
+    "legacy_symbols_preserved": [
+      "SourceAdaptError",
+      "Detection",
+      "SourceAdapter",
+      "Godot2SourceAdapter",
+      "detect_source",
+      "inspect_source",
+      "create_plan",
+      "generate_project",
+      "fidelity_contract",
+      "readiness_report",
+      "probe_fidelity",
+      "finalize_readiness",
+      "adapt",
+      "describe",
+      "main"
+    ],
+    "canonical_artifacts_preserved": [
+      "source_inventory",
+      "semantic_inventory",
+      "creative_ir",
+      "adaptation_plan",
+      "fidelity_contract",
+      "generated_xcp_project",
+      "source_map",
+      "fidelity_and_readiness_evidence",
+      "c5_intent",
+      "c6_to_c5_handoff"
+    ],
+    "canonical_bytes_and_sha256_equivalence_required": true,
+    "legacy_cli_arguments_and_exit_behavior_equivalence_required": true,
+    "structured_error_code_and_complete_details_equivalence_required": true,
+    "delegation_only_relocations": [
+      "adaptation_plan",
+      "fidelity_disposition",
+      "general_2d_lowering",
+      "xcp_project_generation",
+      "c5_intent",
+      "c6_to_c5_handoff",
+      "handoff_verification",
+      "readiness_finalization"
+    ],
+    "authority_not_transferred": [
+      "c6_public_contract",
+      "c5_lifecycle",
+      "c7_evolution"
+    ],
+    "relocated_symbols_require_exact_legacy_delegation": [
+      "adapt",
+      "generate_project",
+      "_adapted_c5_intent",
+      "_adaptation_handoff",
+      "_verify_handoff_artifacts",
+      "finalize_readiness"
+    ]
+  },
+  "frozen_contracts": {
+    "c5": {
+      "status_and_claims_unchanged": true,
+      "sole_live_lifecycle_owner": true
+    },
+    "c6": {
+      "status": "REOPENED_SOURCE_FIDELITY_FAIL_CLOSED",
+      "status_and_claims_unchanged": true,
+      "profile_unchanged_by_g1": true,
+      "external_cli_unchanged": true,
+      "handoff_contract_and_canonical_bytes_unchanged": true,
+      "implementation_may_delegate_to_internal_package": true
+    },
+    "finalizer": {
+      "ownership_unchanged": true,
+      "contract_and_claims_unchanged": true,
+      "legacy_command_unchanged": true,
+      "implementation_may_delegate_to_internal_fidelity_module": true
+    },
+    "c7": {
+      "historical_status": "IMPLEMENTED_MEASURED_ON_XBOX",
+      "current_change_state": "FROZEN_PRESERVED_HISTORY",
+      "profile_unchanged_by_g1": true,
+      "thaw_gate": "G2_SOURCE_MODEL_AND_SEMANTIC_IDENTIFIER_CROSS_PROJECT_VALIDATION",
+      "thaw_requires_second_radically_different_godot_project": true,
+      "another_minilens_revision_is_sufficient": false,
+      "thaw_creates_new_claim": false
+    }
+  },
+  "ordered_gates": [
+    {
+      "gate_id": "G1_INTERNAL_PACKAGE_COMPATIBILITY",
+      "status": "IMPLEMENTED_MEASURED_PC_SIDE",
+      "result": "legacy_surface_and_canonical_outputs_unchanged"
+    },
+    {
+      "gate_id": "G2_SOURCE_MODEL_AND_SEMANTIC_IDENTIFIER_CROSS_PROJECT_VALIDATION",
+      "status": "NEXT_NOT_STARTED",
+      "result": "implemented_source_model_and_stable_ids_validated_on_second_radically_different_godot_project"
+    },
+    {
+      "gate_id": "G3_GODOT4_ENGINE_ASSISTED_EXTRACTION",
+      "status": "BLOCKED_BY_G2",
+      "result": "first_authoritative_pinned_pc_side_godot4_frontend"
+    },
+    {
+      "gate_id": "G4_SEMANTIC_PASSES",
+      "status": "BLOCKED_BY_G3",
+      "result": "deterministic_reference_scene_behavior_state_media_passes"
+    },
+    {
+      "gate_id": "G5_TYPED_CREATIVE_IR",
+      "status": "BLOCKED_BY_G4",
+      "result": "validated_typed_ir_with_explicit_provenance"
+    },
+    {
+      "gate_id": "G6_GENERAL_2D_LOWERING",
+      "status": "BLOCKED_BY_G5",
+      "result": "single_shared_backend_without_project_specific_worker_logic"
+    },
+    {
+      "gate_id": "G7_SOURCE_RUNTIME_TRACING",
+      "status": "BLOCKED_BY_G6",
+      "result": "bounded_authorized_pc_side_source_runtime_oracles"
+    },
+    {
+      "gate_id": "G8_FIDELITY_CLOSURE",
+      "status": "BLOCKED_BY_G7",
+      "result": "five_oracle_equivalence_and_human_source_fidelity_playtest"
+    }
+  ],
+  "claim_boundary": {
+    "g1_measured": true,
+    "c6_fidelity_closed": false,
+    "c7_expanded": false,
+    "worker_candidate_promoted": false,
+    "new_portable_kit_exported": true,
+    "minilens_r11_golden_is_structural_regression_only": true,
+    "minilens_r11_is_fidelity_target": false,
+    "minilens_r11_final_output_frozen": false,
+    "native_or_host_payload_import": false,
+    "runtime_shader_compilation": false,
+    "shell_or_process_creation_on_xbox": false,
+    "credentials_in_projects_or_evidence": false
+  },
+  "package_strategy": {
+    "pc_side_by_default": true,
+    "public_worker_package_required_for_live_validation": true
+  },
+  "validation": {
+    "status": "NOT_VALIDATED_FROM_PUBLIC_BUILD",
+    "historical_operational_evidence_included": false
+  }
+}

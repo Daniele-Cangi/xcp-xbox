@@ -1,0 +1,181 @@
+name: Tests and public release hygiene
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[test]'
+      - run: python -m pytest -q
+      - run: python -m pytest -q reference/xcompute-probe/tests/unit/test_xcp_studio_live_adapter_v1.py
+      - run: python reference/xcompute-probe/tools/generate_xvm_isa_header.py --check
+      - name: Test frozen P4 XVM Python reference without live-runner dependency
+        working-directory: reference/xcompute-probe
+        run: python -m pytest -q tests/unit/test_xvm_reference.py -k 'not test_machine_readable_isa_matches_cpp_catalog'
+      - name: Test frozen P4 creative install lifecycle contract
+        working-directory: reference/xcompute-probe
+        run: python -m pytest -q tests/unit/test_xcp_creative_install_lifecycle_v1.py
+      - name: Test frozen P4 creative project builder
+        working-directory: reference/xcompute-probe
+        run: python -m pytest -q tests/unit/test_xcp_creative_project_v1.py
+      - name: Test original adaptation and evolution on Linux except host MIME dependent audio composition
+        working-directory: reference/xcompute-probe
+        run: python -m pytest -q tests/unit/test_xcp_source_adapt_tool_v1.py tests/unit/test_xcp_project_evolve_v1.py -k 'not test_shared_backend_generates_world2d_for_current_host'
+      - name: Test original XVM assembler and interpreter on PC
+        working-directory: reference/xcompute-probe
+        run: python -m pytest -q tests/unit/test_agent_native_xvm_toolchain_v1.py -k 'not test_live_gate_uses_exact_artifact_bytes_and_correction_loop'
+      - run: xcp conformance all
+      - run: python tools/check_reconstruction_coverage.py
+      - run: python tools/check_reference_worker_graph.py
+      - run: python tools/public_release_check.py
+
+  windows-studio:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install Python toolchain dependencies
+        run: python -m pip install -e '.[test]'
+      - name: Reject synthetic VCLibs Authenticode evidence on Windows
+        run: python -m pytest -q tests/test_assembler_authenticode.py
+      - name: Test original adaptation and public-profile evolution on Windows
+        working-directory: reference/xcompute-probe
+        run: python -m pytest -q tests/unit/test_xcp_source_adapt_tool_v1.py tests/unit/test_xcp_project_evolve_v1.py
+      - name: Stage the verified public toolchain and exact Studio source
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force build | Out-Null
+          python tools/prepare_reference_studio.py --mode public-studio-1.9.1 --output 'build/Studio With Spaces'
+      - name: Test Studio Core
+        shell: pwsh
+        run: dotnet test 'build/Studio With Spaces/tests/winui/XComputeControlCenter.Core.Tests/XComputeControlCenter.Core.Tests.csproj' -c Release
+      - name: Build Studio solution
+        shell: pwsh
+        run: dotnet build 'build/Studio With Spaces/src/XComputeControlCenter/XComputeControlCenter.sln' -c Release
+      - name: Publish Studio and verify WinUI resources
+        shell: pwsh
+        run: |
+          dotnet publish 'build/Studio With Spaces/src/XComputeControlCenter/XComputeControlCenter/XComputeControlCenter.csproj' -c Release -o 'build/studio-publish'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $publish = 'build/studio-publish'
+          if (-not (Test-Path -LiteralPath "$publish/XComputeControlCenter.exe")) { throw 'Studio executable missing' }
+          if (-not (Test-Path -LiteralPath "$publish/XComputeControlCenter.pri")) { throw 'WinUI PRI missing' }
+          $xbf = @(Get-ChildItem -LiteralPath $publish -Recurse -Filter '*.xbf' -File)
+          if ($xbf.Count -lt 10) { throw "Expected at least 10 XBF files, found $($xbf.Count)" }
+      - name: Build and verify pinned application-local Python
+        shell: pwsh
+        run: |
+          python reference/xcompute-probe/tools/build_xcp_studio_python_runtime.py build --profile reference/xcompute-probe/profiles/studio/xcp-studio-python-runtime-v1.json --cache build/python-input-cache --output build/studio-python
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python reference/xcompute-probe/tools/build_xcp_studio_python_runtime.py verify --runtime build/studio-python
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Assemble development Studio folder
+        shell: pwsh
+        run: |
+          python tools/assemble_reference_studio.py --publish build/studio-publish --runtime build/studio-python --output build/studio-dev
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Test-Path -LiteralPath 'build/studio-dev/toolchain/xcp-agent-kit-manifest.json')) { throw 'toolchain missing' }
+          if (-not (Test-Path -LiteralPath 'build/studio-dev/runtime/python/xcp-studio-python-runtime-manifest.json')) { throw 'Python runtime missing' }
+
+  windows-worker:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Stage frozen P4 native sources and check package graph
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force build | Out-Null
+          python tools/prepare_reference_worker.py --output build/worker-p4
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/check_reference_worker_graph.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/stage_development_package_identities.py --stage build/worker-p4
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Require MSVC v145 and Windows packaging tools
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ([Environment]::GetFolderPath('ProgramFilesX86')) 'Microsoft Visual Studio/Installer/vswhere.exe'
+          if (-not (Test-Path -LiteralPath $vswhere)) { throw 'VSWhere missing: native build not executed' }
+          $installation = & $vswhere -latest -products '*' -property installationPath
+          if (-not $installation) { throw 'Visual Studio missing: native build not executed' }
+          $msbuild = Join-Path $installation 'MSBuild/Current/Bin/MSBuild.exe'
+          $toolsets = @(Get-ChildItem -LiteralPath (Join-Path $installation 'MSBuild/Microsoft/VC') -Recurse -Directory -Filter v145 -ErrorAction SilentlyContinue)
+          if (-not (Test-Path -LiteralPath $msbuild) -or $toolsets.Count -eq 0) { throw 'MSVC v145 required: native build not executed' }
+          $sdkBin = Join-Path ([Environment]::GetFolderPath('ProgramFilesX86')) 'Windows Kits/10/bin'
+          $makeappx = Get-ChildItem -LiteralPath $sdkBin -Recurse -File -Filter makeappx.exe -ErrorAction SilentlyContinue | Where-Object { $_.FullName -match '\\x64\\' } | Sort-Object FullName -Descending | Select-Object -First 1
+          $signtool = Get-ChildItem -LiteralPath $sdkBin -Recurse -File -Filter signtool.exe -ErrorAction SilentlyContinue | Where-Object { $_.FullName -match '\\x64\\' } | Sort-Object FullName -Descending | Select-Object -First 1
+          if (-not $makeappx) { throw 'MakeAppx x64 missing: native packaging not executed' }
+          if (-not $signtool) { throw 'SignTool x64 missing: development signing not executed' }
+          "XCP_MSBUILD=$msbuild" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "XCP_MAKEAPPX=$($makeappx.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "XCP_SIGNTOOL=$($signtool.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+      - name: Build worker, native module and broker
+        shell: pwsh
+        run: '& build/worker-p4/tools/build.ps1 -Configuration Release -ManifestFlavor worker-prototype-0181'
+      - name: Build unsigned CPU Capsule and inspect package dependencies
+        shell: pwsh
+        run: |
+          & tools/package_reference_capsule_unsigned.ps1 -StageRoot build/worker-p4 -MSBuildPath $env:XCP_MSBUILD -MakeAppxPath $env:XCP_MAKEAPPX -Development
+          $worker = Get-ChildItem -LiteralPath 'build/worker-p4/src/XComputeProbe/AppPackages' -Recurse -File -Filter '*.msix' | Where-Object { $_.Name.Contains('0.1.182.0') } | Select-Object -First 1
+          if (-not $worker) { throw 'Built worker MSIX missing' }
+          $capsule = 'build/worker-p4/artifacts/public-development/XCP.Development.CpuCapsule.Framework_1.3.0.0_x64_unsigned.msix'
+          python tools/check_development_packages.py --worker-package $worker.FullName --capsule-package $capsule --unsigned
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & tools/sign_reference_development_packages.ps1 -WorkerPackage $worker.FullName -CapsulePackage $capsule -SignToolPath $env:XCP_SIGNTOOL -OutputDirectory 'build/worker-p4/artifacts/public-development/signed'
+      - name: Inspect external Microsoft VCLibs dependency from installed SDK
+        shell: pwsh
+        run: |
+          $sdk = Join-Path ([Environment]::GetFolderPath('ProgramFilesX86')) 'Microsoft SDKs/Windows Kits/10/ExtensionSDKs/Microsoft.VCLibs'
+          if (-not (Test-Path -LiteralPath $sdk)) { throw 'Microsoft VCLibs Extension SDK missing' }
+          $packages = @(Get-ChildItem -LiteralPath $sdk -Recurse -File -Filter 'Microsoft.VCLibs.x64.14.00.appx' |
+            Where-Object { $_.FullName -match '[\\/]Appx[\\/]Retail[\\/]x64[\\/]' })
+          if ($packages.Count -eq 0) { throw 'Retail x64 VCLibs package missing from SDK' }
+          $verified = $false
+          foreach ($package in $packages) {
+            python tools/inspect_reference_vclibs.py --package $package.FullName
+            if ($LASTEXITCODE -ne 0) { continue }
+            $signature = Get-AuthenticodeSignature -LiteralPath $package.FullName
+            if ($signature.Status -eq 'Valid') {
+              Write-Output 'SDK VCLibs identity and Authenticode signature verified; binary not copied.'
+              $verified = $true
+              break
+            }
+          }
+          if (-not $verified) { throw 'No compatible signed VCLibs package found in SDK' }
+
+  windows-development-distribution:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build and verify complete development distribution from XCP
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force build | Out-Null
+          python tools/source_snapshot.py --archive build/source-snapshot.zip
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Expand-Archive -LiteralPath build/source-snapshot.zip -DestinationPath build/source-snapshot
+          if (Test-Path -LiteralPath build/source-snapshot/.git) { throw 'Source snapshot unexpectedly contains .git' }
+          python build/source-snapshot/tools/source_snapshot.py --verify-root build/source-snapshot
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & build/source-snapshot/tools/build_development_distribution.ps1 -OutputRoot build/full-development

@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xcompute-probe.local/schemas/xcp-canvas2d-module-v1.schema.json",
+  "title": "XCP canvas 2D module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "canvas", "nodes", "input_bindings"],
+  "properties": {
+    "schema_version": {"const": "xcp-canvas2d-module-v1"},
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "background"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 1, "maximum": 8192},
+        "height": {"type": "integer", "minimum": 1, "maximum": 8192},
+        "background": {"$ref": "#/$defs/color"}
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {"$ref": "#/$defs/node"}
+    },
+    "input_bindings": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {"$ref": "#/$defs/input_binding"}
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)+$"
+    },
+    "color": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^(#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?|[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*)$"
+    },
+    "transform2d": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position"],
+      "properties": {
+        "position": {
+          "type": "array",
+          "prefixItems": [{"type": "number"}, {"type": "number"}],
+          "items": false
+        },
+        "rotation_degrees": {"type": "number", "minimum": -360000, "maximum": 360000},
+        "scale": {
+          "type": "array",
+          "prefixItems": [
+            {"type": "number", "minimum": 0.0001, "maximum": 10000},
+            {"type": "number", "minimum": 0.0001, "maximum": 10000}
+          ],
+          "items": false
+        }
+      }
+    },
+    "size2d": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number", "exclusiveMinimum": 0, "maximum": 8192},
+        {"type": "number", "exclusiveMinimum": 0, "maximum": 8192}
+      ],
+      "items": false
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fill": {"$ref": "#/$defs/color"},
+        "stroke": {"$ref": "#/$defs/color"},
+        "stroke_width": {"type": "number", "minimum": 0, "maximum": 256},
+        "opacity": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "transform"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "type": {"enum": ["rectangle", "ellipse", "line", "text", "sprite"]},
+        "transform": {"$ref": "#/$defs/transform2d"},
+        "size": {"$ref": "#/$defs/size2d"},
+        "line_end": {
+          "type": "array",
+          "prefixItems": [{"type": "number"}, {"type": "number"}],
+          "items": false
+        },
+        "text": {"type": "string", "maxLength": 4096},
+        "font_size": {"type": "number", "minimum": 4, "maximum": 512},
+        "asset_id": {"$ref": "#/$defs/identifier"},
+        "style": {"$ref": "#/$defs/style"},
+        "z_index": {"type": "integer", "minimum": -32768, "maximum": 32767},
+        "visible": {"type": "boolean"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"type": {"enum": ["rectangle", "ellipse", "sprite"]}}},
+          "then": {"required": ["size"]}
+        },
+        {
+          "if": {"properties": {"type": {"const": "line"}}},
+          "then": {"required": ["line_end"]}
+        },
+        {
+          "if": {"properties": {"type": {"const": "text"}}},
+          "then": {"required": ["text", "font_size"]}
+        },
+        {
+          "if": {"properties": {"type": {"const": "sprite"}}},
+          "then": {"required": ["asset_id"]}
+        }
+      ]
+    },
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "source"],
+      "properties": {
+        "action": {"$ref": "#/$defs/contract_id"},
+        "source": {
+          "enum": [
+            "gamepad.left_stick",
+            "gamepad.right_stick",
+            "gamepad.dpad",
+            "gamepad.a",
+            "gamepad.b",
+            "gamepad.x",
+            "gamepad.y",
+            "gamepad.left_trigger",
+            "gamepad.right_trigger",
+            "keyboard.arrows",
+            "keyboard.enter",
+            "keyboard.escape"
+          ]
+        },
+        "target_node": {"$ref": "#/$defs/identifier"},
+        "scale": {"type": "number", "minimum": -10000, "maximum": 10000}
+      }
+    }
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "schema_version": "xcp-reference-source-lock-v1",
+  "repository": "Daniele-Cangi/Xbox-series-Agent",
+  "g1_snapshot_commit": "e2ff97446c1e5420c6f0c8d84b2bdeee881340f2",
+  "g1_exporter": {
+    "path": "xcompute-probe/tools/export_xcp_agent_kit.py",
+    "bytes": 14851,
+    "sha256": "ad4d05a3699f24f8be8e4e4f879c07716196feaf0145f454cc4ad5e8d9fd7d22"
+  },
+  "g1_kit_source_files": [
+    {
+      "path": "xcompute-probe/profiles/creative/godot-adaptation-compatibility-v1.json",
+      "bytes": 9171,
+      "sha256": "79033379896d2b0799e8650f50e32f2716b079fdea7cc729cc9578b497c057f1"
+    },
+    {
+      "path": "xcompute-probe/profiles/creative/xcp-agent-native-creation-v1.json",
+      "bytes": 5371,
+      "sha256": "ca0d44d8f463a61f5843c3a3c029800a786b7d9007188a588d9768e7459fbe2e"
+    },
+    {
+      "path": "xcompute-probe/profiles/creative/xcp-agent-native-source-adaptation-v1.json",
+      "bytes": 15281,
+      "sha256": "2456bb5dcd37434ddf2c446111030644d2f009736b7ea3a7ea0251631318ec6b"
+    },
+    {
+      "path": "xcompute-probe/profiles/creative/xcp-project-evolution-v1.json",
+      "bytes": 4942,
+      "sha256": "fe47e03982f00dc58028f80115ae292c7e71292b7377542d7ae245d1f920842e"
+    },
+    {
+      "path": "xcompute-probe/schemas/worker-sdk-contract-v1.json",
+      "bytes": 19013,
+      "sha256": "c1772704699c6f7a2db03989bf2632e855dadfebb1c247ce8fc1523172581ea0"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-agent-blind-creation-gate-v1.schema.json",
+      "bytes": 13642,
+      "sha256": "a8299a01491e90f5b0eefa8490dd7dd1573f61711620d9d26106212a4f5f4dd6"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-agent-correction-ledger-v1.schema.json",
+      "bytes": 5602,
+      "sha256": "8d5a9f940cabf61e0175e1bc785cde04bd150b74061b56ae24a291f4824df5d1"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-agent-lifecycle-receipt-v1.schema.json",
+      "bytes": 6739,
+      "sha256": "858d06c705ee4faca7e14489fe2aa2d8187be61f43c46673b26a0090c88830f4"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-agent-project-intent-v1.schema.json",
+      "bytes": 5606,
+      "sha256": "894a15a234e9e5eefc20ad76ffaf0363893c64b87cee8e3329bf64e1b9a6d09c"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-audio-module-v1.schema.json",
+      "bytes": 2166,
+      "sha256": "f0981c3574d57f10b5d59a08084aa4212278ef13f68be2c11a9c6f73ede717ef"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-behavior-module-v1.schema.json",
+      "bytes": 4203,
+      "sha256": "e498f7bf9138d788135b41392820d9889c2040d6158d3686dde3352fc1e1c84c"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-canvas2d-module-v1.schema.json",
+      "bytes": 4930,
+      "sha256": "8c0a290c3561ab277e51b2fa2d2a624a8ec89804d2ce2984cb0212e4ca784781"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-adaptation-handoff-v1.schema.json",
+      "bytes": 4607,
+      "sha256": "0c99fc8dbe59f2e832876e995470328ea76f0822c51c240373b58aaef6722c36"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-adaptation-handoff-v2.schema.json",
+      "bytes": 3899,
+      "sha256": "8ac530d32615f73331305ab8798d7fde50edf9bcfdb45ba03ff1b07820e6728d"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-adaptation-plan-v1.schema.json",
+      "bytes": 6845,
+      "sha256": "5172f362e91b7cbd0b22fcc540b9b59bbc7a5728b93cff914e2cec6893213e5d"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-adaptation-readiness-v1.schema.json",
+      "bytes": 12254,
+      "sha256": "bed6fbb053b993031e2c7cd4a4ac51162bbced240dcfac485747d24257ff6942"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-adaptation-readiness-v2.schema.json",
+      "bytes": 9626,
+      "sha256": "eec4b468b3c9a375d4a147cf9a3d3097c2e58aa09492519beb9e39716647a68f"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-bundle-v1.schema.json",
+      "bytes": 5890,
+      "sha256": "ad13cf5f25e1c77d4239393da24881d3f622c7febc4fb0b8443282e4ef8379d3"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-evolution-overlay-v1.schema.json",
+      "bytes": 4729,
+      "sha256": "74bf90d73bd085c8dd2f31708a51e7471ef7dd4410d41550f13bbf7818a9aae0"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-evolution-report-v1.schema.json",
+      "bytes": 4218,
+      "sha256": "ed70f5f856038d6797f58ab60a82a9442747743d1c5aed6ddd0d9e275bc5c053"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-evolution-reuse-v1.schema.json",
+      "bytes": 3913,
+      "sha256": "b128f599d08826e09fa441fb94a8d6c3c2177aa4c0c12d6ae6809751c20b5b63"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-fidelity-contract-v1.schema.json",
+      "bytes": 7463,
+      "sha256": "b1633f76f42c04179485e493398c8f5df1d480df9d90f29f2d724d35d487d8b4"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-fidelity-evidence-v1.schema.json",
+      "bytes": 3913,
+      "sha256": "bf4faec7ac24f19f9506852f8cff9e6ee53e7ea49b4b0761220537f82b0975a9"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-host-profile-v1.schema.json",
+      "bytes": 13790,
+      "sha256": "9ccb5f0f76afd97c7d9f335b9fff3b529e86bff4a0c562e9998aa686a66fe447"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-ir-v1.schema.json",
+      "bytes": 9417,
+      "sha256": "3c560e11fa541716bd78f34d30812612e6b87c74073ef565bd4232b9d897fae8"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-project-v1.schema.json",
+      "bytes": 3413,
+      "sha256": "c3bd78a792e3ea2f27763699bcfbff503502bb7835b59a373a183c2ea2ff244a"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-reconciliation-plan-v1.schema.json",
+      "bytes": 4273,
+      "sha256": "3ca9ffe6b83814dd0d58c6e573016df64b64e8fa2a9cbe77f684b2235c524bb0"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-semantic-diff-v1.schema.json",
+      "bytes": 4450,
+      "sha256": "4391598375aae64ad91c09b19ddec04ec1aa6e46cf5cdf1ca7c6018bc1f713cc"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-semantic-inventory-v1.schema.json",
+      "bytes": 8751,
+      "sha256": "ebff367f15f3c5f3c7d9be43555f6c215b33ca83e9b5e7ccdcd17b2eb5e5b029"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-source-inventory-v1.schema.json",
+      "bytes": 6643,
+      "sha256": "f101034a804029b9b464fbdee0ef2ff8e91a3d0b0f9c86e2b42b501491ed2395"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-creative-source-map-v1.schema.json",
+      "bytes": 3135,
+      "sha256": "df86b950bc6065c1a63bc72f12897c8b1e25af2d6a05cc5b367e2478f4270a25"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-data-module-v1.schema.json",
+      "bytes": 1814,
+      "sha256": "9526c63af6768dfeda8362cf2cd8ee42b06e922affb79227171fe173b38af593"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-mesh-asset-v1.schema.json",
+      "bytes": 1292,
+      "sha256": "bb3a1f80b709f398187525deba8309790e77034e5088e7ddc6c4d5d0cea95ed9"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-scene3d-module-v1.schema.json",
+      "bytes": 7334,
+      "sha256": "0ced407b911e487e28084adec9afe05b9da0e44b5169c62fe2358253dd274d23"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-ui-module-v1.schema.json",
+      "bytes": 2249,
+      "sha256": "46b5371ae7ec872c652cfdd44587c54d77bbcf172a6cd4038387d6e93216e7d4"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-world2d-campaign-module-v1.schema.json",
+      "bytes": 2970,
+      "sha256": "0d618a3e2b0820d8dff3eaf3392f2675f791113ca95bcc3b032637bc7296e8cc"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-world2d-module-v1.schema.json",
+      "bytes": 7836,
+      "sha256": "2071b8d01fee254f1a2f9eb0584701f5e65092c0cdced88958819afacf6b993f"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-world2d-module-v2.schema.json",
+      "bytes": 8654,
+      "sha256": "d9cd76927278184ea4f7fb4b5cdb7567076ce59c39eaa331912577f2c94da350"
+    },
+    {
+      "path": "xcompute-probe/schemas/xcp-xvm-module-v1.schema.json",
+      "bytes": 2787,
+      "sha256": "148b06457ff30ba2ac50152061a94b27632dcb906a767b1a6591cd2cf152e267"
+    },
+    {
+      "path": "xcompute-probe/schemas/xvm-isa-v2.json",
+      "bytes": 5135,
+      "sha256": "57091ef5c90fe12a36ba46ac8ef709d1a57bfbb098eea7135ebf32391f1f3e10"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/__init__.py",
+      "bytes": 9491,
+      "sha256": "71580d5da5f0f9f3aee3f82f79c2eebdbebf19170a095693186114bc24a0a166"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/adapters/__init__.py",
+      "bytes": 289,
+      "sha256": "af947ee01891f47e0369195dc84671caf7f0b773abfd7479dc27f89d1c9d0280"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/adapters/godot2_legacy.py",
+      "bytes": 57579,
+      "sha256": "b1c42051ee4804e71e4f58ccd201aaf5030404064d1ae817843f7473fa187295"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/adapters/registry.py",
+      "bytes": 6248,
+      "sha256": "b540b78343c10a374e27e60660cdd091137fcbf8ba8eceb02335bc8dc360c64c"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/core/__init__.py",
+      "bytes": 1005,
+      "sha256": "898352dfba10ecb66c185754fb1b2c8bd64339d2ef7704b671a1f9cb505dd94c"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/core/contracts.py",
+      "bytes": 3603,
+      "sha256": "976dbb09c9972bf4cc98e31af26095bf3e3561afb73d30dcffbe733fff4e64c8"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/core/runtime.py",
+      "bytes": 6170,
+      "sha256": "e52aedfb0a13f29276108d243a745f60413b68e433e2a3b8545c6f263fd5a8cf"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/fidelity/__init__.py",
+      "bytes": 418,
+      "sha256": "a27b430f29e1b3c38cebb86056645c988707eb172262bf3e4d37644a4206a84c"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/fidelity/oracles.py",
+      "bytes": 62176,
+      "sha256": "3b1b2b3fb5d24918b61ebcbc246a0229a97bd2bae0f4c9382dae0ada906aab6d"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/handoff/__init__.py",
+      "bytes": 352,
+      "sha256": "25252eb46478a2b65d7ec97f72eb6cc794a51452fddcf5fc2bc2036977fa284d"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/handoff/c5.py",
+      "bytes": 15261,
+      "sha256": "0770a7877b9d15c237513c6f28aef80959a170a53b4816fdb3b920d2261a7cf4"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/ir/__init__.py",
+      "bytes": 232,
+      "sha256": "20ec45b348ce7b0389eea1663f32325cc5a945d1f4d2bb676fb84960118a128e"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/ir/model.py",
+      "bytes": 3798,
+      "sha256": "ecb91fc5eedb1f12fe567a70703710e6421c48f5eac47a7ff9519284eabdcdd0"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/lowering/__init__.py",
+      "bytes": 585,
+      "sha256": "5165a6d20d5a047882c6987cfbe2ca85df390e8e4856478bafbf6c013452e96d"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/lowering/backend.py",
+      "bytes": 51929,
+      "sha256": "3a0f5532e9c0f0e033a8168343a006622cba067e1e81c9b12b4498f4f7e36b31"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/planning/__init__.py",
+      "bytes": 244,
+      "sha256": "222e60e9293aeacef7039d695e6e8ea6d76a8ffeed659ac689058f9e925d7c78"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/planning/capabilities.py",
+      "bytes": 13663,
+      "sha256": "ec7197fc88119768ad8490c61a8637e879019594d5649bafd9308825f5acb8d3"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/semantics/__init__.py",
+      "bytes": 353,
+      "sha256": "8e4c06ee918373f4e357286e293ede3a35f23a1fa003257d26271704291a5e89"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/semantics/godot.py",
+      "bytes": 1940,
+      "sha256": "2946db4e33e6035d3c149d62b25cc2c0c02ead938eeb846199c4b5c53ad12dea"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/semantics/integrity.py",
+      "bytes": 5332,
+      "sha256": "4c2c9660571c683d637625e2a6cd2f710abd054db038962a6489261fd1e37fe9"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/source_models/__init__.py",
+      "bytes": 979,
+      "sha256": "0926557929352e82a60c5235be3b26020c773e5940228a3217b5e6f31fac5e46"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/source_models/engine_assisted.py",
+      "bytes": 6503,
+      "sha256": "36ab4bb9c4337ecd1ac9333403dd72e0ec55b063e987b1534b91e912ea4b55da"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/source_models/godot-source-model-v1.schema.json",
+      "bytes": 5774,
+      "sha256": "4201203d50a217e476510d4b95d4015e700d9df8e101117d8ff2574eb4cddf9d"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/source_models/godot.py",
+      "bytes": 14182,
+      "sha256": "d14278afd01e8feb602ee9e5658a7438322642ff136f3b2030aa7aafac7c7d53"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_adaptation/source_models/inventory.py",
+      "bytes": 3688,
+      "sha256": "426dbf6260eccc4b9948c2fb453f60e72c9102aa4f8d3c39c4ed3996dc4d96c3"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_agent_blind_gate.py",
+      "bytes": 31188,
+      "sha256": "95c0d985b8d8f7968d2cdbd4d9636f2aea15a756041cdbb6057c2fe99481f963"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_agent_lifecycle.py",
+      "bytes": 80608,
+      "sha256": "1db4540686a6c5eeff2fe53c4750de8a6bb6284bf4ad1429210e2a5de4d97ba6"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_creative_project.py",
+      "bytes": 55276,
+      "sha256": "637e609801cef8dd4faef2d262e437dc449336a5e1551034ffc0f6d5a6469976"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_project_evolve.py",
+      "bytes": 53326,
+      "sha256": "7c9da59d117b8d82c467dd9866a5fe6375a19359c682caa540fe2c4a982593ad"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_source_adapt.py",
+      "bytes": 7076,
+      "sha256": "4e8da075fbd60cfdceeeb70363cf6d0f2ef7688cdbef6f3dfec10e6f65eb010a"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_studio_live_adapter.py",
+      "bytes": 16980,
+      "sha256": "75c4ea8cde503654eb9a084f038c1208ec9859df4c2ab4fac8286e0aa60184b7"
+    },
+    {
+      "path": "xcompute-probe/tools/xcp_worker_transport.py",
+      "bytes": 12126,
+      "sha256": "e315b6c2d885aecab5614229775f59ff4bfdf658497f89fb8b626cc5cdb0976f"
+    }
+  ],
+  "g1_kit_source_file_count": 72,
+  "g1_kit_source_payload_bytes": 786340,
+  "g1_expected_export_file_count_including_requirements": 73,
+  "g1_expected_export_manifest_sha256": "86d2cefebd9e01d69e3eb7bd15c17b70a7a501decdcb6f0fbef109515ed46346",
+  "studio_lifecycle_overlays": [
+    {
+      "version": "1.9.0",
+      "source_commit": "4acb86a11396f4e3e4416afe6fc6ae18a22d3a9d",
+      "path": "xcompute-probe/tools/xcp_agent_lifecycle.py",
+      "bytes": 117450,
+      "sha256": "1a5aaada594e25c1cf7bb09349611e6a4cee22c0c2bf955290a86bca41c60d1e"
+    },
+    {
+      "version": "1.9.1",
+      "source_commit": "acb696d3ba38d276824054ceeebb82bbe2d82182",
+      "path": "xcompute-probe/tools/xcp_agent_lifecycle.py",
+      "bytes": 117792,
+      "sha256": "687b09c78ea23b1de3879348d7d4498f9bc5630d485179341a755f6ae8ce5e24"
+    }
+  ]
+}
