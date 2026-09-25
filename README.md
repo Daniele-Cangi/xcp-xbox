@@ -14,8 +14,8 @@ Studio prepares and validates projects, workloads and execution plans. The Xbox
 worker admits supported work, executes it inside the UWP sandbox, and returns
 structured evidence about what actually happened.
 
-[![CI](https://github.com/Daniele-Cangi/XCP-publication/actions/workflows/tests.yml/badge.svg)](https://github.com/Daniele-Cangi/XCP-publication/actions/workflows/tests.yml)
-[![CodeQL](https://github.com/Daniele-Cangi/XCP-publication/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daniele-Cangi/XCP-publication/actions/workflows/codeql.yml)
+[![CI](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/tests.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/tests.yml)
+[![CodeQL](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 
@@ -261,8 +261,8 @@ The portable parts can be exercised on any supported Python development
 environment:
 
 ```bash
-git clone https://github.com/Daniele-Cangi/XCP-publication.git
-cd XCP-publication
+git clone https://github.com/Daniele-Cangi/xcp-xbox.git
+cd xcp-xbox
 
 python -m pip install -e '.[test]'
 python -m pytest -q
