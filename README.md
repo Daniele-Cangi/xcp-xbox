@@ -18,6 +18,9 @@ structured evidence about what actually happened.
 [![CodeQL](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
+[![Ready for dev issues](https://img.shields.io/badge/issues-ready%20for%20dev-brightgreen.svg)](https://github.com/Daniele-Cangi/xcp-xbox/issues)
+
+Official website: [xcpstudio.com](https://xcpstudio.com/).
 
 ---
 
