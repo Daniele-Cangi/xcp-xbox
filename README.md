@@ -1,18 +1,20 @@
 # XCP
 
-**A programmable execution platform for Xbox Series X Developer Mode.**
+**Run software and compute workloads on an Xbox Series X from a Windows PC.**
 
-XCP started from a concrete question:
+XCP turns an Xbox Series X in Developer Mode into a programmable execution
+target.
 
-> **How far can an Xbox Series X in Developer Mode be pushed as a programmable,
-> deterministic computing target?**
+You prepare a project or workload in **XCP Studio** on Windows. XCP validates
+what the console can support, sends the admitted work to the **XCP Worker** on
+Xbox, runs it through supported CPU/GPU execution paths, and returns structured
+results and evidence to the PC.
 
-The result is a Windows-to-Xbox development stack built around an XCP Studio on
-the PC and a native XCP Worker on the console.
+In practical terms, XCP gives you a controlled way to program, measure, test
+and iterate against an Xbox directly from your development environment.
 
-Studio prepares and validates projects, workloads and execution plans. The Xbox
-worker admits supported work, executes it inside the UWP sandbox, and returns
-structured evidence about what actually happened.
+Coding agents can use the same workflow to create, adapt, build, run and inspect
+projects while the console remains inside the Xbox Developer Mode sandbox.
 
 [![CI](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/tests.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml)
@@ -24,7 +26,16 @@ Official website: [xcpstudio.com](https://xcpstudio.com/).
 
 ---
 
-## What XCP does
+## What you can do with XCP
+
+Today, XCP is built around a few concrete workflows:
+
+- prepare and validate software or compute workloads on a Windows PC;
+- execute supported CPU and GPU work on an Xbox Series X in Developer Mode;
+- build and iterate on projects through XCP Studio;
+- let coding agents drive the same bounded project lifecycle;
+- inspect structured results instead of treating a successful launch as proof
+  that the software behaved correctly.
 
 The practical path looks like this:
 
