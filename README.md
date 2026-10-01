@@ -24,6 +24,11 @@ projects while the console remains inside the Xbox Developer Mode sandbox.
 
 Official website: [xcpstudio.com](https://xcpstudio.com/).
 
+> [!NOTE]
+> **Public repository status.** This repository is XCP's canonical public open-source codebase. It was reconstructed from the preserved development lineage rather than created by making the original repository public, because the legacy Git history contained operational evidence, environment-specific Xbox Developer Mode details, private identifiers, and other material that was not appropriate for public release.
+>
+> The reconstruction preserves the software architecture and the provenance of the historical physical-Xbox results while deliberately separating that evidence from newly rebuilt packages. Historical Xbox execution is therefore documented as historical evidence; reconstructed packages are not described as Xbox-validated until they are independently run again on physical hardware.
+
 ---
 
 ## What you can do with XCP
