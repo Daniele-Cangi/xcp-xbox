@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/tests.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daniele-Cangi/xcp-xbox/actions/workflows/codeql.yml)
+[![XCP Deep Dive](https://img.shields.io/badge/XCP%20Deep%20Dive-DEV.to-0A0A0A?logo=devdotto&logoColor=white)](https://dev.to/danielecangi/series/44781)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 [![Ready for dev issues](https://img.shields.io/badge/issues-ready%20for%20dev-brightgreen.svg)](https://github.com/Daniele-Cangi/xcp-xbox/issues)
